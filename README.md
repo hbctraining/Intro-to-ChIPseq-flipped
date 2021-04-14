@@ -5,12 +5,22 @@
 :----------|:----------|:----------|:----------|
 | Biologists | Beginner/Intermediate | None | 3-day workshop (~19.5 hours of trainer-led time)|
 
+
+### Learning Objectives
+
+1.	Understand the necessity for, and use of, the command line interface (bash) and HPC for analyzing high-throughput sequencing data.
+2.	Understand best practices for designing a ChIP-seq experiment and analysis the resulting data.
+
+> These materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.
+
 ### Description
 
 This repository has teaching materials for an Introduction to ChIP-sequencing data analysis workshop. The workshop is organized into two parts:
 
 ### Part I: Raw reads to peak calls (4 sessions)
 > Pre-requisite: Introduction to Shell
+
+This workshop focuses on teaching computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. In addition to running the workflow from FASTQ files to peak calls, the workshop covers best practice guidlelines for ChIP-seq experimental design and data organization/management and data visualization for quality control.
 
 * Introduction to ChIP-seq
 * QC using FASTQC
@@ -22,21 +32,18 @@ This repository has teaching materials for an Introduction to ChIP-sequencing da
 ### Part II: Peak annotation and differential enrichment analysis
 > Pre-requisite: Introduction to R
 
+This workshop focuses on using the R statistical programming environment to evaluate files generated from peak calling of ChIP-seq data. We describe the different file formats encountered with ChIP-seq and use various Bioconductor packages to look at concordance between replicates and annotate regions using nearest gene approaches. We demonstrate the use of DiffBind to evaluate changes in binding patterns between groups of samples, and explore genomic regions of interest as tracks in the Integrated Genome Viewer (IGV).
+
 * File formats for ChIP-seq
-* 
+* Peak concordance between replicates
+* ChIPQC?
+* Peak annotation and visualization
+* Differential enrichment analysis
+* Peak visualization using a genome viewer (IGV)
 
-
-This workshop focuses on teaching basic computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. It includes an introduction to shell (bash) and shell scripting. In addition to running the ChIP-seq workflow from FASTQ files to peak calls and nearest gene annotations, the workshop covers best practice guidlelines for ChIP-seq experimental design and data organization/management and quality control.
-
-> These materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.
-
-### Learning Objectives
-
-1.	Understand the necessity for, and use of, the command line interface (bash) and HPC for analyzing high-throughput sequencing data.
-2.	Understand best practices for designing a ChIP-seq experiment and analysis the resulting data.
 
 ### Lessons
-**[Click here](schedule/2-day.md) for links to lessons and the suggested schedule**
+**[Click here]() for links to lessons and the suggested schedule**
 
 ### Dataset
 
