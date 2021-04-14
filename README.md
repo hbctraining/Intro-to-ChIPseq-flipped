@@ -9,15 +9,21 @@
 
 This repository has teaching materials for an Introduction to ChIP-sequencing data analysis workshop. The workshop is organized into two parts:
 
-* Part I: Raw reads to peak calls (4 sessions)
-  * Introduction to ChIP-seq
-  * QC using FASTQC
-  * Alignment theory and considerations for ChIP-seq
-  * Alignnment and filtering of reads
-  * Peak calling
-  * Peak visualization (using deepTools)
+### Part I: Raw reads to peak calls (4 sessions)
+> Pre-requisite: Introduction to Shell
+
+* Introduction to ChIP-seq
+* QC using FASTQC
+* Alignment theory and considerations for ChIP-seq
+* Alignnment and filtering of reads
+* Peak calling
+* Peak visualization (using deepTools)
   
-* Part II: Peak annotation and differential enrichment analysis
+### Part II: Peak annotation and differential enrichment analysis
+> Pre-requisite: Introduction to R
+
+* File formats for ChIP-seq
+* 
 
 
 This workshop focuses on teaching basic computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. It includes an introduction to shell (bash) and shell scripting. In addition to running the ChIP-seq workflow from FASTQ files to peak calls and nearest gene annotations, the workshop covers best practice guidlelines for ChIP-seq experimental design and data organization/management and quality control.
