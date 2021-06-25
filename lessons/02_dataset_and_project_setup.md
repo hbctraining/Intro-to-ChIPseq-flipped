@@ -8,16 +8,25 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-- Describe the best practices for designing a ChIP-seq experiment
-- Recognize the need for data management and project organization
+- Introduction to the dataset
+- Project setup using best practices in RDM
 
-## Introduction to ChIP-seq
-Chromatin immunoprecipitation (ChIP) experiments are performed to identify DNA bound to specific (chromatin) proteins of interest. The first step involves isolating the chromatin and immunoprecipitating (IP) fragements with an antibody against the protein of interest. In ChIP-seq, the immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
+## Exploring the example dataset
 
-![chipseq_overview](../img/chipseq_overall.png)
+Our goal for this session is to compare the the binding profiles of [Nanog](https://www.nature.com/stemcells/2009/0909/090910/full/stemcells.2009.118.html) and [Pou5f1](https://www.nature.com/articles/7290134) (Oct4). The ChIP was performed on H1 human embryonic stem cell line (h1-ESC) cells, and sequenced using Illumina. The datasets were obtained from the [HAIB TFBS ENCODE collection](http://hgdownload.cse.ucsc.edu/goldenpath/hg19/encodeDCC/wgEncodeHaibTfbs/). These 2 transcription factors are involved in **stem cell pluripotency** and one of the goals is to understand their roles, individually and together, in transriptional regulation. 
 
+Two replicates were collected and each was divided into 3 aliquots for the following:
 
-## Setting up
+- Nanog IP
+- Pou5f1 IP
+- Control input DNA
+
+<img src="../img/chipseq_exp_design.png" width="500">
+
+For these 6 samples, we will be using reads from only a 32.8 Mb of chromosome 12 (chr12:1,000,000-33,800,000), so we can get through the workflow in a reasonable amount of time. 
+	
+
+## Setting up the data
 
 Since we are going to be working with this data on our remote server, **O2**, we first need to log onto the server. 
 
@@ -180,20 +189,7 @@ scripts:
 ***
 
 
-## Exploring the example dataset
 
-Our goal for this session is to compare the the binding profiles of [Nanog](https://www.nature.com/stemcells/2009/0909/090910/full/stemcells.2009.118.html) and [Pou5f1](https://www.nature.com/articles/7290134) (Oct4). The ChIP was performed on H1 human embryonic stem cell line (h1-ESC) cells, and sequenced using Illumina. The datasets were obtained from the [HAIB TFBS ENCODE collection](http://hgdownload.cse.ucsc.edu/goldenpath/hg19/encodeDCC/wgEncodeHaibTfbs/). These 2 transcription factors are involved in **stem cell pluripotency** and one of the goals is to understand their roles, individually and together, in transriptional regulation. 
-
-Two replicates were collected and each was divided into 3 aliquots for the following:
-
-- Nanog IP
-- Pou5f1 IP
-- Control input DNA
-
-<img src="../img/chipseq_exp_design.png" width="500">
-
-For these 6 samples, we will be using reads from only a 32.8 Mb of chromosome 12 (chr12:1,000,000-33,800,000), so we can get through the workflow in a reasonable amount of time. 
-	
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
