@@ -23,6 +23,7 @@
 ### Before the next class:
 
 1. Please **study the contents** and **work through all the code** within the following lessons:
+  * [Experimental design considerations and understanding the ChIP-seq workflow]()
   * [Dataset overview and project organization]()
   * [Quality Control of Sequence Data: Running FASTQC and evaluating results]()
   * [Alignment using Bowtie2]()
