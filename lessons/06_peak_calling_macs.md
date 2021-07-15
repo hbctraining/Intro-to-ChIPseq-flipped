@@ -8,6 +8,8 @@ Contributors: Meeta Mistry, Radhika Khetani
 
 Approximate time: 80 minutes
 
+**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/9
+
 ## Learning Objectives
 
 * Describe the different components of the MACS2 peak calling algorithm
