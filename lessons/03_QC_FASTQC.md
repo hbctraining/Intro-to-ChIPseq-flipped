@@ -8,7 +8,7 @@ Contributors: Mary Piper, Radhika Khetani
 
 Approximate time: 
 
-Link to issue describing the modifications to be made: https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/5
+**Link to issue describing the modifications to be made**: https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/5
 
 ## Learning Objectives
 
