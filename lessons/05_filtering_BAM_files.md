@@ -18,35 +18,11 @@ Approximate time: 45 minutes
 
 An important issue with ChIP-seq data concerns the inclusion of multiple mapped reads (reads mapped to multiple loci on the reference genome). **Allowing for multiple mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase** [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). Therefore we need to filter our alignment files to **contain only uniquely mapping reads** in order to increase confidence in site discovery and improve reproducibility. Since there is no parameter in Bowtie2 to keep only uniquely mapping reads, we will need to perform the following steps to generate alignment files containing only the uniquely mapping reads:
 
-1. Change alignment file format from SAM to BAM
+
 2. Sort BAM file by read coordinate locations
 3. Filter to keep only uniquely mapping reads (this will also remove any unmapped reads)
 
-### 1. Changing file format from SAM to BAM
 
-While the SAM alignment file output by Bowtie2 is human readable, we need a BAM alignment file for downstream tools. Therefore, we will use [Samtools](http://samtools.github.io) to convert the file formats.
-
-To use `samtools` we will need to load the module:
-
-```bash
-$ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
-$ module load samtools/1.9
-```
-
-The command we will use is `samtools view` with the following parameters:
-
-* `-h`: include header in output
-* `-S`: input is in SAM format
-* `-b`: output BAM format
-* `-o`: /path/to/output/file
-
-```bash
-$ samtools view -h -S -b \
--o H1hesc_Input_Rep1_chr12_aln_unsorted.bam \
-H1hesc_Input_Rep1_chr12_aln_unsorted.sam
-```
-
-You can find additional parameters for the samtools functions in the [manual](http://www.htslib.org/doc/samtools-1.2.html).
 
 ### 2. Sorting BAM files by genomic coordinates
 
