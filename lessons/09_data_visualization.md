@@ -6,6 +6,8 @@ date: "Thursday July 29th, 2017"
 
 Approximate time: 80 minutes
 
+**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/12
+
 ## Learning Objectives
 
 * Visualizing enrichment patterns at particular locations in the genome
