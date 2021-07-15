@@ -162,3 +162,29 @@ $ less H1hesc_Input_Rep1_chr12_aln_unsorted.sam
 ```
 
 **Does the information you see line up with the fields we described above?**
+
+### 1. Changing file format from SAM to BAM
+
+While the SAM alignment file output by Bowtie2 is human readable, we need a BAM alignment file for downstream tools. Therefore, we will use [Samtools](http://samtools.github.io) to convert the file formats.
+
+To use `samtools` we will need to load the module:
+
+```bash
+$ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
+$ module load samtools/1.9
+```
+
+The command we will use is `samtools view` with the following parameters:
+
+* `-h`: include header in output
+* `-S`: input is in SAM format
+* `-b`: output BAM format
+* `-o`: /path/to/output/file
+
+```bash
+$ samtools view -h -S -b \
+-o H1hesc_Input_Rep1_chr12_aln_unsorted.bam \
+H1hesc_Input_Rep1_chr12_aln_unsorted.sam
+```
+
+You can find additional parameters for the samtools functions in the [manual](http://www.htslib.org/doc/samtools-1.2.html).
