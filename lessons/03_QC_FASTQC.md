@@ -6,7 +6,9 @@ date: "April 17th, 2019"
 
 Contributors: Mary Piper, Radhika Khetani
 
-Approximate time: 55 minutes
+Approximate time: 
+
+Link to issue describing the modifications to be made: https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/5
 
 ## Learning Objectives
 
