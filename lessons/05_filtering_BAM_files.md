@@ -8,9 +8,10 @@ Contributors: Mary Piper, Radhika Khetani, Meeta Mistry
 
 Approximate time: 45 minutes
 
+**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/8
+
 ## Learning Objectives
 
-* Examining a SAM file and understanding the information stored in it
 * Filtering aligned reads to keep only uniquely mapped ones
 
 
