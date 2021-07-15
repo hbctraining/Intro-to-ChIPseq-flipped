@@ -8,6 +8,8 @@ Contributors: Mary Piper, Radhika Khetani, Meeta Mistry
 
 Approximate time: 45 minutes
 
+**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/7
+
 ## Learning Objectives
 
 * Perform alignment of reads to the genome using Bowtie2
