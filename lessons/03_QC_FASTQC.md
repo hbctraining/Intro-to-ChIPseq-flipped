@@ -17,7 +17,9 @@ Approximate time:
 
 ## Quality control of sequence reads
 
-<img src="../img/chip_workflow_june2017_step1_QC.png" width="400">
+<p align="center">
+  <img src="../img/chip_workflow_june2017_step1_QC.png" width="400">
+</p>
 
 Now that we set up files and directory structure, we are ready for our ChIP-seq analysis. For any NGS analysis, the first step in the workflow is to evaluate the quality of the reads, prior to alignment them to the reference genome and downstream analyses. 
 
@@ -158,8 +160,10 @@ The html file contains the final report from FastQC. Let's transfer the html fil
 ##### Filezilla - Step 1
 
 Open *FileZilla*, and click on the File tab. Choose 'Site Manager'.
- 
-<img src="../img/filezilla_setup.png" width="500">	
+
+<p align="center">
+<img src="../img/filezilla_setup.png" width="500">
+</p>
 
 ##### Filezilla - Step 2
 
@@ -173,21 +177,27 @@ Within the 'Site Manager' window, do the following:
 6. Password: password for training_account
 7. Click 'Connect'
 
+<p align="center">
 <img src="../img/filezilla_login.png" width="500">	
+</p>
 	
-The **"Per base sequence quality"** plot is the most important analysis module in FastQC for ChIP-seq; it provides the distribution of quality scores across all bases at each position in the reads. This information can help determine whether there were any problems at the sequencing facility during the sequencing of your data. Generally, we expect a decrease in quality towards the ends of the reads, but we shouldn't see any quality drops at the beginning or in the middle of the reads.
+The **"Per base sequence quality"** plot is the most important analysis module in FastQC for ChIP-seq; it provides the distribution of quality scores across all bases at each position in the reads. This information helps determine whether there are any problems during the sequencing of your data. Generally, we might observe a decrease in quality towards the ends of the reads, but we shouldn't see any quality drops at the beginning or in the middle of the reads.
 
-![FastQC_seq_qual](../img/FastQC_seq_qual.png)
+<p align="center">
+	<img src="../img/03_fastqc_sequence_quality.png" width="600">
+</p>
 
-Based on the sequence quality plot, we see the majority of the reads have high quality, but the whiskers drop into the poor quality regions, indicating that a significant number of reads have low quality bases across the reads. The poor quality reads in the middle of the sequence would be concerning if this was our dataset, and we would probably want to contact the sequencing facility. However, this dataset was created artifically, so does not indicate a problem at the sequencing facility. Trimming could be performed from both ends of the sequences, or we can use an alignment tool that can ignore these poor quality bases at the ends of reads (soft clip). 
+Based on the sequence quality plot, the majority of the reads have high quality. Particularly, the quality remains high towards the end of the read, suggesting that the sequencing process works well. We do not observe any unexpected quality drop in the middle of the sequence. If that happens, we will need to contact the sequencing facility for further investigation. For now, we are confident about the quality of the data, and could move forward with downstream analysis.
 
-This is the main plot explored for ChIP-seq, but if you would like to go through the remaining plots/metrics, FastQC has a really well documented [manual page](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) with [more details](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) about all the plots in the report. For ChIP-seq data, we recommend checking the following metrics:
+This is the main plot we explore for ChIP-seq, but if you would like to go through the remaining plots and metrics, FastQC has a well-documented [manual page](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) with [more details](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) (under the Analysis Modules directory) about all the plots in the report. For ChIP-seq data, we recommend checking the following metrics:
 
 - **Per base sequence composition:** You can expect to encounter read start sequence biases in this plot if fragmenting with transposases. 
 - **Sequence duplication levels:** This plot can help you get an idea of what proportion of your library corresponds to duplicates. Duplicates are typically removed (even if there is a chance that they are biological duplicates); therefore, if there is a large amount of duplication, the number of reads available for mapping and/or for peak calling will be reduced.
-- **Over-represented sequences:**  Over-represented sequences are either highly biologically significant or represent biases. With ChIP-seq you expect to see over-represented sequences in the IP sample because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences doesn’t mean you have a bad experiment. If you see over-represented sequences in the input, that usually reflects some bias in the protocol to specific regions.
+- **Over-represented sequences:**  Over-represented sequences are either highly biologically significant or represent biases. With ChIP-seq, you expect to see over-represented sequences in the IP sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences doesn’t mean you have a bad experiment. If you see over-represented sequences in the input, that usually reflects some bias in the protocol to specific regions.
 
-We recommend looking at [this post](http://bioinfo-core.org/index.php/9th_Discussion-28_October_2010) for more information on what bad plots look like and what they mean for your data. Also, FastQC is just an indicator of what's going on with your data, don't take the "PASS"es and "FAIL"s too seriously.
+*In our report, do you observe high duplication levels, or over-represented sequences?*
+
+We recommend looking at [this post](http://bioinfo-core.org/index.php/9th_Discussion-28_October_2010) for more information on what bad plots look like and what they mean for your data. Also, FastQC is just an indicator of what's going on with your data. A good data does not necessarily need to pass every metrics. For example, it is fine that "Persequence GC content" and "Kmer Content" are flagged in our data.
 
 > **We also have a [slidedeck](https://github.com/hbctraining/Intro-to-rnaseq-hpc-O2/raw/master/lectures/error_profiles_mm.pdf) of error profiles for Illumina sequencing, where we discuss specific FASTQC plots and possible sources of these types of errors.**
 
