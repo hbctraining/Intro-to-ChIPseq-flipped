@@ -1,10 +1,10 @@
 ---
 title: "FastQC for quality assessment"
-author: "Mary Piper, Radhika Khetani"
-date: "April 17th, 2019"
+author: "Mary Piper, Radhika Khetani, Jihe Liu"
+date: "Aug 5th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani
+Contributors: Mary Piper, Radhika Khetani, Jihe Liu
 
 Approximate time: 
 
@@ -12,23 +12,14 @@ Approximate time:
 
 ## Learning Objectives
 
-* Become familiar with the Illumina sequencing technology
-* Understanding how to use modules in the cluster environment
-* Evaluate the quality of your sequencing data using FastQC
+* Understand the basics of a FASTQ file
+* Evaluate the quality of the sequencing data using FastQC
 
 ## Quality control of sequence reads
 
 <img src="../img/chip_workflow_june2017_step1_QC.png" width="400">
 
-Now that we have our files and directory structure, we are ready to begin our ChIP-seq analysis. For any NGS analysis method, our first step in the workflow is to explore the quality of our reads prior to aligning them to the reference genome and proceeding with downstream analyses. 
-
-### Understanding the Illumina sequencing technology
-
-Before we can assess the quality of our reads, it would be helpful to know a little bit about how these reads were generated. Since our data was sequenced on an Illumina sequencer we will introduce you to their Sequencing by Synthesis methodology, however keep in mind there are other technologies and the way reads are generated will vary (as will the associated biases observed in your data). 
-
-<img src="../img/sbs_illumina.png" width="700">
-
-An **animation of the Sequencing by Synthesis is most helpful** (rather than reading through lines of text), and so we would like you to take five minutes and watch [this YouTube video](https://www.youtube.com/watch?v=fCd6B5HRaZ8&t=3s) from Illumina.
+Now that we set up files and directory structure, we are ready for our ChIP-seq analysis. For any NGS analysis, the first step in the workflow is to evaluate the quality of the reads, prior to alignment them to the reference genome and downstream analyses. 
 
 ### Unmapped read data (FASTQ)
 
@@ -58,7 +49,7 @@ As mentioned previously, line 4 has characters encoding the quality of each nucl
     Quality score: 0........10........20........30........40                                
 ```
  
-Using the quality encoding character legend, the first nucelotide in the read (C) is called with a quality score of 31 and our Ns are called with a score of 2. **As you can tell by now, this is a bad read.** 
+Using the quality encoding character legend, the first nucelotide in the read (C) is called with a quality score of 31, and our Ns are called with a score of 2. **As you can tell by now, this is a bad read.** 
 
 Each quality score represents the probability that the corresponding nucleotide call is incorrect. This quality score is logarithmically based and is calculated as:
 
@@ -75,49 +66,37 @@ These probabaility values are the results from the base calling algorithm and de
 |50	|1 in 100,000|	99.999%|
 |60	|1 in 1,000,000|	99.9999%|
 
-Therefore, for the first nucleotide in the read (C), there is less than a 1 in 1000 chance that the base was called incorrectly. Whereas, for the the end of the read there is greater than 50% probabaility that the base is called incorrectly.
+Therefore, for the first nucleotide in the read (C), there is less than a 1 in 1000 chance that the base was called incorrectly. However, for the end of the read, there is greater than 50% probabaility that the base is called incorrectly.
 
 ## Assessing quality with FastQC
 
-Now we understand what information is stored in a FASTQ file, the next step is to examine quality metrics for our data.
+Now we understand what information is stored in a FASTQ file, the next step is to generate quality metrics for our data.
 
-[FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) provides a simple way to do some quality control checks on raw sequence data coming from high throughput sequencing pipelines. It provides a modular set of analyses which you can use to give a quick impression of whether your data has any problems of which you should be aware before doing any further analysis.
+[FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) provides a simple way to do some quality control checks on raw sequence data coming from high throughput sequencing pipelines. It contains a modular set of analyses, allowing us to have a quick glimpse of whether the data is problematic before doing any further analysis.
 
-The main functions of FastQC are:
+The main features of FastQC are:
 
-* Import of data from BAM, SAM or FastQ files (any variant)
-* Providing a quick overview to tell you in which areas there may be problems
-* Summary graphs and tables to quickly assess your data
-* Export of results to an HTML based permanent report
-* Offline operation to allow automated generation of reports without running the interactive application
+* Imports data in FASTQ files (or BAM files)
+* Evaluates the reads automatically and identify potential issues of the data
+* Generates a HTML-based quality report with graphs and tables
 
 ### Run FastQC  
 
-Let's run FastQC on all of our files. 
+Before we start using any software, we need to check if it is already loaded on the cluster. Otherwise, we have to load it into our environment (or `$PATH`). On the O2 cluster, we can check for and load tools using modules. 
 
-Change directories to the `raw_data` folder and check the contents
-
-```bash
-$ cd ~/chipseq/raw_data 
-
-$ ls -l
-```
-
-Before we start using any software, we either have to check if it's available on the cluster, and if it is we have to load it into our environment (or `$PATH`). On the O2 cluster, we can check for and load tools using modules. 
-
-If we check which modules we currently have loaded, we should not see FastQC.
+When we check which modules are currently loaded, we should not see FastQC.
 
 ```bash
 $ module list
 ```
 
-> **NOTE:** If we check our $PATH variable, we will see that the FastQC program is not in our $PATH (i.e. its not in a directory that unix will automatically check to run commands/programs).
+> **NOTE:** If we check our $PATH variable, we will also see that the FastQC program is not in our $PATH (i.e. its not in a directory that unix will automatically check to run commands/programs).
 >
 > ```bash
 > $ echo $PATH
 > ```
 
-To find the FastQC module to load we need to search the versions available:
+To find the FastQC module to load, we need to search the available versions:
 
 ```bash
 $ module spider
@@ -126,10 +105,10 @@ $ module spider
 Then we can load the FastQC module:
 
 ```bash
-$ module load fastqc/0.11.5
+$ module load fastqc/0.11.3
 ```
 
-Once a module for a tool is loaded, you have essentially made it directly available to you like any other basic UNIX command.
+Once a module for a tool is loaded, it is directly available to you like any other basic UNIX command.
 
 ```bash
 $ module list
@@ -137,38 +116,34 @@ $ module list
 $ echo $PATH
 ```
 
-FastQC will accept multiple file names as input, so we can use the `*.fq` wildcard.
+Now let's run FastQC on one of our samples: the chip data for a replicate of wild-type sample(wt_sample2_chip). We specify two arguments here: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input.
 
 ```bash
-$ fastqc *.fastq
+$ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz
 ```
 
-*Did you notice how each file was processed serially? How do we speed this up?*
+> Note: FastQC could also accept multiple file names as input. You just need to separate different file names with space. FastQC also recognizes files with wildcard characters.
 
-Exit the interactive session and once you are on a "login node," start a new interactive session with 6 cores. Now we can use the multi-threading functionality of FastQC to speed this up by running 6 jobs at once, one job for one file.
+*It takes a few minutes to finish the run of this sample. How do we speed it up?*
+
+We could run the program faster through the multi-threading functionality of FastQC. Before we use that function though, we need to increase the number of cores for our interactive session. Exit the interactive session (now you should be at a "login node"), then start a new interactive session with 4 cores. Now we could run FastQC with 4 threads (with the flag `-t`), thus increasing the speed.
 
 ```bash
-$ exit  #exit the current interactive session
+$ exit  # exit the current interactive session
 
-$ srun --pty -c 6 -p interactive -t 0-12:00 --mem 1G --reservation=HBC2 /bin/bash  #start a new one with 6 cpus (-n 6) and 1G RAM (--mem 1G)
+$ srun --pty -c 4 -p interactive -t 0-12:00 --mem 8G --reservation=HBC2 /bin/bash  # start a new one with 4 cpus (-c 6) and 8G RAM (--mem 8G)
 
-$ module load fastqc/0.11.5  #reload the module for the new session
+$ module load fastqc/0.11.3  # reload the module for the new session
 
-$ cd ~/chipseq/raw_data
-
-$ fastqc -t 6 *.fastq  #note the extra parameter we specified for 6 threads
+$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  # note the extra parameter, where we specified for 4 threads
 ```
 
-How did I know about the -t argument for FastQC?
+*Do you notice any difference in running time? Does multi-threading speed up the run?*
+
+If you are new to FastQC, how to know that `-t` is the right argument to use?
 
 ```bash
 $ fastqc --help
-```
-
-Now, move all of the `fastqc` files to the `results/fastqc` directory:
-
-```bash
-$ mv *fastqc* ../results/fastqc/
 ```
 
 ### FastQC Results
