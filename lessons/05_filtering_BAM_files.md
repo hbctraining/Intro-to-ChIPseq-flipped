@@ -1,29 +1,26 @@
 ---
 title: "Alignment and filtering"
-author: "Mary Piper, Radhika Khetani"
-date: "April 17th, 2019"
+author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu"
+date: "Aug 10th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani, Meeta Mistry
+Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
 
-Approximate time: 45 minutes
+Approximate time:
 
 **Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/8
 
 ## Learning Objectives
 
-* Filtering aligned reads to keep only uniquely mapped ones
-
+* Understand the purpose of filtering alignment reads
+* Learn to perform filtering with sambamba and samtools
 
 ## Filtering reads
 
-An important issue with ChIP-seq data concerns the inclusion of multiple mapped reads (reads mapped to multiple loci on the reference genome). **Allowing for multiple mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase** [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). Therefore we need to filter our alignment files to **contain only uniquely mapping reads** in order to increase confidence in site discovery and improve reproducibility. Since there is no parameter in Bowtie2 to keep only uniquely mapping reads, we will need to perform the following steps to generate alignment files containing only the uniquely mapping reads:
+A key issue with a ChIP-seq data is the inclusion of multi-mapped reads (reads that are mapped to multiple loci on the reference genome). **Allowing for multiple mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase** [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). Therefore, we need to filter our alignment files to **contain only uniquely mapping reads**, to increase peak-calling confidence and improve data reproducibility. As there is no parameter in Bowtie2 to keep only uniquely mapping reads, we need to perform the following steps to generate alignment files containing only the uniquely mapping reads:
 
-
-2. Sort BAM file by read coordinate locations
-3. Filter to keep only uniquely mapping reads (this will also remove any unmapped reads)
-
-
+1. Sort BAM file by read coordinate locations
+2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
 
 ### 2. Sorting BAM files by genomic coordinates
 
