@@ -1,7 +1,7 @@
 ---
 title: "Visualization of peaks"
-author: "Meeta Mistry"
-date: "Thursday July 29th, 2017"
+author: "Meeta Mistry, Jihe Liu"
+date: "Aug 11th, 2021"
 ---
 
 Approximate time: 80 minutes
@@ -12,124 +12,56 @@ Approximate time: 80 minutes
 
 * Visualizing enrichment patterns at particular locations in the genome
 
-## Visualization of ChIP-seq data
-
-The first part of ChIP-sequencing analysis uses common processing pipelines, which involves the alignment of raw reads to the genome, data filtering, and identification of enriched signal regions (peak calling). In the second stage, individual software programs allow detailed analysis of those peaks, biological interpretation, and visualization of ChIP-seq results.
-
-There are various strategies for visualizing enrichment patterns and we will explore a few of them. To start, we will create bigWig files for our samples, a standard file format commonly used for ChIP-seq data visualization.
-
-
 ## Profile plots and heatmaps
 
-Because many cis-regulatory elements are close to TSSs of their targets, a common visualization technique is to use bigWig files to obtain a global evaluation of enrichment around the TSS. In our example, we will assess enrichment around the TSS and plot this separately for the Nanog and Pou5f1 samples (two replicates in each plot). 
+After creating the bigWig files, we are ready to perform data visualization. We first need to prepare an intermediate file that will be used with the `plotHeatmap` and `plotProfile` commands.
 
-Rather than looking at the TSS for all known genes, we will only look be looking at genes on chromosome 12 in the interest of time. Copy over the BED file which contains the coordinates for all genes on chromosome 12 to the visualization folder.
-
-```bash
-$ cp /n/groups/hbctraining/chip-seq/deepTools/chr12_genes.bed ~/chipseq/results/visualization/
-```
-
-Before we start plotting our data, we first need to prepare an intermediate file that can be used with the `plotHeatmap` and `plotProfile` commands.
-
+<p align="center">
 <img src="../img/computeMatrix_overview.png" width="700">
+</p>
 
+The `computeMatrix` command accepts multiple bigWig files and multiple region files (BED format) to create a count matrix -- the intermediate file. The command can also filter and sort regions according to their scores. The region file will be the BED file we generated for the final peaks, and the bigWig files will be those generated from the last lesson. Additionally, we specify a window of +/- 4000 bp around the reference point of genes (`-b` and `-a`). The [reference point](https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html#Optional%20arguments_repeat1) for the plotting could be either the region start (TSS), the region end (TES) or the center of the region. Here, we use the center of the region (the default is TSS). For each window, `computeMatrix` will calculate scores based on the read density values in the bigWig files.
 
-The `computeMatrix` command accepts multiple bigWig files and multiple region files (BED format) to create a count matrix which is the intermediate file. It can also be used to filter and sort regions according to their score. Our region file will be the BED file we just copied over and our bigWig files will be those generated from the full dataset that we have provided for you. Additionally, we will specify a window of +/- 1000bp around the TSS of genes (`-b` and `-a`). For each window, `computeMatrix` will calculate scores based on the read density values in the bigWig files.
-
-First, let's create a matrix for one of the Nanog replicates:
+Let's create a matrix for the wt sample:
 
 ```bash
 
-$ computeMatrix reference-point --referencePoint TSS \
--b 1000 -a 1000 \
--R ~/chipseq/results/visualization/chr12_genes.bed \
--S /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Nanog*.bw \
+computeMatrix reference-point --referencePoint center \
+-b 4000 -a 4000 \
+-R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+-S ~/chipseq_workshop/results/visualization/bigWig/wt_sample1_chip.bw ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw \
 --skipZeros \
--o ~/chipseq/results/visualization/matrixNanog_TSS_chr12.gz \
--p 6 \
---outFileSortedRegions ~/chipseq/results/visualization/regions_TSS_chr12.bed
+-o ~/chipseq_workshop/results/visualization/wt_matrix.gz \
+-p 6
 
 ```
 
 > **NOTE:** Typically, the genome regions are genes, and can be obtained from the [UCSC table browser](http://rohsdb.cmb.usc.edu/GBshape/cgi-bin/hgTables). Alternatively, you could look at other regions of interest that are not genomic feature related (i.e. binding regions from another protein of interest).
 
-Now, let's create another matrix for the Pou5f1 replicates:
+With the computed matrix, we could now create a **profile plot**, which is essentially a density plot that evaluates read density across all reference points. For the wt samples, we can see that **sample2 has higher amount of signal at the reference point compared to sample1**. 
 
 ```bash
 
-$ computeMatrix reference-point --referencePoint TSS \
--b 1000 -a 1000 \
--R ~/chipseq/results/visualization/chr12_genes.bed \
--S /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Pou5f1*.bw \
---skipZeros \
--p 6 \
--o ~/chipseq/results/visualization/matrixPou5f1_TSS_chr12.gz \
---outFileSortedRegions ~/chipseq/results/visualization/regionsPou5f1_TSS_chr12.bed
+# Create figures directory under visualization
+mkdir ~/chipseq_workshop/results/visualization/figures
 
-```
-
-Using that matrix we can create a **profile plot** which is essentially a density plot that evaluates read density across all transcription start sites. For Nanog, we can see that **Replicate 2 has a particularly higher amount of signal at the TSS compared to Replicate 1**. 
-
-```bash
-$ plotProfile -m visualization/matrixNanog_TSS_chr12.gz \
--out visualization/figures/TSS_Nanog_profile.png \
+# Plot the profiles
+plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
+-out ~/chipseq_workshop/results/visualization/figures/plot1_wt.png \
+--regionsLabel "" \
 --perGroup \
---colors green purple \
---plotTitle "" --samplesLabel "Rep1" "Rep2" \
---refPointLabel "TSS" \
--T "Nanog read density" \
--z ""
+--colors red blue \
+--samplesLabel "PRDM16_sample1" "PRDM16_sample2" \
+--refPointLabel "PRDM16 binding sites"
 
 ```
 
-<img src="../img/TSS_Nanog_profile.png" width="500">
-
-Alternatively, we could use a **heatmap** to evaluate the same matrix of information:
-
-```bash
-$ plotHeatmap -m visualization/matrixNanog_TSS_chr12.gz \
--out visualization/figures/TSS_Nanog_heatmap.png \
---colorMap RdBu \
---whatToShow 'heatmap and colorbar' \
---zMin -4 --zMax 4  
-```
-<img src="../img/TSS_Nanog_heatmap.png" width="400">
+<p align="center">
+<img src="../img/09_plot1_wt.png" width="500">
+</p>
 
 
-Similarly we can do the same for **Pou5f1. Here, we find that Replicate 1 exhibits stronger signal**.
-
-```bash
-$ plotProfile -m visualization/matrixPou5f1_TSS_chr12.gz \
--out visualization/figures/TSS_Pou5f1_profile.png \
---perGroup --colors green purple \
---plotTitle "" --samplesLabel "Rep1" "Rep2" \
---refPointLabel "TSS" -T "Pou5f1 read density" -z ""
-```
-
-<img src="../img/TSS_Pou5f1_profile.png" width="400">
-
-```bash
-$ plotHeatmap -m visualization/matrixPou5f1_TSS_chr12.gz \
--out visualization/figures/TSS_Pou5f1_heatmap.png \
---colorMap RdBu \
---whatToShow 'heatmap and colorbar' \
---zMin -2 --zMax 2  
-```
-
-<img src="../img/TSS_Pou5f1_heatmap.png" width="400">
-
-If we wanted **both images in one single plot**, we can do that with `plotHeatmap` and just removing the `--whatToShow` parameter.
-
-```bash
-$ plotHeatmap -m visualization/matrixPou5f1_TSS_chr12.gz \
--out visualization/figures/TSS_Pou5f1_profile-heatmap.png \
---colorMap RdBu \
---zMin -2 --zMax 2  
-```
-
-<img src="../img/TSS_Pou5f1_heatmap_and_profile.png" width="400">
-
-> **NOTE:** Both `plotProfile` and `plotHeatmap` have many options, including the ability to change the type of lines plotted and to plot by group rather than sample. We encourage you to explore the documentation to find out more detail.
+> **NOTE:** Both `plotProfile` and `plotHeatmap` have many options, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the documentation to find out more detail.
 
 ## Visualizing enrichment in differentially enriched regions
 
