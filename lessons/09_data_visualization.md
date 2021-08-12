@@ -12,7 +12,7 @@ Approximate time: 80 minutes
 
 * Visualizing enrichment patterns at particular locations in the genome
 
-## Profile plots and heatmaps
+## Profile plots
 
 After creating the bigWig files, we are ready to perform data visualization. We first need to prepare an intermediate file that will be used with the `plotHeatmap` and `plotProfile` commands.
 
@@ -63,71 +63,47 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 
 > **NOTE:** Both `plotProfile` and `plotHeatmap` have many options, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the documentation to find out more detail.
 
-## Visualizing enrichment in differentially enriched regions
+**Exercise**
 
-Previously, we had evaluated differential enrichment between the two factors in our study. We had found **almost all of the peaks that were identfied were specific to Nanog and only one region that had significantly higher enrichment in Pou5f1**. We can use the BED files we generated with DiffBind as input to `deepTools` and visualize enrichment in those regions to evaluate the differences in read density.
+We explored profiles at the center of region. How about the TSS region? Compute the matrix with TSS as the reference point, and then plot the corresponding profile. What does the profile look like? Could you think of why it looks like that?
 
-* Open up `FileZilla` and **copy over the BED files to O2** in`~/chipseq/results/visualization`:
-
-<img src="../img/filezilla_diffbind.png">
-
-Now we can use some of the `deepTools` commands we had explored previously. **Note that we have changed the command from `reference-point` to `scale-regions`.** In the `scale-regions` mode, all regions in the BED file are stretched or shrunken to the length in bases indicated by the user (`--regionBodyLength`).
-
-<img src="../img/computeMatrix_modes.png" width="600">
-
-Let's **start with Nanog file which contains 33 regions** that were identified as increased in enrichment compared to Pou5f1. The plot confirms what we had expected, that is, Pou5f1 don't have much read depth in these regions. 
+## Plotting with histone methylation pattern
+How does PRDM16 regulates gene expression? One possibility is through histone methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3). The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)). We deposited the data in our training directory, which you could directly use.
 
 ```bash
+#!/bin/sh
 
- $ computeMatrix scale-regions \
--R ~/chipseq/results/visualization/Nanog_enriched.bed \
--S /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Pou5f1*.bw /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Nanog*.bw \
+#SBATCH -p priority
+#SBATCH -c 2
+#SBATCH -t 0-1:00
+#SBATCH --mem 16G
+
+computeMatrix reference-point --referencePoint center \
+-b 4000 -a 4000 \
+-R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+-S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k04me1UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k04me3UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k27me3UE14_mm10.bw \
 --skipZeros \
--p 6 \
---regionBodyLength 2000 \
--a 500 -b 500 \
--o ~/chipseq/results/visualization/matrixAll_Nanog_binding_sites.gz
+-o ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
+-p 6
 
-
-$ plotProfile -m visualization/matrixAll_Nanog_binding_sites.gz \
--out visualization/figures/Allsamples_NanogSites_profile.png \
---perGroup  --plotTitle "" \
---samplesLabel "Pou5f1-Rep1" "Pou5f1-Rep2" "Nanog-Rep1" "Nanog-Rep2" \
--T "Nanog only binding sites"  -z "" \
---startLabel "" \
---endLabel "" \
---colors red red darkblue darkblue
+plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
+-out ~/chipseq_workshop/results/visualization/figures/plot2_wt_encode.png \
+--regionsLabel "" \
+--perGroup \
+--colors blue green red orange \
+--samplesLabel "PRDM16" "H3K4me" "H3K4me3" "H3K27me3" \
+--refPointLabel "PRDM16 binding sites"
 ```
 
-<img src="../img/Allsamples_NanogSites_profile.png" width="500">
+We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions. The result makes sense, because both H3K4me3 and H3K4me are associated with transcriptional activation. There was also little overlap with H3K27me3, which is a epigenetic modification associated with transcriptional repression during neurogenesis. 
 
-With **Pou5f1, remember we only had one region**. We are still able to plot this data but you will notice that it is a bit more boxy in nature. This is because values are not being averaged over multiple regions.
+<p align="center">
+<img src="../img/09_plot2_wt_encode.png" width="500">
+</p>
 
-```bash
+**Exercise**
 
- $ computeMatrix scale-regions \
--R ~/chipseq/results/visualization/Pou5f1_enriched.bed \
--S /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Pou5f1*.bw /n/groups/hbctraining/chip-seq/full-dataset/bigWig/Encode_Nanog*.bw \
---skipZeros \
--p 6 \
---regionBodyLength 2000 \
--a 500 -b 500 \
--o ~/chipseq/results/visualization/matrixAll_Pou5f1_binding_sites.gz 
-
-
-$ plotProfile -m visualization/matrixAll_Pou5f1_binding_sites.gz \
--out visualization/figures/Allsamples_Pou5f1Sites_profile.png \
---perGroup  --plotTitle "" \
---samplesLabel "Pou5f1-Rep1" "Pou5f1-Rep2" "Nanog-Rep1" "Nanog-Rep2" \
--T "Pou5f1 only binding sites"  -z "" \
---startLabel "" --endLabel "" \
---colors red red darkblue darkblue
-```
-
-<img src="../img/Allsamples_Pou5f1Sites_profile2.png" width="500">
-
-
-
+The study also included PRDM16-knockout experiment (we refer to as `ko`). How does the `ko` sample looks like compared to the `wt` sample? We placed the bigWig file for one of the `ko`sample at the location `/n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/ko_sample2_chip.bw`. Use this, and the bigWig file you generated earlier for `wt`, to plot the peaks. Do you see a difference between `wt` and `ko` samples? Does that match your expectation?
 
 
 ***
