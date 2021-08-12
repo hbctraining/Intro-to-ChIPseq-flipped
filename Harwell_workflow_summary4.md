@@ -198,7 +198,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 
 - Plot2: encode fig 6a
 > NOTE: the prompt will show the message "The following chromosome names did not match between the bigwig files", which is fine. It is not an error message.
-> **run 20 min in an interactive node**
+> **run 20 min in an interactive node, 11 min in sbatch script**
 ```
 computeMatrix reference-point --referencePoint center \
 -b 4000 -a 4000 \
