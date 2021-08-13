@@ -4,13 +4,14 @@ author: "Meeta Mistry, Jihe Liu"
 date: "Aug 11th, 2021"
 ---
 
-Approximate time: 80 minutes
+Approximate time:
 
 **Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/12
 
 ## Learning Objectives
 
-* Visualizing enrichment patterns at particular locations in the genome
+* Learn how to visualize ChIP-seq data using `deeptools`
+* Learn how to interpret the profile plots and analyze the enrichment patterns at particular locations in the genome
 
 ## Profile plots
 
@@ -68,7 +69,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 We explored profiles at the center of region. How about the TSS region? Compute the matrix with TSS as the reference point, and then plot the corresponding profile. What does the profile look like? Could you think of why it looks like that?
 
 ## Plotting with histone methylation pattern
-How does PRDM16 regulates gene expression? One possibility is through histone methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3). The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)). We deposited the data in our training directory, which you could directly use.
+After plotting the binding pattern for PRDM16, we then ask: how does PRDM16 regulates the gene expression? Let's explore one of the possibilities here: histone methylation. Histone methylation could up-regulate or down-regulate the gene expression, depending on the position of methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3), and speculate the mechanism of regulation accordingly. The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)), which we have put in our training directory (`/n/groups/hbctraining/harwell-datasets/encode-chipseq/`). To fasten the computing process, we could submit a running job, instead of running on an interactive node. Create a sbatch script as below (with the name `plot2.sbatch`, and then run the script using `sbatch plot2.sbatch` command.
 
 ```bash
 #!/bin/sh
@@ -95,7 +96,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --refPointLabel "PRDM16 binding sites"
 ```
 
-We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions. The result makes sense, because both H3K4me3 and H3K4me are associated with transcriptional activation. There was also little overlap with H3K27me3, which is a epigenetic modification associated with transcriptional repression during neurogenesis. 
+We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions. The result makes sense, because both H3K4me3 and H3K4me are associated with transcriptional activation. Not surprisingly, H3K27me3 shares little overlap in PRDM16-binding regions, as H3K27me3 is a epigenetic modification associated with transcriptional repression during neurogenesis, and we do not expect transcriptional repression.
 
 <p align="center">
 <img src="../img/09_plot2_wt_encode.png" width="500">
@@ -104,6 +105,36 @@ We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions
 **Exercise**
 
 The study also included PRDM16-knockout experiment (we refer to as `ko`). How does the `ko` sample looks like compared to the `wt` sample? We placed the bigWig file for one of the `ko`sample at the location `/n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/ko_sample2_chip.bw`. Use this, and the bigWig file you generated earlier for `wt`, to plot the peaks. Do you see a difference between `wt` and `ko` samples? Does that match your expectation?
+
+<details>
+  <summary>Solution</summary>
+  
+  ```
+  # Navigate to results directory
+  computeMatrix reference-point --referencePoint center \
+  -b 4000 -a 4000 \
+  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+  -S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/ko_sample2_chip.bw \
+  --skipZeros \
+  -o ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
+  -p 6
+
+  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
+  -out ~/chipseq_workshop/results/visualization/figures/plot4_wt_ko.png \
+  --regionsLabel "" \
+  --perGroup \
+  --colors blue red \
+  --samplesLabel "PRDM16_WT" "PRDM16_KO" \
+  --refPointLabel "PRDM16 binding sites"
+  ```
+  
+  We observed that the `wt` sample shows significant higher enrichment at PRDM16-binding regions, compared to the `ko` sample. The result matches our expectation, because PRDM16 is knocked out in `ko` sample.
+  
+  <p align="center">
+  <img src="../img/09_plot4_wt_ko.png" width="500">
+  </p>
+
+</details>
 
 
 ***
