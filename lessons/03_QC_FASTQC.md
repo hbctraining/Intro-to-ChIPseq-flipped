@@ -181,7 +181,7 @@ Within the 'Site Manager' window, do the following:
 <img src="../img/filezilla_login.png" width="500">	
 </p>
 	
-The **"Per base sequence quality"** plot is the most important analysis module in FastQC for ChIP-seq; it provides the distribution of quality scores across all bases at each position in the reads. This information helps determine whether there are any problems during the sequencing of your data. Generally, we might observe a decrease in quality towards the ends of the reads, but we shouldn't see any quality drops at the beginning or in the middle of the reads.
+The **[Per base sequence quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html)** plot is the most important analysis module in FastQC for ChIP-seq; it provides the distribution of quality scores across all bases at each position in the reads. This information helps determine whether there are any problems during the sequencing of your data. Generally, we might observe a decrease in quality towards the ends of the reads, but we shouldn't see any quality drops at the beginning or in the middle of the reads.
 
 <p align="center">
 	<img src="../img/03_fastqc_sequence_quality.png" width="600">
@@ -191,11 +191,21 @@ Based on the sequence quality plot, the majority of the reads have high quality.
 
 This is the main plot we explore for ChIP-seq, but if you would like to go through the remaining plots and metrics, FastQC has a well-documented [manual page](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) with [more details](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) (under the Analysis Modules directory) about all the plots in the report. For ChIP-seq data, we recommend checking the following metrics:
 
-- **Per base sequence composition:** You can expect to encounter read start sequence biases in this plot if fragmenting with transposases. 
-- **Sequence duplication levels:** This plot can help you get an idea of what proportion of your library corresponds to duplicates. Duplicates are typically removed (even if there is a chance that they are biological duplicates); therefore, if there is a large amount of duplication, the number of reads available for mapping and/or for peak calling will be reduced.
-- **Over-represented sequences:**  Over-represented sequences are either highly biologically significant or represent biases. With ChIP-seq, you expect to see over-represented sequences in the IP sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences doesn’t mean you have a bad experiment. If you see over-represented sequences in the input, that usually reflects some bias in the protocol to specific regions.
+- **[Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html):** Here, we observe a unique sequence length (50 bp) in our data, which is as expected. In some cases, if the sequence lengths vary in the fastqc report, that indicates either the sequencer generates varying lengths of sequences, or the adapter sequences are trimmed in the previous steps.
 
-*In our report, do you observe any high duplication levels, or over-represented sequences?*
+- **[Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html):** This plot indicates what proportion of your library corresponds to duplicates. Duplicates are typically removed (even if there is a chance that they are biological duplicates). Therefore, if there is a large amount of duplication, the number of reads available for mapping and peak calling will be reduced. We don't observe concerning duplication levels in our data.
+
+<p align="center">
+	<img src="../img/03_fastqc_duplication_level.png" width="600">
+</p>
+
+- **[Over-represented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html):**  Over-represented sequences could come from actual biological significance, or biases introduced during the sequencing. With ChIP-seq, you expect to see over-represented sequences in the immunoprecipitation sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences in fastqc report doesn’t mean you have a bad experiment. If you observe over-represented sequences in the input sample, that usually suggests some bias in the protocol to specific regions. Here, there is no over-represented sequences in our `wt_sample2_chip` sample. 
+
+- **[Kmer content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/11%20Kmer%20Content.html):** This metric examines whether there is positional bias for any small fragment of sequence. For ChIP-seq data, it is expected to observe enriched kmer for some positions (because of DNA binding patterns). Therefore, do not worry if you see "Failure" in this metric. 
+
+<p align="center">
+	<img src="../img/03_fastqc_kmer_content.png" width="600">
+</p>
 
 We recommend looking at [this post](http://bioinfo-core.org/index.php/9th_Discussion-28_October_2010) for more information on what bad plots look like and what they mean for your data. Also, FastQC is just an indicator of what's going on with your data. A good data does not necessarily need to pass every metrics. For example, it is fine that "Persequence GC content" and "Kmer Content" are flagged in our data.
 
