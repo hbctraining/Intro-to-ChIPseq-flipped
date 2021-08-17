@@ -13,7 +13,8 @@ Approximate time:
 ## Learning Objectives
 
 * Learn how to align reads to the genome using Bowtie2
-* Add stuff from slide deck here?
+* Understand SAM and BAM file format, and learn how to convert SAM file to BAM file
+* Run alignment script and evaluate the alignment result
 
 ## Alignment to Genome
 
@@ -107,9 +108,7 @@ VN: program version
 
 Following the header is the **alignment section**. Each line corresponds to the alignment information for a single read. Each alignment line has **11 mandatory fields for essential mapping information** and a variable number of other fields for aligner-specific information. 
 
-<p align="center">
 ![SAM1](../img/sam_bam.png)
-</p>
 
 An example read mapping is displayed above. *Note that the example above spans two lines, but in the actual file it is a single line.* Let's go through the fields one at a time. 
 
@@ -242,7 +241,7 @@ rm ~/chipseq_workshop/results/wt_sample2_chip.sam
 > - The job takes about 50 minutes to finish. You could monitor the progress using the `sacct` command;
 > - In the last line of the solution code, we remove the SAM file after generating the BAM file. We recommend do so to save space.
 
-**Exercise**
+**Exercise:**
 
 After the running is finished, check the resulting `.out` and `.err` files. What information do you obtain from each file? WHat is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
 
