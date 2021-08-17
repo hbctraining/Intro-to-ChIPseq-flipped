@@ -1,12 +1,12 @@
 ---
 title: "Handling replicates"
-author: "Meeta Mistry"
-date: "Monday, June 27th, 2017"
+author: "Meeta Mistry, Jihe Liu"
+date: "Aug 17th, 2021"
 ---
 
-Contributors: Meeta Mistry, Radhika Khetani 
+Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu
 
-Approximate time: 75 minutes
+Approximate time:
 
 **Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/10
 
@@ -17,30 +17,32 @@ Approximate time: 75 minutes
 
 ## Overlapping peaks
 
-In this section, our goal is to determine what peaks are in common between the the two replicates for each factor (Nanog and Pou5f1). To perform this task we are going to use a suite of tools called `bedtools`.
+In this section, our goal is to refine our called peaks. We will do two consecutive checks: first, filter out peaks that are within the black listed region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
 
 ### `bedtools`
 
-The idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting, etc., to obtain all sorts of information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) from [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah is easy to use, and an extremely versatile tool that performs tasks of this nature. 
+The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) from [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah is such an easy and versatile tool to perform these tasks. 
 
+<p align="center">
 <img src="../img/bedtools.png" width="700">
+</p>
 
 As the name implies, this suite of tools works with **Bed** files, but it also works with other file formats that have genome coordinate information. 
 
+<p align="center">
 <img src="../img/bedtools-basic.png" width="600">
+</p>
 
-> **NOTE:** When working with multiple files to perform arithmetic on genomic coordinates, it is essential that all files have coordinate information for the same exact version of the genome and the same coordinate system (0-based or 1-based)!
+> **NOTE:** When working with multiple files to perform arithmetic on genomic coordinates, it is essential that all files have coordinate information from the same version of the genome and the coordinate system (0-based or 1-based)!
 
 ### Setting up
 
-Let's start an interactive session and change directories and set up a space for the resulting overlaps. 
+Let's start an interactive session. 
 
 ```bash
 $ srun --pty -p short -t 0-12:00 --mem 8G --reservation=HBC bash	
 
 $ cd ~/chipseq/results/
-
-$ mkdir bedtools
 ```
 	
 Load the modules for `bedtools` and `samtools`:
@@ -48,7 +50,30 @@ Load the modules for `bedtools` and `samtools`:
 ```bash
 $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
 ```
-	
+
+### filtering out peaks in blacklisted regions
+We discussed blacklisted regions in the previous lesson, where we mentioned that although we could have filtered out blacklisted regions from BAM files, we would instead perform the filtering after peak calling. So here we are! As you will see, filtering blacklisted regions using `bedtools` is quick and straightforward.
+
+We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. To filter out blacklisted region for `wt_sample1`, we use the following code:
+
+```bash
+bedtools intersect \
+-v \ 
+-a ~/chipseq_workshop/results/macs2/wt_sample1_peaks.narrowPeak \
+-b ~/chipseq_workshop/reference/mm10-blacklist.v2.bed \
+> ~/chipseq_workshop/results/macs2/wt_sample1_peaks_filtered.bed
+```
+
+Similarly, we could filter out blacklisted regions for `wt_sample2`:
+
+```bash
+bedtools intersect \
+-v \ 
+-a ~/chipseq_workshop/results/macs2/wt_sample2_peaks.narrowPeak \
+-b ~/chipseq_workshop/reference/mm10-blacklist.v2.bed \
+> ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
+```
+
 ### Finding overlapping peaks between replicates
 
 The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools is the one we want to use, since it is able to report back the peaks that are overlapping with respect to a given file (the file designated as "a").
