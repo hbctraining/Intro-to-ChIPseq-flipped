@@ -86,9 +86,9 @@ Some basic options for aligning reads to the genome using Bowtie2 are:
 
 ## Alignment file format: SAM/BAM
 
-The output we requested from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment Map format**. The SAM file, is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
+The output from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment Map format**. The SAM file is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
-The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of alignment, etc., this will change depending on the aligner being used. Each section begins with character ‘@’ followed by **a two-letter record type code**.  These are followed by two-letter tags and values. Example of some common sections are provided below:
+The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of alignment, etc., this will change depending on the aligner being used. Each section begins with character ‘@’ followed by **a two-letter record type code**. These are followed by two-letter tags and values. Example of some common sections are provided below:
 
 ```
 @HD  The header line
@@ -105,11 +105,13 @@ PN: program name
 VN: program version
 ```
 
-Following the header is the **alignment section**. Each line that follows corresponds to alignment information for a single read. Each alignment line has **11 mandatory fields for essential mapping information** and a variable number of other fields for aligner specific information. 
+Following the header is the **alignment section**. Each line corresponds to the alignment information for a single read. Each alignment line has **11 mandatory fields for essential mapping information** and a variable number of other fields for aligner-specific information. 
 
+<p align="center">
 ![SAM1](../img/sam_bam.png)
+</p>
 
-An example read mapping is displayed above. *Note that the example above spans two lines, but in the file it is a single line.* Let's go through the fields one at a time. 
+An example read mapping is displayed above. *Note that the example above spans two lines, but in the actual file it is a single line.* Let's go through the fields one at a time. 
 
 - **`QNAME`:** Query name or read name - this is the same read name present in the header of the FASTQ file
 - **`FLAG`:** numerical value providing information about read mapping and whether the read is part of a pair.
@@ -130,18 +132,18 @@ An example read mapping is displayed above. *Note that the example above spans t
   > | 512 | read fails platform/vendor quality checks |
   > | 1024| read is PCR or optical duplicate |
   > 
-  > * For a given alignment, each of these flags are either **on or off** indicating the condition is **true or false**. 
+  > * For a given alignment, each of these flags are either **on or off**, indicating the condition is **true or false**. 
   > * The `FLAG` is a combination of all of the individual flags (from the table above) that are true for the alignment 
   > * The beauty of the flag values is that **any combination of flags can only result in one sum**.
   > 
   > **There are tools that help you translate the bitwise flag, for example [this one from Picard](https://broadinstitute.github.io/picard/explain-flags.html)**
 
-- **`RNAME`:** is the reference sequence name, giving the chromosome to which the read mapped. The example read is from chromosome 1 which explains why we see 'chr1'. 
+- **`RNAME`:** is the reference sequence name, giving the chromosome to which the read maps. The example read is from chromosome 1, which explains why we see 'chr1'. 
 - **`POS`:** refers to the 1-based leftmost position of the alignment. 
 - **`MAPQ`:** is giving us the alignment quality, the scale of which will depend on the aligner being used. 
 - **`CIGAR`:** is a sequence of letters and numbers that represent the *edits or operations* required to match the read to the reference. The letters are operations that are used to indicate which bases align to the reference (i.e. match, mismatch, deletion, insertion), and the numbers indicate the associated base lengths for each 'operation'.
 
-Now to the remaning fields in our SAM file:
+Now to the remaining fields in our SAM file:
 
 ![SAM1](../img/sam_bam3.png)
 
@@ -156,27 +158,28 @@ Finally, you have the raw sequence data from the original FASTQ file stored for 
 - **`SEQ`:** is the raw sequence
 - **`QUAL`:** is the associated quality values for each position in the read.
 
-
-Let's take a quick peek at our SAM file that we just generated. Since it is just a text file, we can browse through it using `less`:
+Since we haven't run the code yet, we could take a quick peek at a sample SAM file here at `/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.sam`. Since it is just a text file, we can browse through it using `less`:
 
 ``` bash
-$ less H1hesc_Input_Rep1_chr12_aln_unsorted.sam
+$ less /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.sam
 ```
 
 **Does the information you see line up with the fields we described above?**
 
-### 1. Changing file format from SAM to BAM
+### Changing file format from SAM to BAM
 
-While the SAM alignment file output by Bowtie2 is human readable, we need a BAM alignment file for downstream tools. Therefore, we will use [Samtools](http://samtools.github.io) to convert the file formats.
+While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equavalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM.
 
-To use `samtools` we will need to load the module:
+> NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we could delete it to save space.
+
+Let's load the module `samtools`:
 
 ```bash
 $ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
 $ module load samtools/1.9
 ```
 
-The command we will use is `samtools view` with the following parameters:
+You can find detailed instructions for different samtools functions in this [manual](http://www.htslib.org/doc/samtools-1.2.html). For our purpose, we will use the command `samtools view` with the following parameters:
 
 * `-h`: include header in output
 * `-S`: input is in SAM format
@@ -185,8 +188,8 @@ The command we will use is `samtools view` with the following parameters:
 
 ```bash
 $ samtools view -h -S -b \
--o H1hesc_Input_Rep1_chr12_aln_unsorted.bam \
-H1hesc_Input_Rep1_chr12_aln_unsorted.sam
+-o ~/chipseq_workshop/results/wt_sample2_chip.bam \
+~/chipseq_workshop/results/wt_sample2_chip.sam
 ```
 
-You can find additional parameters for the samtools functions in the [manual](http://www.htslib.org/doc/samtools-1.2.html).
+
