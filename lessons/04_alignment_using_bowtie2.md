@@ -67,7 +67,8 @@ $ module load gcc/6.2.0 bowtie2/2.2.9
 
 The below is an example code to run bowtie2 on a single FASTQ file `wt_sample2_chip`. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
 
-``` DO NOT RUN
+```bash
+# DO NOT RUN
 $ bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
