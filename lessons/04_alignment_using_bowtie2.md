@@ -1,37 +1,42 @@
 ---
 title: "Alignment using Bowtie2"
-author: "Mary Piper, Radhika Khetani"
-date: "April 17th, 2019"
+author: "Mary Piper, Radhika Khetani, Jihe Liu"
+date: "Aug 17th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani, Meeta Mistry
+Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
 
-Approximate time: 45 minutes
+Approximate time:
 
 **Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/7
 
 ## Learning Objectives
 
-* Perform alignment of reads to the genome using Bowtie2
+* Learn how to align reads to the genome using Bowtie2
 * Add stuff from slide deck here?
-
 
 ## Alignment to Genome
 
-Now that we have assessed the quality of our sequence data, we are ready to align the reads to the reference genome. [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that indexes the genome with an FM Index based on the Burrows-Wheeler Transform method to keep memory requirements low for the alignment process. *Bowtie2* supports gapped, local and paired-end alignment modes and works best for reads that are at least 50 bp (shorter read lengths should use Bowtie1). By default, Bowtie2 will perform a global end-to-end read alignment, which is best for quality-trimmed reads. However, it also has a local alignment mode, which will perform soft-clipping for the removal of poor quality bases or adapters from untrimmed reads. We will use this option since we did not trim our reads.
+Now that we have assessed the quality of our sequence data, we are ready to align the reads to the reference genome. [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that indexes the genome with an FM Index based on the Burrows-Wheeler Transform method to keep memory requirements low for the alignment process. *Bowtie2* supports gapped, local and paired-end alignment modes, and it works best for reads that are at least 50 bp (shorter read lengths should use Bowtie1). By default, Bowtie2 performs a global end-to-end read alignment, which is best for quality-trimmed reads. However, it also offers a local alignment mode, which will perform soft-clipping for the removal of poor quality bases or adapters from untrimmed reads. We will use this option since we did not trim our reads.
 
-> _**NOTE:** Our reads are only 36 bp, so technically we should explore alignment with [bwa](http://bio-bwa.sourceforge.net/) or Bowtie1 to see if it is better. However, since it is rare that you will have sequencing reads with less than 50 bp, we will show you how to perform alignment using Bowtie2._
-
+<p align="center">
 <img src="../img/chip_workflow_june2017_step1_align.png" width="400">
+</p>
 
 > #### How do other aligners compare?
-> In this workshop we are using Bowtie2 to align our reads, but there are a number of other options. We have explored the use of [bwa](http://bio-bwa.sourceforge.net/) for ChIP-seq analysis and found some differences. For **bwa**, the mapping rates are higher (~ 2%), with an equally similar increase in the number of duplicate mappings identified. Post-filtering this translates to a significantly higher number of mapped reads and results in a much larger number of peaks being called (30% increase). When we compare the peak calls generated from the different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. Whether or not these additional peaks are true positives, is something that is yet to be determined. 
+> We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
 
-### Creating a Bowtie2 index
+### Bowtie2 index
 
-To perform the Bowtie2 alignment, a genome index is required. The index is analagous to the index in the back of a book. By indexing the genome, we have organized it in a manner that now allows for efficient search and retrieval of matches of the query (sequence read) to the genome. **We previously generated the genome indices for you**, and they exist in the `reference_data` directory.
+To perform the Bowtie2 alignment, a genome index is required. The index is analagous to the index in a book. By indexing the genome, we have organized it in a manner that now allows for efficient search and retrieval of matches of the query (sequence read) to the genome.
 
-However, if you needed to create a genome index yourself, you would use the following command:
+The O2 cluster has a designated directory (`/n/groups/shared_databases/`) with shared databases for human and other commonly used model organisms, where O2 users could readily access. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool-specific data, and data from public databases, such as NCBI and PDB. Therefore, when you use a tool that requires a reference, it is worth taking a quick look at this directory and checking whether your desired reference is already deposited here.
+
+>```bash
+>$ ls -l /n/groups/shared_databases/
+>```
+
+Back to our data, we will use mouse `mm10` version as the reference genome. The index is located at `/n/groups/shared_databases/bowtie2_indexes/mm10`, so we will directly refer to it. However, if you need to create a genome index yourself, you could use the following command:
 
 ```bash
 # DO NOT RUN
@@ -39,48 +44,44 @@ However, if you needed to create a genome index yourself, you would use the foll
 bowtie2-build <path_to_reference_genome.fa> <prefix_to_name_indexes>
 ```
 
-> A quick note on shared databases for human and other commonly used model organisms. The O2 cluster has a designated directory at `/n/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databases, such as NCBI and PDB. So when using a tool that requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
-
->```bash
->$ ls -l /n/groups/shared_databases/igenome/
->```
-
 ### Aligning reads to the genome with Bowtie2
 
-Since we have our indices already created, we can get started with read alignment. Change directories to the `bowtie2` folder:
+We could now start with the read alignment. Let's first create a `bowtie2` directory:
 
 ```bash
-$ cd ~/chipseq/results/bowtie2
+# Create bowtie2 directory
+mkdir ~/chipseq_workshop/results/bowtie2
 ```
 
-Now let's load the module. We can find out more on the module on O2:
+We then need to load the module. We could find out more about bowtie2 on O2:
 
 ```bash
 $ module spider bowtie2
 ```
-You will notice that before we load this module we also need to load the gcc compiler (as will be the case for many of the NGS analysis tools on O2. Always check `module spider` first.)
+
+Notice that before we load bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
 
 ```bash
 $ module load gcc/6.2.0 bowtie2/2.2.9
 ```
 
-We will perform alignment on our single raw FASTQ file, `H1hesc_Input_Rep1_chr12.fastq`. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
+The below is an example code to run bowtie2 on a single FASTQ file `wt_sample2_chip`. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
 
-The basic options for aligning reads to the genome using Bowtie2 are:
+``` DO NOT RUN
+$ bowtie2 -p 2 -q --local \
+-x /n/groups/shared_databases/bowtie2_indexes/mm10 \
+-U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-S ~/chipseq_workshop/results/wt_sample2_chip.sam
+```
 
-* `-p`: number of processors / cores
+Some basic options for aligning reads to the genome using Bowtie2 are:
+
+* `-p`: number of processors/cores
 * `-q`: reads are in FASTQ format
 * `--local`: local alignment feature to perform soft-clipping
 * `-x`: /path/to/genome_indices_directory
 * `-U`: /path/to/FASTQ_file
 * `-S`: /path/to/output/SAM_file
-
-```bash
-$ bowtie2 -p 2 -q --local \
--x ~/chipseq/reference_data/chr12 \
--U ~/chipseq/raw_data/H1hesc_Input_Rep1_chr12.fastq \
--S ~/chipseq/results/bowtie2/H1hesc_Input_Rep1_chr12_aln_unsorted.sam
-```
 
 ## Alignment file format: SAM/BAM
 
