@@ -192,4 +192,57 @@ $ samtools view -h -S -b \
 ~/chipseq_workshop/results/wt_sample2_chip.sam
 ```
 
+## Create SBATCH script for the alignment
+
+Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster. Let's specify the job submission options as below (don't forget the shebang line, `#!/bin/bash` at the begining):
+
+```
+#SBATCH -p short              # partition name
+#SBATCH -c 2                  # number of cores
+#SBATCH -t 0-2:00             # time limit
+#SBATCH --mem 8G              # requested memory
+#SBATCH --job-name alignment 	# job name
+#SBATCH -o %j.out			          # file to which standard output will be written
+#SBATCH -e %j.err 		          # file to which standard error will be written
+```
+
+In the body of the script, we will load the required modules, run bowtie2 to obtain alignment SAM file, and then convert SAM file to BAM file using samtools. Please refer to the corresponding codes we discussed earlier in this lesson, to come up with the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
+
+<details>
+  <summary>Solution</summary>
+ 
+``` bash
+#!/bin/bash
+ 
+#SBATCH -p short              # partition name
+#SBATCH -c 2                  # number of cores
+#SBATCH -t 0-2:00             # time limit
+#SBATCH --mem 8G              # requested memory
+#SBATCH --job-name alignment 	# job name
+#SBATCH -o %j.out			          # file to which standard output will be written
+#SBATCH -e %j.err 		          # file to which standard error will be written
+
+module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
+ 
+bowtie2 -p 2 -q --local \
+-x /n/groups/shared_databases/bowtie2_indexes/mm10 \
+-U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-S ~/chipseq_workshop/results/wt_sample2_chip.sam
+ 
+samtools view -h -S -b \
+-o ~/chipseq_workshop/results/wt_sample2_chip.bam \
+~/chipseq_workshop/results/wt_sample2_chip.sam
+
+rm ~/chipseq_workshop/results/wt_sample2_chip.sam        
+```
+
+</details>
+
+> NOTE:
+> - The job takes about 50 minutes to finish. You could monitor the progress using the `sacct` command;
+> - In the last line of the solution code, we remove the SAM file after generating the BAM file. We recommend do so to save space.
+
+**Exercise**
+
+After the running is finished, check the resulting `.out` and `.err` files. What information do you obtain from each file? WHat is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
 
