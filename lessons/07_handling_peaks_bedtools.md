@@ -12,12 +12,13 @@ Approximate time:
 
 ## Learning Objectives
 
-* Combining replicates using simple overlap with Bedtools
+* Learn how to filter out peaks at blacklisted regions
+* Learn how to find overlap peaks betweeen replicates
 
 
 ## Filtering peaks
 
-In this section, our goal is to refine our called peaks. We will do two consecutive checks: first, filter out peaks that are within the black listed region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
+In this section, our goal is to refine our called peaks from macs2. We will do two consecutive filterings: first, filter out peaks that are within the blacklisted region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
 
 ### `bedtools`
 
@@ -53,7 +54,7 @@ $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
 
 ### `bedtools intersect`
 
-The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools reports the peaks that are overlapping with respect to a given file (the file designated as "a"). We will use this command to do filtering.
+The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools evaluates A (file 1) and finds regions that overlap in B (file 2). We will use this command to do the filtering.
 
 <p align="center">
 <img src="../img/bedtools_intersect.png" width="600">
@@ -65,13 +66,11 @@ To find out more information on the parameters available when intersecting, use 
 $ bedtools intersect -h
 ```
 
-The intersect tool evaluates A (file 1) and finds regions that overlap in B (file 2). We will add the `-wo` which indicates to write the original A (file 1) and B (file 2) entries plus the number of base pairs of overlap between the two features.
-
 ### filtering out peaks in blacklisted regions
 
 We discussed blacklisted regions in the previous lesson, where we mentioned that although we could have filtered out blacklisted regions from BAM files, we would instead perform the filtering after peak calling. So here we are! As you will see, filtering blacklisted regions using `bedtools` is quick and straightforward.
 
-We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z), and we download the associated data from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
+We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z), and we downloaded the blacklist regions from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
 
 ```bash
 bedtools intersect \
@@ -105,26 +104,27 @@ wc -l ~/chipseq_workshop/results/macs2/wt_sample2_peaks.narrowPeak
 
 ### Finding overlapping peaks between replicates
 
-As we have two replicates per condition, we would like to find out the overlapping peaks between replicates - these will be confident peaks we identify as the final result. Let's start with the Nanog replicates: 
+Next, as we have two replicates per condition, we would like to find out the overlapping peaks between replicates - these will be confident peaks we identify as the final result. Similar to the previous step, we could use the `bedtools intersect` command again. The only difference is that we will use three different flags here:
+
+- `-wo`: Write the original A (file 1) and B (file 2) entries plus the number of base pairs of overlap between the two features.
+- `-f`: Minimum overlap required as a fraction of A. The value ranges from 0 to 1. We will use 0.3, requiring the overlap region being at least 30% of A.
+- `-r`: Require that the fraction overlap be reciprocal for A and B. Together with the `-f` flag above, we require the overlap region being at least 30% of B as well.
+
+The below code generates the overlapping peaks: 
 
 ```bash
 $ bedtools intersect \
--a macs2/Nanog-rep1_peaks.narrowPeak \
--b macs2/Nanog-rep2_peaks.narrowPeak \
--wo > bedtools/Nanog-overlaps.bed
+-wo -f 0.3 -r \
+-a -a ~/chipseq_workshop/results/macs2/wt_sample1_peaks_filtered.bed \
+-b ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed \
+> ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
 
-**How many overlapping peaks did we get?**
-
-We'll do the same for the Pou5f1 replicates:
+Finally, let's check how many confident peaks are present now:
 
 ```bash
-$ bedtools intersect \
--a macs2/Pou5f1-rep1_peaks.narrowPeak \
--b macs2/Pou5f1-rep2_peaks.narrowPeak \
--wo > bedtools/Pou5f1-overlaps.bed
+wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
-Note that we are working with subsetted data and so our list of peaks for each replicate is small. Thus, the overlapping peak set will be small as we found with both Nanog and Pou5f1. What is interesting though, is that even though the individual peak lists are smaller for Pou5f1 samples, the overlapping replicates represent a higher proportion of overlap with respect to each replicate.
 
 > **_Historical Note_:** A simpler heuristic for establishing reproducibility was previously used as a standard for depositing ENCODE data and was in effect when much of the currently available data was submitted. According to this standard, either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common. As with the current standards, this was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size.
 
