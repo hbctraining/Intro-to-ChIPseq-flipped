@@ -15,7 +15,7 @@ Approximate time:
 * Combining replicates using simple overlap with Bedtools
 
 
-## Overlapping peaks
+## Filtering peaks
 
 In this section, our goal is to refine our called peaks. We will do two consecutive checks: first, filter out peaks that are within the black listed region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
 
@@ -51,10 +51,27 @@ Load the modules for `bedtools` and `samtools`:
 $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
 ```
 
+### `bedtools intersect`
+
+The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools reports the peaks that are overlapping with respect to a given file (the file designated as "a"). We will use this command to do filtering.
+
+<p align="center">
+<img src="../img/bedtools_intersect.png" width="600">
+</p>
+
+To find out more information on the parameters available when intersecting, use the help flag:
+
+```bash
+$ bedtools intersect -h
+```
+
+The intersect tool evaluates A (file 1) and finds regions that overlap in B (file 2). We will add the `-wo` which indicates to write the original A (file 1) and B (file 2) entries plus the number of base pairs of overlap between the two features.
+
 ### filtering out peaks in blacklisted regions
+
 We discussed blacklisted regions in the previous lesson, where we mentioned that although we could have filtered out blacklisted regions from BAM files, we would instead perform the filtering after peak calling. So here we are! As you will see, filtering blacklisted regions using `bedtools` is quick and straightforward.
 
-We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. To filter out blacklisted region for `wt_sample1`, we use the following code:
+We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z), and we download the associated data from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
 
 ```bash
 bedtools intersect \
@@ -74,22 +91,21 @@ bedtools intersect \
 > ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
 ```
 
-### Finding overlapping peaks between replicates
+> **NOTE:** The narrowPeak file also follows the bed file format. That's why we could use it as an input, even though it does not end with the suffix `.bed`.
 
-The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools is the one we want to use, since it is able to report back the peaks that are overlapping with respect to a given file (the file designated as "a").
-
-<img src="../img/bedtools_intersect.png" width="600">
-
-
-To find out more information on the parameters available when intersecting, use the help flag:
+We could use `wc -l` command to check how many peaks are filtered out because they are located at the blacklisted region:
 
 ```bash
-$ bedtools intersect -h
+# Number of peaks before the filtering
+wc -l ~/chipseq_workshop/results/macs2/wt_sample2_peaks.narrowPeak
+
+# Number of peaks after the filtering
+~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
 ```
 
-The intersect tool evaluates A (file 1) and finds regions that overlap in B (file 2). We will add the `-wo` which indicates to write the original A (file 1) and B (file 2) entries plus the number of base pairs of overlap between the two features.
+### Finding overlapping peaks between replicates
 
-Let's start with the Nanog replicates: 
+As we have two replicates per condition, we would like to find out the overlapping peaks between replicates - these will be confident peaks we identify as the final result. Let's start with the Nanog replicates: 
 
 ```bash
 $ bedtools intersect \
