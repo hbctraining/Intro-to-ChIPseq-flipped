@@ -194,7 +194,16 @@ $ samtools view -h -S -b \
 
 ## Create SBATCH script for the alignment
 
-Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster. Let's specify the job submission options as below (don't forget the shebang line, `#!/bin/bash` at the begining):
+Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster. 
+
+```bash
+# Create a SBATCH script
+vim alignment.sbatch
+```
+
+> NOTE: In the `vim`, press `i` to start the editing mode. Once done, type `:wq` to save and exit.
+
+Let's specify the job submission options as below (don't forget the shebang line, `#!/bin/bash` at the begining):
 
 ```
 #SBATCH -p short              # partition name
@@ -206,7 +215,7 @@ Genome alignment usually takes quite a while to finish - that's why we don't run
 #SBATCH -e %j.err 		          # file to which standard error will be written
 ```
 
-In the body of the script, we will load the required modules, run bowtie2 to obtain alignment SAM file, and then convert SAM file to BAM file using samtools. Please refer to the corresponding codes we discussed earlier in this lesson, to come up with the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
+In the body of the script, we will load the required modules, run bowtie2 to obtain alignment SAM file, and then convert SAM file to BAM file using samtools. Please refer to the corresponding codes we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
 
 <details>
   <summary>Solution</summary>
@@ -240,7 +249,7 @@ rm ~/chipseq_workshop/results/wt_sample2_chip.sam
 
 > NOTE:
 > - The job takes about 50 minutes to finish. You could monitor the progress using the `sacct` command;
-> - In the last line of the solution code, we remove the SAM file after generating the BAM file. We recommend do so to save space.
+> - In the last line of the solution code, we remove the SAM file after generating the BAM file. We recommend you do so to save space.
 
 **Exercise:**
 
