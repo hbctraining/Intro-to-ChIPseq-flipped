@@ -146,7 +146,8 @@ $ module load fastqc/0.11.3  # reload the module for the new session
 $ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  # note the extra parameter, where we specified for 4 threads
 ```
 
-**Exercise**
+**Exercise 1**: 
+
 Do you notice any difference in running time? Does multi-threading speed up the run?
 
 If you are new to FastQC, how to know that `-t` is the right argument to use? We could use `--help` to check what arguments are available for FastQC. Among them, `-t` (or `--threads`) specifies the number of files which can be processed simultaneously.
