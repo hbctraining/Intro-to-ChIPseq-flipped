@@ -22,9 +22,15 @@ A key issue with a ChIP-seq data is the inclusion of multi-mapped reads (reads t
 1. Sort BAM files by genomic coordinates
 2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
 
-### 2. Sort BAM files by genomic coordinates
+### 1. Sort BAM files by genomic coordinates
 
 Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we will use [Samtools](http://www.htslib.org/), a popular tool to manipulate BAM and SAM files.
+
+> NOTE: 
+> You will need the BAM file generated from the last lesson. If you haven't generated the BAM file yet, please first copy over the BAM file to your directory:
+> ```bash
+> $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.bam ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam
+> ``` 
 
 The command we use is `samtools sort` with the following parameter:
 
@@ -34,7 +40,7 @@ The command we use is `samtools sort` with the following parameter:
 $ samtools sort ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_sorted.bam \
 ```
 
-### 3. Filter the reads to keep only uniquely mapping reads
+### 2. Filter the reads to keep only uniquely mapping reads
 
 Next, we can filter the sorted BAM files to keep only uniquely mapping reads. We use the `sambamba view` command with the following parameters:
 
