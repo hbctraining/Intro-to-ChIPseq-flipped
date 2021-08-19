@@ -73,7 +73,7 @@ The below is an example code to run bowtie2 on a single FASTQ file `wt_sample2_c
 $ bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/wt_sample2_chip.sam
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
 Some basic options for aligning reads to the genome using Bowtie2 are:
@@ -188,8 +188,8 @@ You can find detailed instructions for different samtools functions in this [man
 ```bash
 # DO NOT RUN
 $ samtools view -h -S -b \
--o ~/chipseq_workshop/results/wt_sample2_chip.bam \
-~/chipseq_workshop/results/wt_sample2_chip.sam
+-o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
+~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
 ## Create SBATCH script for the alignment
@@ -236,13 +236,13 @@ module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/wt_sample2_chip.sam
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
  
 samtools view -h -S -b \
--o ~/chipseq_workshop/results/wt_sample2_chip.bam \
-~/chipseq_workshop/results/wt_sample2_chip.sam
+-o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
+~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 
-rm ~/chipseq_workshop/results/wt_sample2_chip.sam        
+rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
 ```
 
 </details>
