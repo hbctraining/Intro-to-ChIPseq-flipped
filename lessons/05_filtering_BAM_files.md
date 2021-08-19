@@ -37,7 +37,7 @@ The command we use is `samtools sort` with the following parameter:
 * `-o`: /path/to/output/file
 
 ```bash
-$ samtools sort ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_sorted.bam \
+$ samtools sort ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_sorted.bam
 ```
 
 ### 2. Filter the reads to keep only uniquely mapping reads
