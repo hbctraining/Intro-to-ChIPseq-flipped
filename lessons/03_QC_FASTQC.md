@@ -110,12 +110,18 @@ Then we can load the FastQC module:
 $ module load fastqc/0.11.3
 ```
 
-Once a module for a tool is loaded, it is directly available to you like any other basic UNIX command.
+Once a module for a tool is loaded, it is directly available to you like any other basic UNIX command. We could see FastQC in our module list, as well as $PATH variable.
 
 ```bash
 $ module list
 
 $ echo $PATH
+```
+
+Next, create a `fastqc` directory under `results`, to store the FastQC output:
+
+```bash
+$ mkdir -p chipseq_workshop/results/fastqc
 ```
 
 Now let's run FastQC on one of our samples: the chip data for a replicate of wild-type sample(wt_sample2_chip). We specify two arguments here: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input.
