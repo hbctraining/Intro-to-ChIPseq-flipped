@@ -186,6 +186,7 @@ You can find detailed instructions for different samtools functions in this [man
 * `-o`: /path/to/output/file
 
 ```bash
+# DO NOT RUN
 $ samtools view -h -S -b \
 -o ~/chipseq_workshop/results/wt_sample2_chip.bam \
 ~/chipseq_workshop/results/wt_sample2_chip.sam
