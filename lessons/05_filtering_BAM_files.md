@@ -21,28 +21,18 @@ A key issue with a ChIP-seq data is the inclusion of multi-mapped reads (reads t
 
 1. Sort BAM files by genomic coordinates
 2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
-3. Index the filtered reads
 
 ### 2. Sort BAM files by genomic coordinates
 
-Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we will use [Sambamba](http://lomereiter.github.io/sambamba/index.html), which is a tool that quickly processes BAM and SAM files.
+Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we will use [Samtools](http://www.htslib.org/), a popular tool to manipulate BAM and SAM files.
 
-The command we use is `sambamba sort` with the following parameters:
+The command we use is `samtools sort` with the following parameter:
 
-* `-t`: number of threads / cores
 * `-o`: /path/to/output/file
 
 ```bash
-$ sambamba sort -t 2 \
--o ~/chipseq_workshop/results/wt_sample2_chip_sorted.bam \
-~/chipseq_workshop/results/wt_sample2_chip.bam
+$ sambamba sort ~/chipseq_workshop/results/wt_sample2_chip.bam -o ~/chipseq_workshop/results/wt_sample2_chip_sorted.bam \
 ```
-
-> **NOTE: This tool is not available as a module on O2.** You will only be able to use this as part of the tools available in the `bcbio` pipeline. In a previous lesson, you had added this to your $PATH by modifying your `.bashrc` file. **If the command above does not work for you, run this line below:**
-> 
-> `export PATH=/n/app/bcbio/tools/bin:$PATH`
-
-We could have also used `samtools` to perform the sorting here. However, the advantage of using `sambamba` is that along with the newly sorted file, an index file is also generated. List the contents of the directory to check if that is true. If we used `samtools`, this would have been a two-step process.
 
 ### 3. Filter the reads to keep only uniquely mapping reads
 
@@ -75,14 +65,6 @@ Now that the alignment files contain only uniquely mapping reads, we are ready t
 > Blacklisted regions represent artifact regions that tend to show artificially high signal (excessive unstructured anomalous reads mapping). These regions are often found at specific types of repeats such as centromeres, telomeres and satellite repeats and typically appear uniquely mappable so simple mappability filters applied above do not remove them. The ENCODE and modENCODE consortia have compiled blacklists for various species and genome versions including human, mouse, worm and fly. These blacklisted regions (coordinate files) can be filtered out from our alignment files before proceeding to peak calling.
 > 
 > We will revisit this in more detail when we [discuss QC metrics](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/07_QC_quality_metrics.html) in a later lesson.
-
-### 4. Index the filtered reads
-
-Lastly, we create the index for our final filtered reads. Index is not required for the peak calling, but it is required for generating the bigWig files. We use `samtools index` to generate the index.
-
-```
-$ samtools index ~/chipseq_workshop/results/wt_sample2_chip_final.bam
-```
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
