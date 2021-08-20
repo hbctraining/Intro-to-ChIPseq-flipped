@@ -30,7 +30,7 @@ Let's create a matrix for the wt sample:
 computeMatrix reference-point --referencePoint center \
 -b 4000 -a 4000 \
 -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
--S ~/chipseq_workshop/results/visualization/bigWig/wt_sample1_chip.bw ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw \
+-S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw \
 --skipZeros \
 -o ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 -p 6
