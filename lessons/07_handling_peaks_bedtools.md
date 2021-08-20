@@ -74,7 +74,7 @@ We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_w
 
 ```bash
 bedtools intersect \
--v \ 
+-v \
 -a ~/chipseq_workshop/results/macs2/wt_sample1_peaks.narrowPeak \
 -b ~/chipseq_workshop/reference/mm10-blacklist.v2.bed \
 > ~/chipseq_workshop/results/macs2/wt_sample1_peaks_filtered.bed
@@ -84,7 +84,7 @@ Similarly, we could filter out blacklisted regions for `wt_sample2`:
 
 ```bash
 bedtools intersect \
--v \ 
+-v \
 -a ~/chipseq_workshop/results/macs2/wt_sample2_peaks.narrowPeak \
 -b ~/chipseq_workshop/reference/mm10-blacklist.v2.bed \
 > ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
