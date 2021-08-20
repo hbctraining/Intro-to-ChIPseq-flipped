@@ -99,7 +99,7 @@ We could use `wc -l` command to check how many peaks are filtered out because th
 wc -l ~/chipseq_workshop/results/macs2/wt_sample2_peaks.narrowPeak
 
 # Number of peaks after the filtering
-~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
+wc -l ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed
 ```
 
 ### Finding overlapping peaks between replicates
