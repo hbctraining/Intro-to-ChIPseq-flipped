@@ -43,7 +43,7 @@ Let's start an interactive session.
 ```bash
 $ srun --pty -p short -t 0-12:00 --mem 8G --reservation=HBC bash	
 
-$ cd ~/chipseq/results/
+$ cd ~/chipseq_workshop/results/
 ```
 	
 Load the modules for `bedtools` and `samtools`:
