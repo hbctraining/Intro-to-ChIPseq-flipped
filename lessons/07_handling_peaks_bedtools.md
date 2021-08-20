@@ -115,7 +115,7 @@ The below code generates the overlapping peaks:
 ```bash
 $ bedtools intersect \
 -wo -f 0.3 -r \
--a -a ~/chipseq_workshop/results/macs2/wt_sample1_peaks_filtered.bed \
+-a ~/chipseq_workshop/results/macs2/wt_sample1_peaks_filtered.bed \
 -b ~/chipseq_workshop/results/macs2/wt_sample2_peaks_filtered.bed \
 > ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
