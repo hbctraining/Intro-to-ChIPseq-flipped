@@ -61,7 +61,7 @@ $ module load samtools/1.9
 Create index for the `wt_sample2_chip_final` BAM file that we created in earlier lesson:
 
 ```bash
-$ samtools index ~/chipseq_workshop/results/wt_sample2_chip_final.bam
+$ samtools index ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam
 ```
 
 There are two useful commands in `deepTools` to create bigWig files: `bamCoverage` and `bamCompare`. The former takes in a single BAM file and return a bigWig file. The latter normalizes two files to each other (i.e. ChIP sample relative to input), and returns a single bigWig file.
