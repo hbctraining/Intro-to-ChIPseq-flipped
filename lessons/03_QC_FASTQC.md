@@ -72,7 +72,7 @@ Therefore, for the first nucleotide in the read (C), there is less than a 1 in 1
 
 ## Assessing quality with FastQC
 
-Now we understand what information is stored in a FASTQ file, the next step is to generate quality metrics for our data.
+Now we understand what information is stored in a FASTQ file, the next step is to **generate quality metrics for our sequence data**.
 
 [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) provides a simple way to do some quality control checks on raw sequence data coming from high throughput sequencing pipelines. It contains a modular set of analyses, allowing us to have a quick glimpse of whether the data is problematic before doing any further analysis.
 
@@ -82,79 +82,100 @@ The main features of FastQC are:
 * Evaluates the reads automatically and identify potential issues of the data
 * Generates a HTML-based quality report with graphs and tables
 
-### Run FastQC  
+### Running FastQC  
 
-Before we start using any software, we need to check if it is already loaded on the cluster. Otherwise, we have to load it into our environment (or `$PATH`). On the O2 cluster, we can check for and load tools using modules. 
-
-When we check which modules are currently loaded, we should not see FastQC.
+When working in a cluster environment, you will find that generally many tools and software are pre-installed for your use. On the O2 cluster, these tools are available through the LMOD system.  In order to see if the tool you are looking for exists as a module you can use the `module avail` command.
 
 ```bash
-$ module list
+module avail fastqc
 ```
 
-> **NOTE:** If we check our $PATH variable, we will also see that the FastQC program is not in our $PATH (i.e. its not in a directory that unix will automatically check to run commands/programs).
->
-> ```bash
-> $ echo $PATH
-> ```
-
-To find the FastQC module to load, we need to search the available versions:
+For more detailed information, we can use the `module spider` command:
 
 ```bash
-$ module spider
+$ module spider fastqc
 ```
 
-Then we can load the FastQC module:
+Then we can decide on the version we would like to use and load the FastQC module:
 
 ```bash
 $ module load fastqc/0.11.3
 ```
 
-Once a module for a tool is loaded, it is directly available to you like any other basic UNIX command. We could see FastQC in our module list, as well as $PATH variable.
+You should now see that the module is loaded:
+
 
 ```bash
 $ module list
 
+```
+
+Once a module for a tool is loaded, it becomes directly available to you like any other basic UNIX command. That is, at the command prompt we just need to provide the name of the tool to use it. This is because the path to the executable file for FastQC has now been added to our $PATH variable. Check your $PATH variable to see whether or not you see a relevant path. _Is it appended to the beginning or end? Do you see any additional paths added?_ 
+
+```bash
 $ echo $PATH
 ```
 
-Next, create a `fastqc` directory under `results`, to store the FastQC output:
+> NOTE: Before we run FastQC, **you should be on a compute node** in an interactive session. Please run the following `srun` command if you are not on a compute node.
+> 
+> ```bash
+> $ srun --pty -p interactive -t 0-3:00 --mem 8G /bin/bash
+> ```
+>
+> ***An interactive session is very useful to test tools and workflows.***
+
+Now we're all set to run FastQC on one of our samples!
+
+Before we do that we will create a `fastqc` directory under `results`, to store the FastQC output:
 
 ```bash
 $ mkdir -p chipseq_workshop/results/fastqc
 ```
 
-Now let's run FastQC on one of our samples: the chip data for a replicate of wild-type sample(wt_sample2_chip). We specify two arguments here: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input.
+**To run FastQC we need to specify two arguments**: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input. We will be using one of the WT replicates as input:
 
 ```bash
 $ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz
 ```
 
-> Note: FastQC could also accept multiple file names as input. You just need to separate different file names with space. FastQC also recognizes files with wildcard characters.
+> _NOTE_: FastQC can also accept multiple files as input. you just need to separate each file name with a space. FastQC also recognizes multiple files with the use of wildcard characters.
 
-*It takes a few minutes to finish the run of this sample. How do we speed it up?*
+**You may have noticed that it takes a few minutes to run this single sample through FastQC. How can we speed it up?**
 
-We could run the program faster through the multi-threading functionality of FastQC. Before we use that function though, we need to increase the number of cores for our interactive session. Exit the interactive session (now you should be at a "login node"), then start a new interactive session with 4 cores. Now we could run FastQC with 4 threads (with the flag `-t`), thus increasing the speed.
+We could run the program faster by making use of the multi-threading functionality of FastQC. This will enable us to run the same command, but have it be distributed across multiple cores instead of the single core we are using now. In order to specify multi-threading, we need to request those resources from the cluster. **Our current interactive session is only using one core!** 
+
+Exit the interactive session (now you should be at a "login node"), then start a new interactive session with 4 cores using the `srun` command.
 
 ```bash
 $ exit  # exit the current interactive session
 
 $ srun --pty -c 4 -p interactive -t 0-12:00 --mem 8G --reservation=HBC2 /bin/bash  # start a new one with 4 cpus (-c 6) and 8G RAM (--mem 8G)
-
-$ module load fastqc/0.11.3  # reload the module for the new session
-
-$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  # note the extra parameter, where we specified for 4 threads
 ```
 
-**Exercise 1**: 
+Take a quick look at your $PATH variable. Is FastQC still listed in there? Since you have created a fresh new interactive there will be no modules loaded and your $PATH will only contain the default paths. Load the module again:
 
-Do you notice any difference in running time? Does multi-threading speed up the run?
+```bash
+$ module load fastqc/0.11.3  # reload the module for the new session
+```
 
-If you are new to FastQC, how to know that `-t` is the right argument to use? We could use `--help` to check what arguments are available for FastQC. Among them, `-t` (or `--threads`) specifies the number of files which can be processed simultaneously.
+***
+
+**Exercise**: 
+
+1. If you are new to FastQC, how will you know the right argument to use? We could use `--help` to check what arguments are available for FastQC.
 
 ```bash
 $ fastqc --help
 ```
+ <details>
+	<summary><i>Answer</i></summary>
+	<code>$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  
+</code> 
+</details>
+
+2. Do you notice any difference in running time? Does multi-threading speed up the run?
+                   
+***
 
 ### Transfer FastQC Results
    
