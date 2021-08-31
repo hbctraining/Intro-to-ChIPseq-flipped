@@ -25,7 +25,7 @@
 1. Please **study the contents** and **work through all the code** within the following lessons:
   * [Experimental design considerations and understanding the ChIP-seq workflow]()
   * [Dataset overview and project organization]()
-  * [Quality Control of Sequence Data: Running FASTQC and evaluating results]()
+  * [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
   * [Alignment using Bowtie2]()
 
     > **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
