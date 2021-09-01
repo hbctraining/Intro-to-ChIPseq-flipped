@@ -6,17 +6,33 @@ date: "Sept 1st, 2021"
 
 Approximate time: 45 minutes
 
-# Introduction to the dataset
+## Introduction to the dataset
 
 For this workshop we will be working with ChIP-seq data from a recent publication in Neuron by Baizabal et al. (2018) [[1]](https://doi.org/10.1016/j.neuron.2018.04.033). 
 
-The authors in this paper discover an epigenetic mechanism that controls the number and positioning of cortical neurons. They discover that the histone methyltransferase PRDM16 works with enhancer elements to either silence or activate expression of sets of genes that impact the organization of the cerebral cortex. 
+The authors in this paper sought to understand how chromatin-modifying enzymes function in neural stem cells to establish the epigenetic landscape that determines cell type and stage-specific gene expression. Chromatin-modifying enzymes are transcriptional regulators that control gene expression through covalent modification of DNA or histones. 
+
+
+### PRDM16
+
+The transcriptional regulator PRDM16 is a chromatin-modifying enzyme that belongs to the larger PRDM (Positive Regulatory Domain) protein family, that is structurally defined by the presence of a conserved N-terminal histone methyltransferase PR domain (Hohenauer and Moore, 2012). 
+
+* PRDM16 has been shown to function in vitro as a histone 3 lysine 9 (H3K9) and histone 3 lysine 4 (H3K4) mono-methyltransferase (Pinheiro et al., 2012, Zhou et al., 2016). 
+* PRDM16 also regulates gene expression by forming complexes with transcriptional co-factors and other histone-modifying proteins (Chi and Cohen, 2016). 
+* * PRDM16 was previously shown to control embryonic and post-natal neural stem cell maintenance and differentiation in the brain (Chuikov et al., 2010, Inoue et al., 2017, Shimada et al., 2017). 
+
+
+**How PRDM16 functions to regulate transcriptional programs in the developing cerebral cortex remains largely unknown.**
+
+In this paper, the authors use various techniques to identify and validate the targets and activities of PRDM16, including ChIP-seq, bulk RNA-seq, FACS, in-situ hybridization and immunofluorescent microscopy on brain samples from embryonic mice, generation of conditional knockout mice, etc. They show that the absence of PRDM16 in cortical neurons results in the misregulation of over a thousand genes during neurogenesis. **To identify the subset of genes that are transcriptional targets of PRDM16 and to understand how these genes are directly regulated, they performed chromatin immunoprecipitation followed by sequencing (ChIP-seq)** at E15.5, when upper layer neurons are being generated. Additionally, to validate the specificity of these binding sites, they performed PRDM16 ChIP-seq in two separate pools of E15.5 Prdm16 cKO cortices.
+
+**They discover that the histone methyltransferase PRDM16 works with enhancer elements to either silence or activate expression of sets of genes that impact the organization of the cerebral cortex.**
+
 
 <p align="center">
 <img src="../img/graphical_abstract.png" width="500">
 </p>
 
-The authors use various techniques to identify and validate the targets and activities of PRDM16, including ChIP-seq, bulk RNA-seq, FACS, in-situ hybridization and immunofluorescent microscopy on brain samples from embryonic mice, generation of conditional knockout mice, etc. Majority of the figures in this publication are a combination of the evidence gathered from several of these techniques.
 	
 
 ## Setting up the data
