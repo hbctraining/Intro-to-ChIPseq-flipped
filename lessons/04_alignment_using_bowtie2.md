@@ -303,7 +303,7 @@ rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 2. What information do you obtain from each file? 
 3. What is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
 
-***
+
 
 
 ***
