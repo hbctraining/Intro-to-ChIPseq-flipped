@@ -12,42 +12,83 @@ Approximate time:
 
 ## Learning Objectives
 
+* Understanding the basics of alignment theory
 * Learn how to align reads to the genome using Bowtie2
 * Understand SAM and BAM file format, and learn how to convert SAM file to BAM file
 * Run alignment script and evaluate the alignment result
 
 ## Alignment to Genome
 
-Now that we have assessed the quality of our sequence data, we are ready to align the reads to the reference genome. [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that indexes the genome with an FM Index based on the Burrows-Wheeler Transform method to keep memory requirements low for the alignment process. *Bowtie2* supports gapped, local and paired-end alignment modes, and it works best for reads that are at least 50 bp (shorter read lengths should use Bowtie1). By default, Bowtie2 performs a global end-to-end read alignment, which is best for quality-trimmed reads. However, it also offers a local alignment mode, which will perform soft-clipping for the removal of poor quality bases or adapters from untrimmed reads. We will use this option since we did not trim our reads.
+Now that we have assessed the quality of our sequence data, we are ready to align the reads to the reference genome. 
 
+**CHANGE THIS WORKFLOW TO ONLY INCLUDE ALIGNMENT (grey out filtering)**
 <p align="center">
 <img src="../img/chip_workflow_june2017_step1_align.png" width="400">
 </p>
 
+In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome.
+However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex. By contrast, the reads we are searching for are much smaller (50-150bp), and there are on the on the range of millions of them for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to sequencing errors, and also non-unique alignment due to the nature of short reads.
+
+<p align="center">
+<img src="../img/alignment_theory.png" width="700">
+</p>
+
+There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and one that we will be using in this workshop is Bowtie2.
+
+
+## Bowtie2
+
+[Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool.
+
+* It supports gapped, local and paired-end alignment modes, and it works best for reads that are at least 50 bp (shorter read lengths should use Bowtie1)
+* Bowtie2 performs a global end-to-end read alignment, which is best for quality-trimmed reads
+* It also offers a local alignment mode, which will perform soft-clipping for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
+
 > #### How do other aligners compare?
 > We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
 
-### Bowtie2 index
+### Soft-clipping 
+
+**Describe soft-clipping here briefly** (bullet points below have been taken from teh slide deck)
+
+* Portions of the read that do not match well to the reference genome on either side of the reads are ignored for the alignment
+* The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases
+* Soft-clipped bases are retained in the sequence and simply marked. Trimming methods hard-clip, which deletes the unwanted sequence.
+
+
+<p align="center">
+<img src="../img/softclipping.png" width="700">
+</p>
+
+
+### Bowtie2: Building an index
 
 To perform the Bowtie2 alignment, a genome index is required. The index is analagous to the index in a book. By indexing the genome, we have organized it in a manner that now allows for efficient search and retrieval of matches of the query (sequence read) to the genome.
 
-The O2 cluster has a designated directory (`/n/groups/shared_databases/`) with shared databases for human and other commonly used model organisms, where O2 users could readily access. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool-specific data, and data from public databases, such as NCBI and PDB. Therefore, when you use a tool that requires a reference, it is worth taking a quick look at this directory and checking whether your desired reference is already deposited here.
+Bowtie2 indexes the genome with an FM Index based on the **Burrows-Wheeler Transform** method to keep memory requirements low for the alignment process. Describe very briefly or link out to a helpful resource on BWT?
 
->```bash
->$ ls -l /n/groups/shared_databases/
->```
-
-Back to our data, we will use mouse `mm10` version as the reference genome. The index is located at `/n/groups/shared_databases/bowtie2_indexes/mm10`, so we will directly refer to it. However, if you need to create a genome index yourself, you could use the following command:
+To create an index for your analysis, you can use the `bowtie2-build` command. There are various arguments you can provide, but in its simplest form all you needs as input is the path to the reference genome FASTA file, and a prefix to name your indices once its created.
 
 ```bash
-# DO NOT RUN
+#### DO NOT RUN THIS CODE ####
 
-bowtie2-build <path_to_reference_genome.fa> <prefix_to_name_indexes>
+$ bowtie2-build <path_to_reference_genome.fa> <prefix_to_name_indexes>
 ```
 
-### Aligning reads to the genome with Bowtie2
+**We will not be creating a genome index.**
 
-We could now start with the read alignment. Let's first create a `bowtie2` directory:
+The O2 cluster has a designated directory (`/n/groups/shared_databases/`) with shared databases for human and other commonly used model organisms that all users can readily access. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool-specific data, and data from public databases, such as NCBI and PDB. Therefore, when using a tool that requires a reference file, it is worth taking a quick look at this directory and checking whether your desired reference is already deposited here.
+
+```bash
+$ ls -l /n/groups/shared_databases/
+```
+> *NOTE:* some disadvantages of using the shared databases? Not knowing exactly what reference version (i.e. release) or the exact parameters used to generate it.
+
+For our dataset, we will need the `mm10` build of the reference genome. You can find those indices at `/n/groups/shared_databases/bowtie2_indexes/mm10`. **Rather than copying the files over, we will just point to the directory when necessary** so we will directly refer to it. 
+
+### Bowtie: Alignment
+
+Now we are ready to perform the read alignment. Let's first create a `bowtie2` directory for our output:
 
 ```bash
 # Create bowtie2 directory
@@ -66,7 +107,16 @@ Notice that before we load bowtie2, we also need to load the gcc compiler (as is
 $ module load gcc/6.2.0 bowtie2/2.2.9
 ```
 
-The below is an example code to run bowtie2 on a single FASTQ file `wt_sample2_chip`. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
+The command to run the alignment is simply `bowtie2`. Some additional arguments that we will need for aligning reads to the genome using Bowtie2 are described below:
+
+* `-p`: number of processors/cores
+* `-q`: reads are in FASTQ format
+* `--local`: local alignment feature to perform soft-clipping
+* `-x`: /path/to/genome_indices_directory
+* `-U`: /path/to/FASTQ_file
+* `-S`: /path/to/output/SAM_file
+
+Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
 
 ```bash
 # DO NOT RUN
@@ -76,16 +126,10 @@ $ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
-Some basic options for aligning reads to the genome using Bowtie2 are:
 
-* `-p`: number of processors/cores
-* `-q`: reads are in FASTQ format
-* `--local`: local alignment feature to perform soft-clipping
-* `-x`: /path/to/genome_indices_directory
-* `-U`: /path/to/FASTQ_file
-* `-S`: /path/to/output/SAM_file
+## Alignment output: SAM/BAM file format
 
-## Alignment file format: SAM/BAM
+**This part can probably be trimmed in content**
 
 The output from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment Map format**. The SAM file is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
@@ -192,9 +236,9 @@ $ samtools view -h -S -b \
 ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
-## Create SBATCH script for the alignment
+## Running alignment on a single sample
 
-Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster. 
+Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
 
 ```bash
 # Create a SBATCH script
@@ -251,7 +295,17 @@ rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 > - The job takes about 50 minutes to finish. You could monitor the progress using the `sacct` command;
 > - In the last line of the solution code, we remove the SAM file after generating the BAM file. We recommend you do so to save space.
 
+***
+
 **Exercise:**
 
-After the running is finished, check the resulting `.out` and `.err` files. What information do you obtain from each file? WHat is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
+1. After your job has completed, check the resulting `.out` and `.err` files. 
+2. What information do you obtain from each file? 
+3. What is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
+
+***
+
+
+***
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
 
