@@ -1,29 +1,22 @@
 ---
-title: "Introduction to ChIP-seq and directory setup"
+title: "Introduction to the dataset and project organization"
 author: "Mary Piper, Radhika Khetani, Meeta Mistry"
-date: "March 14th, 2018"
+date: "Sept 1st, 2021"
 ---
 
 Approximate time: 45 minutes
 
-## Learning Objectives
+# Introduction to the dataset
 
-- Introduction to the dataset
-- Project setup using best practices in RDM
+For this workshop we will be working with ChIP-seq data from a recent publication in Neuron by Baizabal et al. (2018) [[1]](https://doi.org/10.1016/j.neuron.2018.04.033). 
 
-## Exploring the example dataset
+The authors in this paper discover an epigenetic mechanism that controls the number and positioning of cortical neurons. They discover that the histone methyltransferase PRDM16 works with enhancer elements to either silence or activate expression of sets of genes that impact the organization of the cerebral cortex. 
 
-Our goal for this session is to compare the the binding profiles of [Nanog](https://www.nature.com/stemcells/2009/0909/090910/full/stemcells.2009.118.html) and [Pou5f1](https://www.nature.com/articles/7290134) (Oct4). The ChIP was performed on H1 human embryonic stem cell line (h1-ESC) cells, and sequenced using Illumina. The datasets were obtained from the [HAIB TFBS ENCODE collection](http://hgdownload.cse.ucsc.edu/goldenpath/hg19/encodeDCC/wgEncodeHaibTfbs/). These 2 transcription factors are involved in **stem cell pluripotency** and one of the goals is to understand their roles, individually and together, in transriptional regulation. 
+<p align="center">
+<img src="../img/graphical_abstract.png" width="500">
+</p>
 
-Two replicates were collected and each was divided into 3 aliquots for the following:
-
-- Nanog IP
-- Pou5f1 IP
-- Control input DNA
-
-<img src="../img/chipseq_exp_design.png" width="500">
-
-For these 6 samples, we will be using reads from only a 32.8 Mb of chromosome 12 (chr12:1,000,000-33,800,000), so we can get through the workflow in a reasonable amount of time. 
+The authors use various techniques to identify and validate the targets and activities of PRDM16, including ChIP-seq, bulk RNA-seq, FACS, in-situ hybridization and immunofluorescent microscopy on brain samples from embryonic mice, generation of conditional knockout mice, etc. Majority of the figures in this publication are a combination of the evidence gathered from several of these techniques.
 	
 
 ## Setting up the data
