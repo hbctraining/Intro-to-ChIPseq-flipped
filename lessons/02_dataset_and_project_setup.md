@@ -42,24 +42,37 @@ In this paper, the authors use various techniques to identify and validate the t
 </p>
 
 
-From the RNA-seq data, they found that the absence of PRDM16 in cortical neurons resulted in the misregulation of over a thousand genes during neurogenesis. **To identify the subset of genes that are transcriptional targets of PRDM16 and to understand how these genes are directly regulated, they performed chromatin immunoprecipitation followed by sequencing (ChIP-seq)**.
-
-### Metadats
-
-Samples were obtained from mice at E15.5, when upper layer neurons are being generated. 
-
-Additionally, to validate the specificity of these binding sites, they performed PRDM16 ChIP-seq in two separate pools of E15.5 Prdm16 cKO cortices.
-
-#### Hypothesis?
-
-**They discover that the histone methyltransferase PRDM16 works with enhancer elements to either silence or activate expression of sets of genes that impact the organization of the cerebral cortex.**
+From the RNA-seq data, they found that the absence of PRDM16 in cortical neurons resulted in the misregulation of over a thousand genes during neurogenesis. To identify the subset of genes that are transcriptional targets of PRDM16 and to understand how these genes are directly regulated, they performed chromatin immunoprecipitation followed by sequencing (ChIP-seq).
 
 
+**Hypothesis:** Does the histone methyltransferase PRDM16 works with enhancer elements to either silence or activate expression of sets of genes that impact the organization of the cerebral cortex?
 
 
-	
+### Raw data
 
-## Setting up the data
+From this study we are using the [ChIP-seq](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111657) data which is publicly available in the [Sequence Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra?term=SRP134733).
+
+> **NOTE:** If you are interested in how to obtain publicly available sequence data from the SRA we have some materials on this [linked here](https://hbctraining.github.io/Accessing_public_genomic_data/lessons/downloading_from_SRA.html).
+
+### Metadata
+
+In addition to the raw sequence data we also need to collect **information about the data**, also known as **metadata**.  We are usually quick to want to begin analysis of the sequence data (FASTQ files), but how useful is it if we know nothing about the samples that this sequence data originated from? 
+
+Some relevant metadata for our dataset is provided below:
+
+* Whole brain lysates were obtained from **mice at E15.5** (when upper layer neurons are being generated)
+* Approximately **20-40 million cortical cells** were isolated for each sample
+* After the ChIP protocol, genomic DNA was purified, end repaired, ligated with barcoded adaptors, amplified for 11 PCR cycles
+* Library **fragments in the range of 100-800 bp** were size-selected using agarose gel electrophoresis followed by DNA gel extraction
+* Libraries were sequenced in an **Illumina HiSeq 2500** sequencer to a sequencing depth of **30-40 million reads per sample**.
+
+> All of the above pertains to both WT and Prdm16 conditional knock-out (cKO) mouse (Emx1Ires-Cre; Prdm16flox/flox)
+
+Our dataset consists of two WT samples and two cKO samples. For each of the IP samples, we have a corresponding input sample as illustrated in the schematic below.
+
+**Add image here**
+
+## Project Organization
 
 Since we are going to be working with this data on our remote server, **O2**, we first need to log onto the server. 
 
