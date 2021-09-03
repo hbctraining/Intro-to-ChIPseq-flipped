@@ -72,6 +72,32 @@ Our dataset consists of two WT samples and two cKO samples. For each of the IP s
 
 **Add image here**
 
+## Implementing data management best practices
+
+In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html) we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis.
+
+<p align="center">
+<img src="../img/data-lifecycle-base.png" width="500">
+</p>
+
+_Image acquired from the [Harvard Biomedical Data Management Website](https://datamanagement.hms.harvard.edu/data-lifecycle)_
+
+### Planning and organization
+
+For each experiment you work on and analyze data for, it is considered best practice to get organized by creating a planned storage space (directory structure). We will start by creating a directory that we can use for the rest of the workshop. First, make sure that you are in your home directory.
+
+```bash
+$ cd
+$ pwd
+```
+
+This should return `/home/rc_training`. Create the directory `rnaseq` and move into it.
+
+```bash
+$ mkdir rnaseq
+$ cd rnaseq
+```
+
 ## Project Organization
 
 Since we are going to be working with this data on our remote server, **O2**, we first need to log onto the server. 
