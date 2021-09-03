@@ -23,10 +23,10 @@
 ### Before the next class:
 
 1. Please **study the contents** and **work through all the code** within the following lessons:
-  * [Experimental design considerations and understanding the ChIP-seq workflow]()
-  * [Dataset overview and project organization]()
+  * [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
+  * [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
   * [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
-  * [Alignment using Bowtie2]()
+  * [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
 
     > **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
     > 1. Log in using `ssh rc_trainingXX@o2.hms.harvard.edu` and enter your password (replace the "XX" in the username with the number you were assigned in class). 
