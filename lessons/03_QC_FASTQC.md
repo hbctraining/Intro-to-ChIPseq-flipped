@@ -168,10 +168,10 @@ $ module load fastqc/0.11.3  # reload the module for the new session
 $ fastqc --help
 ```
 
-_Once you have figured out what argument to use, run FastQC with 4 threads/cores._
+_**Once you have figured out what argument to use, run FastQC with 4 threads/cores.**_
 
  <details>
-   <summary><i>Answer</i></summary>
+   <summary><i>Code</i></summary>
    <code>$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  
    </code> 
 </details>
