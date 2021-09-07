@@ -14,11 +14,13 @@ Approximate time: 45 minutes
 * Understand the possible routes of analysis in the ChIP-seq workflow
 
 
-## Experimental design considerations for ChIP-seq
+## Considerations for ChIP-seq
 
-Demonstrate how to design an RNA-seq experiment that avoids confounding and batch effects
+In chromatin immunoprecipitation (ChIP) experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. In ChIP-seq, the immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
 
+<p align="center">
+<img src="../img/chipseq_overall.png" width="400">
+</p>
 
-Chromatin immunoprecipitation (ChIP) experiments are performed to identify DNA bound to specific (chromatin) proteins of interest. The first step involves isolating the chromatin and immunoprecipitating (IP) fragements with an antibody against the protein of interest. In ChIP-seq, the immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
+ChIP-seq has now been widely used for many transcription factors, histone modifications, chromatin modifying complexes, and other chromatin-associated proteins in a wide variety of organisms. As such, there is much diversity in the way ChIP-seq experiments are designed and the way analyses are executed. In this lesson, we describe a few simple guidelines for setting up a ChIP-seq experiment and where applicable discriminate between requirements for narrow versus broad peaks.
 
-![chipseq_overview](../img/chipseq_overall.png)
