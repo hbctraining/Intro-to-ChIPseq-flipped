@@ -57,6 +57,7 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
     * You can also check a region of DNA that you do not expect to be enriched and thus do not expect to be amplified by qPCR, to show that your ChIP is specific (negative control)
 * If you don't have any known targets for your protein, run a **postive control IP**. Histone H3 or H3k4me3 usually work very well. Since there is loads of H3K4me3 present at most TSSs you could design primers against the promoter of a housekeeping gene. If you have a good signal present, you will at least know the protocol is working well.
 
+> **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol. The p300 proteins [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
 
 ### Input control
 * YOu need an input!
