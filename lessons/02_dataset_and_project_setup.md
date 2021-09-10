@@ -62,6 +62,7 @@ Some relevant metadata for our dataset is provided below:
 
 * Whole brain lysates were obtained from **mice at E15.5** (when upper layer neurons are being generated)
 * Approximately **20-40 million cortical cells** were isolated for each sample
+* A [dual cross-linking protocol](https://www.abcam.com/protocols/dual-cross-linking-chip-protocol-1) was implemented using formaldehyde and EGS. This type of double cross-linking is very effective when you are using ChIP to observe direct binding or even those found in DNA binding complexes not bound directly to DNA.  
 * After the ChIP protocol, genomic DNA was purified, end repaired, ligated with barcoded adaptors, amplified for 11 PCR cycles
 * Library **fragments in the range of 100-800 bp** were size-selected using agarose gel electrophoresis followed by DNA gel extraction
 * Libraries were sequenced in an **Illumina HiSeq 2500** sequencer to a sequencing depth of **30-40 million reads per sample**.
