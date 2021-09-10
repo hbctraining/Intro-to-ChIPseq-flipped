@@ -60,7 +60,21 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 > **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol. The p300 proteins [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
 
 ### Input control
-* YOu need an input!
+
+A ChIP-Seq peak should be compared with the same region of the genome in a matched control sample. Only a fraction of the DNA in our ChIP sample corresponds to actual signal amidst background noise. 
+
+There are a number of artefacts that tend to generate pileups of reads that could be interpreted as a false positive peaks. These include:
+* Open chromatin regions that are fragmented more easily than closed regions due to the accessibility of the DNA
+* The presence of repetitive sequences
+* An Uneven distribution of sequence tags across the genome due to DNA composition
+* ‘hyper-ChIPable’ regions in the genome, in which peaks of unrelated proteins, including negative controls, overlap. These regions tend to be positively correlated with promoters of well-expressed genes.
+
+caused by uneven genomic sonication and nonspecific interactions between chromatin and antibody
+
+Input vs IgG
+
+
+
 
 
 ### Replicates
