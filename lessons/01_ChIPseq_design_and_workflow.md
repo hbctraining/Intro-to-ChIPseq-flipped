@@ -1,6 +1,6 @@
 ---
 title: "Experimental design considerations and understanding the ChIP-seq workflow"
-author: "Mary Piper, Radhika Khetani, Meeta Mistry"
+author: "Mary Piper, Radhika Khetani, Meeta Mistry, Shannan Ho Sui"
 date: "March 14th, 2018"
 ---
 
@@ -8,9 +8,7 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Explain the protocol for creating an appropriate input
-* Describe the importance of replicates for ChIP-seq experiments
-* Provide guidelines for sequencing depth
+* ...
 * Understand the possible routes of analysis in the ChIP-seq workflow
 
 
@@ -28,14 +26,14 @@ In this lesson, we describe a few simple guidelines for setting up a ChIP-seq ex
 
 ## Experimental design considerations
 
-When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very much valid and are still used in practice today.
+When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
 
 > #### ENCODE: Encyclopedia of DNA Elements
 > The ENCODE Project was planned as a follow-up to the Human Genome Project. It aims to identify all functional elements in the human genome. Coinciding with the completion of the Human Genome Project in 2003, the ENCODE Project began as a worldwide effort involving more than 30 research groups and more than 400 scientists.
 > 
 > Over the years, the ENCODE Consortium has become involved with additional projects whose goals run in parallel. A popular one is the modENCODE (MODel organism ENCyclopedia Of DNA Elements) project, targeting the identification of functional elements in selected model organism genomes, specifically Drosophila melanogaster and Caenorhabditis elegans.
 
-Below, is the **decision tree** that was presented earlier in the workshop (lecture). From thsi, we highlight some important points below:
+Below, is the **decision tree** that was presented earlier in the workshop (lecture). From this, we highlight some important points below:
 
 <p align="center">
 <img src="../img/expt_decisiontree.png" width="900">
@@ -84,21 +82,41 @@ Input samples can account for variations in the fragmentation step of the ChIP p
 
 ### Replicates
 
-As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 2-3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance and identify a set of enriched regions with greater confidence.
+As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 2-3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance of peaks and identify a set of reproducible enriched regions with greater confidence. If you have multiple sample groups and are planning a differential enrichment analysis, increasing the number of replicates will give you more statistical power to find changes between groups.
 
 > #### Do we see batch effects in ChIP-seq data?
-> It really depends on your experiment and your biological question.
-It is best to run everything in parallel as much as possible, to avoid any potential for **batch effects**. We  
+> Typically, batch effects are not as big of a concern with ChIP-seq data. However, it is best to run everything in parallel as much as possible. If you only have a single sample group, it should be more feasible to prepare all samples together (since there are fewer). For multiple sample groups, if you are not able to process all samples together, split replicates of the different sample groups across batches. This way you avoid any potential confounding.
+
 
 ### Sequencing considerations
 
-Read length (50- to 150-bp)
-Longer reads and paired-end reads improve mappability
-Only necessary for allele-specific chromatin events, investigations of transposable elements)
-Balance cost with value of more informative reads
-Avoid batches or distribute samples evenly over batches
-Sequencing depth (5-10M min; 20-40M as standard for TFs; higher for broad profiles)
-Sequence input controls to equal or higher depth than IP samples
+Below we list some general guidelines and things to think about when sending your samples to the sequencing facility:
+
+#### Read length
+* Read length shoudl be between 50- to 150-bp
+* Single-end reads is sufficient in most cases
+    * Longer reads and paired-end reads will improve mappability
+    * Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements
+* Balance cost with value of more informative reads
+    * i.e. spending money on replicates is more important than longer reads or paired-end
+
+#### Sequencing depth
+
+* Narrow peak profiles
+     * **Mammalian cells**; ENCODE suggests a minimum of 10 million uniquely mapped reads. For standard transcription factors we recommend between **20-40 million total read depth**
+     * **Worms and flies**; ENCODE suggests a minimum of **2 million uniquely mapped reads**. We recommend between **4-8 million total read depth**.
+     
+* Broad peak profiles
+     * Generally require a higher sequence depth
+     * **Mammalian cells** require a **minimum of 40M total read depth; more is better** for detecting some histone marks
+     * **Worms and flies; less is known** and so the numbers vary across studies. We suggest a **minimum of 8M total read depth.**
+
+* Sequence the input controls to equal or higher depth than your ChIP samples
+
+
+
+## Understanding the ChIP-seq analysis workflow
+
 
 
 ## Resources:
