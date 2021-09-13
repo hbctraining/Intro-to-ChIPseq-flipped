@@ -19,6 +19,7 @@ Approximate time:
 
 **ADD A WORKFLOW IMAGE HERE**
 
+
 A key issue when working with a ChIP-seq data is to **move forward with only the uniquely mapping reads**.  Allowing for multiply mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). To increase our confidence in peak calling and improve data reproducibility, we need to **filter out both multi-mapping reads and duplicate reads**.
 
 * Multi-mapping reads are reads that are mapping to multiple loci on the reference genome.
@@ -26,14 +27,14 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
     * **The bad kind of duplicates:** If initial starting material is low this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. 
     * **The good kind of duplicates:** You can expect some biological duplicates with ChIP-seq since you are only sequencing a small part of the genome. This number can increase if your depth of coverage is excessive or if your protein only binds to few sites. If there are a good proportion of biological dupicates, removal can lead to an underestimation of the ChIP signal. 
 
-> ### Some additional notes on duplicates
-> Most peak calling algorithms also implement methods to deal with duplicate reads. While they are commonly removed prior to peak calling, another option is to leave them now and deal with them later. Skip the duplicate filtering at this step if:
+> #### Some additional notes on duplicates
+> Most peak calling algorithms also implement methods to deal with duplicate reads. While they are commonly removed prior to peak calling, another option is to leave them now and deal with them later. **Skip the duplicate filtering at this step if**:
 > * You are planning on performing a differential binding analysis.
 > * You are expecting binding in repetitive regions (also, use paired-end sequencing) 
 > * You have included UMIs into your experimental setup.
 
 
-The predecessor to Bowtie2, used to offer an argument that allowed us to easily perform filtering along with alignment. We do not have this option with Bowtie2 and so the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/).
+The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. We do not have this option with Bowtie2 and so the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. The **filtering will consist of two steps**:
 
 1. Sort BAM files by genomic coordinates
 2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
