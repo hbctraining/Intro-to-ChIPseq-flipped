@@ -265,7 +265,7 @@ Based on the sequence quality plot of our sample, the majority of the reads have
 The **[Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)** module generates a graph showing the distribution of fragment sizes in the file which was analysed. Most high-throughput sequencers generate reads of uniform length, and this will produce a simple graph showing a peak only at one size, but for variable length FastQ files this will show the relative amounts of each different size of sequence fragment.
 
 <p align="center">
-	<img src="../img/03_fastqc_seq_length" width="600">
+	<img src="../img/03_fastqc_seq_length.png" width="600">
 </p>
 
 We observe a unique sequence length (50 bp) in our data, which is as expected. In some cases of ChIP-seq data, we have observed variable sequence lengths that is not due to the sequencer. Rather, this can be a result of the adapter removal in the previous steps suggesting that there was adapter contamination in your sample.
