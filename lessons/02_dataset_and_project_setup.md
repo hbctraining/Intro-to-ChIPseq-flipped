@@ -8,7 +8,7 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Introducing the dataset and biological context
+* Introduce the dataset and biological context
 * Recognize the need for data management and project organization
 
 
@@ -28,7 +28,7 @@ _Image adapted from: [American Society of Hematology](https://www.hematology.org
 
 The transcriptional regulator **PRDM16 is a chromatin-modifying enzyme** that belongs to the larger PRDM (Positive Regulatory Domain) protein family, that is structurally defined by the **presence of a conserved N-terminal histone methyltransferase PR domain** (Hohenauer and Moore, 2012). 
 
-* PRDM16 has been shown to function in vitro as a histone 3 lysine 9 (H3K9) and histone 3 lysine 4 (H3K4) mono-methyltransferase (Pinheiro et al., 2012, Zhou et al., 2016). 
+* PRDM16 has been shown to function *in vitro* as a histone 3 lysine 9 (H3K9) and histone 3 lysine 4 (H3K4) mono-methyltransferase (Pinheiro et al., 2012, Zhou et al., 2016). 
 * PRDM16 also regulates gene expression by forming complexes with transcriptional co-factors and other histone-modifying proteins (Chi and Cohen, 2016). 
 * PRDM16 was previously shown to control embryonic and post-natal neural stem cell maintenance and differentiation in the brain (Chuikov et al., 2010, Inoue et al., 2017, Shimada et al., 2017). 
 
@@ -50,19 +50,19 @@ From the RNA-seq data, they found that the absence of PRDM16 in cortical neurons
 
 ### Raw data
 
-From this study we are using the [ChIP-seq](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111657) data which is publicly available in the [Sequence Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra?term=SRP134733).
+For this study, we use the [ChIP-seq](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111657) data that is publicly available in the [Sequence Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra?term=SRP134733).
 
-> **NOTE:** If you are interested in how to obtain publicly available sequence data from the SRA we have some materials on this [linked here](https://hbctraining.github.io/Accessing_public_genomic_data/lessons/downloading_from_SRA.html).
+> **NOTE:** If you are interested in how to obtain publicly available sequence data from the SRA, we have training materials on this [topic](https://hbctraining.github.io/Accessing_public_genomic_data/lessons/downloading_from_SRA.html).
 
 ### Metadata
 
-In addition to the raw sequence data we also need to collect **information about the data**, also known as **metadata**.  We are usually quick to want to begin analysis of the sequence data (FASTQ files), but how useful is it if we know nothing about the samples that this sequence data originated from? 
+In addition to the raw sequence data, we also need to collect **information about the data**, also known as **metadata**.  We sometimes rush to begin the analysis of the sequence data (FASTQ files), but how useful is it if we know nothing about the samples that this sequence data originated from? 
 
 Some relevant metadata for our dataset is provided below:
 
 * Whole brain lysates were obtained from **mice at E15.5** (when upper layer neurons are being generated)
 * Approximately **20-40 million cortical cells** were isolated for each sample
-* A [dual cross-linking protocol](https://www.abcam.com/protocols/dual-cross-linking-chip-protocol-1) was implemented using formaldehyde and EGS. This type of double cross-linking is very effective when you are using ChIP to observe direct binding or even those found in DNA binding complexes not bound directly to DNA.  
+* A [dual cross-linking protocol](https://www.abcam.com/protocols/dual-cross-linking-chip-protocol-1) was implemented using formaldehyde and EGS. This type of double cross-linking is very effective in identifying direct binding, as well as those found in DNA binding complexes not bound directly to DNA.  
 * After the ChIP protocol, genomic DNA was purified, end repaired, ligated with barcoded adaptors, amplified for 11 PCR cycles
 * Library **fragments in the range of 100-800 bp** were size-selected using agarose gel electrophoresis followed by DNA gel extraction
 * Libraries were sequenced in an **Illumina HiSeq 2500** sequencer to a sequencing depth of **30-40 million reads per sample**.
@@ -75,7 +75,7 @@ Our dataset consists of two WT samples and two cKO samples. For each of the IP s
 
 ## Implementing data management best practices
 
-In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html) we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis.
+In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html), we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis.
 
 <p align="center">
 <img src="../img/data-lifecycle-base.png" width="500">
@@ -167,7 +167,7 @@ In your lab notebook, you likely keep track of the different reagents and kits u
  
 #### README files
 
-After setting up the directory structure it is useful to have a **[README file](https://datamanagement.hms.harvard.edu/readme-files) within your project directory**. This is a plain text file containing a short summary about the project and a description of the files/directories found within it. An example README is shown below. It can also be helpful to include a README within each sub-directory with any information pertaining to the analysis.
+After setting up the directory structure, it is useful to have a **[README file](https://datamanagement.hms.harvard.edu/readme-files) within your project directory**. This is a plain text file containing a short summary about the project and a description of the files/directories found within it. An example README is shown below. It can also be helpful to include a README within each sub-directory with any information pertaining to the analysis.
 
 ```
 ## README ##
