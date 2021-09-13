@@ -44,18 +44,8 @@ MACS improves the spatial resolution of binding sites through **combining the in
 
 MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with the **same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
 
-> **Why worry about duplicates?**
-Reads with the same start position are considered duplicates. These duplicates can arise from experimental artifacts, but can also contribute to genuine ChIP-signal.
->
-> * **The bad kind of duplicates:** If initial starting material is low this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. Also blacklisted (repeat) regions with ultra high signal will also be high in duplicates. Masking these regions prior to analysis can help remove this problem.
-> * **The good kind of duplicates:** You can expect some biological duplicates with ChIP-seq since you are only sequencing a small part of the genome. This number can increase if your depth of coverage is excessive or if your protein only binds to few sites. If there are a good proportion of biological dupicates, removal can lead to an underestimation of the ChIP signal. 
->
-> **The take-home:** 
-> * Consider your enrichment efficiency and sequencing depth. Try to discriminate via genome browser of your non-deduplicated data. Bona fide peaks will have multiple overlapping reads with offsets, while samples with only PCR duplicates will stack up perfectly without offsets. A possible solution to distinguishing biological duplicate from PCR artifact would be to include UMIs into your experimental setup.
-> * Retain duplicates for differential binding analysis. 
-> * If you are expecting binding in repetitive regions, use paired-end sequencing and keep duplicates.
-> 
-> **Otherwise, best practice is to remove duplicates prior to peak calling**. 
+**We do not need to worry about this since we filtered out during the duplicates [post-alignment filtering step](05_filtering_BAM_files.md).**
+
 
 ### Modeling the shift size
 
