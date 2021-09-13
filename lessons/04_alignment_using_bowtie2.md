@@ -126,6 +126,7 @@ $ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
+Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. Talk about this vs `>`. Show the code below on how we use it.
 
 ## Alignment output: SAM/BAM file format
 
@@ -259,7 +260,13 @@ Let's specify the job submission options as below (don't forget the shebang line
 #SBATCH -e %j.err 		          # file to which standard error will be written
 ```
 
-In the body of the script, we will load the required modules, run bowtie2 to obtain alignment SAM file, and then convert SAM file to BAM file using samtools. Please refer to the corresponding codes we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
+In the body of the script, add the code  required to:
+
+* load the required modules
+* run bowtie2 to obtain alignment SAM file, and a log file that captures the alignment summary (add that into the script below) and
+* convert SAM file to BAM file using samtools. 
+
+Please refer to the corresponding codes we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
 
 <details>
   <summary>Solution</summary>
