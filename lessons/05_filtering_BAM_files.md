@@ -39,6 +39,21 @@ The older version of Bowtie2 had an argument that allowed us to easily perform f
 1. Sort BAM files by genomic coordinates
 2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
 
+Before we begin, you will want to make sure you are **logged into O2 and on a compute node** before you continue through this lesson. Type in the following command with your username to login:
+
+```bash
+ssh username@o2.hms.harvard.edu
+```
+ 
+To start an interactive session with 2 cores and 10G of memory (sorting can be memory-intensive):
+
+```bash
+$ srun --pty -p interactive -t 0-2:30 --mem 10G -n 1 --reservation=HBC2 /bin/bash
+```
+
+> **Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
+
+
 ### 1. Sort BAM files by genomic coordinates
 
 Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we will use [Samtools](http://www.htslib.org/), a popular tool to manipulate BAM and SAM files.
