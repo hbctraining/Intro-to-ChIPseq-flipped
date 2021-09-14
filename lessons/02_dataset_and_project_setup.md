@@ -67,9 +67,9 @@ Some relevant metadata for our dataset is provided below:
 * Library **fragments in the range of 100-800 bp** were size-selected using agarose gel electrophoresis followed by DNA gel extraction
 * Libraries were sequenced in an **Illumina HiSeq 2500** sequencer to a sequencing depth of **30-40 million reads per sample**.
 
-> All of the above pertains to both WT and Prdm16 conditional knock-out (cKO) mouse (Emx1Ires-Cre; Prdm16flox/flox)
+> All of the above pertains to both WT and Prdm16 conditional knock-out mouse (Emx1Ires-Cre; Prdm16flox/flox). *For the rest of the workshop we will be referring to the conditional knockout samples as KO*.
 
-Our dataset consists of two WT samples and two cKO samples. For each of the IP samples, we have a corresponding input sample as illustrated in the schematic below.
+Our dataset consists of two WT samples and two KO samples. For each of the IP samples, we have a corresponding input sample as illustrated in the schematic below.
 
 **Add image here**
 
@@ -106,17 +106,17 @@ $ cd
 $ pwd
 ```
 
-This should return `/home/rc_training`. Create the directory `chipseq` and move into it.
+This should return `/home/rc_training`. Create the directory `chipseq_workshop` and move into it.
 
 ```bash
-$ mkdir chipseq
-$ cd chipseq
+$ mkdir chipseq_workshop
+$ cd chipseq_workshop
 ```
 
 Now that we have a project directory, we can set up the following structure within it to keep files organized.
 
 ```bash
-chipseq/
+chipseq_workshop/
 ├── logs/
 ├── meta/
 ├── raw_data/
@@ -171,7 +171,7 @@ After setting up the directory structure, it is useful to have a **[README file]
 
 ```
 ## README ##
-## This directory contains data generated during the Introduction to RNA-seq workshop
+## This directory contains data generated during the Introduction to ChIP-seq workshop
 ## Date: 
 
 There are five subdirectories in this directory:
@@ -187,7 +187,7 @@ scripts:
 
 **Exercise**
 
-1. Take a moment to create a README for the `chipseq/` folder (hint: use `vim` to create the file). Give a short description of the project and brief descriptions of the types of files you will be storing within each of the sub-directories. 
+1. Take a moment to create a README for the `chipseq_workshop/` folder (hint: use `vim` to create the file). Give a short description of the project and brief descriptions of the types of files you will be storing within each of the sub-directories. 
 
 
 
