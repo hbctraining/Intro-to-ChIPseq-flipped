@@ -14,7 +14,7 @@ Approximate time: 80 minutes
 * Describe the parameters involved in running MACS2
 * List and describe the output files from MACS2
 
-# Peak Calling
+## Peak Calling
 
 Peak calling, the next step in our workflow, is a computational method used to identify areas in the genome that have been enriched with aligned reads as a consequence of performing a ChIP-sequencing experiment. 
 
@@ -30,14 +30,15 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
-There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this session. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
-
-
-## Types of binding profiles
+### Types of binding profiles
 
 ...Identifying short degenerate sequences that present as punctate binding sites. ChIP-seq analysis algorithms are specialized in identifying one of **two types of enrichment** (or have specific methods for each): **broad peaks** or broad domains (i.e. histone modifications that cover entire gene bodies) or **narrow peaks** (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also 'mixed' binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
 
 Talk about histone marks here - maybe some more info on cofactors, enhancers....
+
+
+There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this session. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
+
 
 ## MACS2
 A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites it is also suited for larger regions.
