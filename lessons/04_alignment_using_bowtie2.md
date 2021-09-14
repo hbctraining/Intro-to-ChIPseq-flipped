@@ -202,19 +202,12 @@ Finally, you have the raw sequence data from the original FASTQ file stored for 
 - **`SEQ`:** is the raw sequence
 - **`QUAL`:** is the associated quality values for each position in the read.
 
-Since we haven't run the code yet, we could take a quick peek at a sample SAM file here at `/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.sam`. Since it is just a text file, we can browse through it using `less`:
-
-``` bash
-$ less /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.sam
-```
-
-**Does the information you see line up with the fields we described above?**
 
 ### Changing file format from SAM to BAM
 
 While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equavalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM.
 
-> NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we could delete it to save space.
+> NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we can delete it to save space.
 
 Let's load the module `samtools`:
 
@@ -239,7 +232,7 @@ $ samtools view -h -S -b \
 
 ## Running alignment on a single sample
 
-Genome alignment usually takes quite a while to finish - that's why we don't run the codes on an interactive node. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
+Genome alignment can take a while to finish,so we won't run it on an interactibve session. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
 
 ```bash
 # Create a SBATCH script
@@ -260,13 +253,13 @@ Let's specify the job submission options as below (don't forget the shebang line
 #SBATCH -e %j.err 		          # file to which standard error will be written
 ```
 
-In the body of the script, add the code  required to:
+In the body of the script, add the code required to:
 
-* load the required modules
-* run bowtie2 to obtain alignment SAM file, and a log file that captures the alignment summary (add that into the script below) and
-* convert SAM file to BAM file using samtools. 
+* Load the necessary modules
+* Run bowtie2 to obtain alignment SAM file, and a log file that captures the alignment summary
+* Convert SAM file to BAM file using samtools. 
 
-Please refer to the corresponding codes we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
+Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
 
 <details>
   <summary>Solution</summary>
@@ -287,7 +280,7 @@ module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
  
 samtools view -h -S -b \
 -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
@@ -308,10 +301,8 @@ rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 
 1. After your job has completed, check the resulting `.out` and `.err` files. 
 2. What information do you obtain from each file? 
-3. What is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
-
-
-
+3. Take a quick peek at a sample SAM file using `less`. Does the information you see line up with the fields we described above?
+4. What is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
