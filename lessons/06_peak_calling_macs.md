@@ -221,19 +221,27 @@ Let's first obtain a summary of how many peaks were called in each sample. We ca
 $ wc -l *.narrowPeak
 ```
 	
-### File formats: BED vs narrowPeak
+*** 
 
-#### BED
-Take content from slide deck here
+**Exercise:**
 
-#### narrowPeak
-A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
+1. Using the BAM files listed below, use MACS2 to call peaks on the KO samples.
 
-<p align="center">
-<img src="../img/narrowPeak.png">
-</p>
+```bash
+# KO ChIP BAM files
+/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/ko_sample1_chip_final.bam
+/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/ko_sample2_chip_final.bam
 
+# KO input BAM files
+/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/ko_sample1_input_final.bam
+/n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/ko_sample2_input_final.bam
+```
 
+2. How many peaks do you get for each sample? How does this compare with the WT?
+
+***
+
+In the next lesson, we will delve deeper into the output files and understanding what information is stored in them.
 
 ### Other peak calling software
 
