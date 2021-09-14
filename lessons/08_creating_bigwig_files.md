@@ -18,6 +18,18 @@ The first stage of ChIP-seq analysis uses common processing pipelines, which inv
 
 There are various strategies for visualizing enrichment patterns, and we will explore a few of them. To start, we will create bigWig files for our samples, a standard file format commonly used for ChIP-seq data visualization.
 
+### File formats for peak visualization
+
+**Take content from slide deck**
+
+#### Wiggle and bigwig file format
+
+Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
+
+#### BedGraph format:
+
+The BedGraph format also allows display of continuous-valued data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
+
 ## Creating bigWig files
 
 The general procedure is to take our alignment files (BAM) and convert them into bigWig files. The bigWig format is an indexed binary format useful for dense, continuous data to be displayed in a genome browser as a graph/track. The bigWig files could also be used as inputs for some visualization commands we will be running in `deepTools`. 
