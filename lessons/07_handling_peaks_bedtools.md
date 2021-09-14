@@ -1,5 +1,5 @@
 ---
-title: "Handling replicates"
+title: "Handling peak files with bedtools"
 author: "Meeta Mistry, Jihe Liu"
 date: "Aug 17th, 2021"
 ---
@@ -15,21 +15,12 @@ Approximate time:
 * Learn how to filter out peaks at blacklisted regions
 * Learn how to find overlap peaks betweeen replicates
 
-## File formats
 
-**WIG format:**
-
-Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
-
-**BedGraph format:**
-
-The BedGraph format also allows display of continuous-valued data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
-
-## Filtering peaks
+## Handling peak files with `bedtools`
 
 In this section, our goal is to refine our called peaks from macs2. We will do two consecutive filterings: first, filter out peaks that are within the blacklisted region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
 
-### `bedtools`
+## `bedtools`
 
 The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) from [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah is such an easy and versatile tool to perform these tasks. 
 
@@ -44,6 +35,13 @@ As the name implies, this suite of tools works with **Bed** files, but it also w
 </p>
 
 > **NOTE:** When working with multiple files to perform arithmetic on genomic coordinates, it is essential that all files have coordinate information from the same version of the genome and the coordinate system (0-based or 1-based)!
+
+## BED file format
+
+**Take content from slide deck!**
+
+
+## Filtering peaks overlapping with blacklist regions
 
 ### Setting up
 
@@ -75,7 +73,7 @@ To find out more information on the parameters available when intersecting, use 
 $ bedtools intersect -h
 ```
 
-### filtering out peaks in blacklisted regions
+## Filtering out peaks in blacklisted regions
 
 We discussed blacklisted regions in the previous lesson, where we mentioned that although we could have filtered out blacklisted regions from BAM files, we would instead perform the filtering after peak calling. So here we are! As you will see, filtering blacklisted regions using `bedtools` is quick and straightforward.
 
