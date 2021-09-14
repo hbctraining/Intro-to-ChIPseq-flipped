@@ -48,7 +48,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:15 | Self-learning lessons review |  |
-| 10:15 - 11:00 | [Filtering BAM files]() |  |
+| 10:15 - 11:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) |  |
 | 11:00- 11:05 | Break|  |
 | 11:05 - 12:00 | [Peak calling]() |  |
 
