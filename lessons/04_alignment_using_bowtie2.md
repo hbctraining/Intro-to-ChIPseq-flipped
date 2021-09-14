@@ -86,7 +86,7 @@ $ ls -l /n/groups/shared_databases/
 
 For our dataset, we will need the `mm10` build of the reference genome. You can find those indices at `/n/groups/shared_databases/bowtie2_indexes/mm10`. **Rather than copying the files over, we will just point to the directory when necessary** so we will directly refer to it. 
 
-### Bowtie: Alignment
+### Bowtie2: Alignment
 
 Now we are ready to perform the read alignment. Let's first create a `bowtie2` directory for our output:
 
@@ -205,23 +205,25 @@ Finally, you have the raw sequence data from the original FASTQ file stored for 
 
 ### Changing file format from SAM to BAM
 
-While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equavalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM.
+While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equavalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM. Samtools is a program taht consists of many utilities for working with the Sequence Alignment/Map (SAM) format. Here, we will use the `samtools view` command to conver our SAM file into its binary compressed version (BAM) and save it to file.
 
 > NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we can delete it to save space.
 
-Let's load the module `samtools`:
+Let's start by loading the module `samtools`:
 
 ```bash
 $ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
 $ module load samtools/1.9
 ```
 
-You can find detailed instructions for different samtools functions in this [manual](http://www.htslib.org/doc/samtools-1.2.html). For our purpose, we will use the command `samtools view` with the following parameters:
+We outline below the parameters to use with the command `samtools view`, and what each does:
 
 * `-h`: include header in output
 * `-S`: input is in SAM format
 * `-b`: output BAM format
 * `-o`: /path/to/output/file
+
+> **NOTE**: You can find detailed instructions for different samtools functions and additional parameter options in this [manual](http://www.htslib.org/doc/samtools-1.2.html). 
 
 ```bash
 # DO NOT RUN
