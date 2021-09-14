@@ -26,34 +26,27 @@ Now that we have assessed the quality of our sequence data, we are ready to alig
 <img src="../img/chip_workflow_june2017_step1_align.png" width="400">
 </p>
 
-In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome.
-However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex. By contrast, the reads we are searching for are much smaller (50-150bp), and there are on the on the range of millions of them for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to sequencing errors, and also non-unique alignment due to the nature of short reads.
+In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and there are on the on the range of millions of them for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to sequencing errors, and also non-unique alignment due to the nature of short reads.
 
 <p align="center">
 <img src="../img/alignment_theory.png" width="700">
 </p>
 
-There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and one that we will be using in this workshop is Bowtie2.
+There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is Bowtie2.
 
 
 ## Bowtie2
 
-[Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool.
+[Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that supports gapped, local and paired-end alignment modes and works best for reads that are **at least 50 bp** (shorter read lengths should use Bowtie1). 
 
-* It supports gapped, local and paired-end alignment modes, and it works best for reads that are at least 50 bp (shorter read lengths should use Bowtie1)
-* Bowtie2 performs a global end-to-end read alignment, which is best for quality-trimmed reads
-* It also offers a local alignment mode, which will perform soft-clipping for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
+By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _soft-clipping_ for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
 
 > #### How do other aligners compare?
 > We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
 
 ### Soft-clipping 
 
-**Describe soft-clipping here briefly** (bullet points below have been taken from teh slide deck)
-
-* Portions of the read that do not match well to the reference genome on either side of the reads are ignored for the alignment
-* The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases
-* Soft-clipped bases are retained in the sequence and simply marked. Trimming methods hard-clip, which deletes the unwanted sequence.
+Soft-clipping allows for more accurate alignment by ignoring portions at the ends of the reads that do match well to the reference genome. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. Soft-clipped bases are retained in the sequence and simply marked. In contrast to trimming, which deletes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it.
 
 
 <p align="center">
@@ -65,7 +58,7 @@ There are many different tools that have been developed for alignment of next-ge
 
 To perform the Bowtie2 alignment, a genome index is required. The index is analagous to the index in a book. By indexing the genome, we have organized it in a manner that now allows for efficient search and retrieval of matches of the query (sequence read) to the genome.
 
-Bowtie2 indexes the genome with an FM Index based on the **Burrows-Wheeler Transform** method to keep memory requirements low for the alignment process. Describe very briefly or link out to a helpful resource on BWT?
+Bowtie2 indexes the genome with an FM Index based on the **Burrows-Wheeler Transform** method to keep memory requirements low for the alignment process. A thorough description of the Burrows-Wheeler Transform and the FM Index can be found in this [resource paper](https://www.cs.jhu.edu/~langmea/resources/bwt_fm.pdf).
 
 To create an index for your analysis, you can use the `bowtie2-build` command. There are various arguments you can provide, but in its simplest form all you needs as input is the path to the reference genome FASTA file, and a prefix to name your indices once its created.
 
@@ -82,7 +75,7 @@ The O2 cluster has a designated directory (`/n/groups/shared_databases/`) with s
 ```bash
 $ ls -l /n/groups/shared_databases/
 ```
-> *NOTE:* some disadvantages of using the shared databases? Not knowing exactly what reference version (i.e. release) or the exact parameters used to generate it.
+> *NOTE:* Disadvantages of using the shared databases include not knowing exactly what is the reference version (i.e. release) or the exact parameters used to generate it. When using shared databases, it is important that it is clear how the reference was generated and its version.
 
 For our dataset, we will need the `mm10` build of the reference genome. You can find those indices at `/n/groups/shared_databases/bowtie2_indexes/mm10`. **Rather than copying the files over, we will just point to the directory when necessary** so we will directly refer to it. 
 
@@ -126,30 +119,20 @@ $ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
-Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. Talk about this vs `>`. Show the code below on how we use it.
+Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. When a command is run it will often generate two types of output: the standard output accomplished by the process and diagnostic output referred to as standard error. By convention, both are output to the screen, but we can redirect it to file using redirection operators. To redirect the standard output to file, we can use the `>` and to redirect the standard error to file we can use `2>`. Tools generally follow the convention of the which type of information is in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We will often redirect the standard error from a process to a log file so that we have this information for any downstream troubleshooting, which we could use as follows:
+
+```
+# Redirection of standard error
+fastqc *.fastq -o ~/chipseq/results/fastqc 2> ../logs/fastqc_log.txt
+```
+
+If a tool doesn't have an output argument, then we need to be sure to redirect it from our screen to file. Show the code below on how we use it.
 
 ## Alignment output: SAM/BAM file format
 
-**This part can probably be trimmed in content**
-
 The output from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment Map format**. The SAM file is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
-The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of alignment, etc., this will change depending on the aligner being used. Each section begins with character ‘@’ followed by **a two-letter record type code**. These are followed by two-letter tags and values. Example of some common sections are provided below:
-
-```
-@HD  The header line
-VN: format version
-SO: Sorting order of alignments
-
-@SQ  Reference sequence dictionary
-SN: reference sequence name
-LN: reference sequence length
-SP: species
-
-@PG  Program
-PN: program name
-VN: program version
-```
+The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of alignment, etc., this will change depending on the aligner being used. Each section begins with character ‘@’ followed by [**a two-letter record type code**](https://www.samformat.info/sam-format-header). These are followed by two-letter tags and values. Example of some common sections are provided below:
 
 Following the header is the **alignment section**. Each line corresponds to the alignment information for a single read. Each alignment line has **11 mandatory fields for essential mapping information** and a variable number of other fields for aligner-specific information. 
 
@@ -158,30 +141,7 @@ Following the header is the **alignment section**. Each line corresponds to the 
 An example read mapping is displayed above. *Note that the example above spans two lines, but in the actual file it is a single line.* Let's go through the fields one at a time. 
 
 - **`QNAME`:** Query name or read name - this is the same read name present in the header of the FASTQ file
-- **`FLAG`:** numerical value providing information about read mapping and whether the read is part of a pair.
- 
-  > **NOTE:** The information stored inside the FLAG is additive based on the following information being TRUE or FALSE:
-  > 
-  > | Flag | Description |
-  > | ------:|:----------------------:|
-  > | 1 | read is mapped |
-  > | 2 | read is mapped as part of a pair |
-  > | 4 | read is unmapped |
-  > | 8 | mate is unmapped |
-  > | 16| read reverse strand|
-  > | 32 | mate reverse strand |
-  > | 64 | first in pair |
-  > | 128 | second in pair |
-  > | 256 | not primary alignment |
-  > | 512 | read fails platform/vendor quality checks |
-  > | 1024| read is PCR or optical duplicate |
-  > 
-  > * For a given alignment, each of these flags are either **on or off**, indicating the condition is **true or false**. 
-  > * The `FLAG` is a combination of all of the individual flags (from the table above) that are true for the alignment 
-  > * The beauty of the flag values is that **any combination of flags can only result in one sum**.
-  > 
-  > **There are tools that help you translate the bitwise flag, for example [this one from Picard](https://broadinstitute.github.io/picard/explain-flags.html)**
-
+- **`FLAG`:** numerical value providing information about read mapping and whether the read is part of a pair. Specifics regarding the FLAG values are [available](https://www.samformat.info/sam-format-flag-single).
 - **`RNAME`:** is the reference sequence name, giving the chromosome to which the read maps. The example read is from chromosome 1, which explains why we see 'chr1'. 
 - **`POS`:** refers to the 1-based leftmost position of the alignment. 
 - **`MAPQ`:** is giving us the alignment quality, the scale of which will depend on the aligner being used. 
