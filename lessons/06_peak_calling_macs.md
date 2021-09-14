@@ -55,7 +55,7 @@ We will be using the newest version of this tool, MACS2. The underlying algorith
 
 MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with the **same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
 
-**We do not need to worry about this since we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
+*We do not need to worry about this since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
 
 
 ### Modeling the shift size
@@ -89,7 +89,9 @@ To calculate λBG from tag count, MAC2 requires the **effective genome size** or
 
 After MACS shifts every tag by *d/2*, it then slides across the genome using a window size of *2d* to find candidate peaks. The tag distribution along the genome can be modeled by a Poisson distribution. The Poisson is a one parameter model, where the parameter **λ is the expected number of reads in that window**.
 
+<p align="center">
 <img src="../img/peak_detection.png" width="300">
+</p>
 
 Instead of using a uniform λ estimated from the whole genome, MACS uses a dynamic parameter, λlocal, defined for each candidate peak. The lambda parameter is estimated from the control sample and is deduced by **taking the maximum value across various window sizes:** 
 
