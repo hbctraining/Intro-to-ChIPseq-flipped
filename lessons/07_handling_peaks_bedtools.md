@@ -15,6 +15,15 @@ Approximate time:
 * Learn how to filter out peaks at blacklisted regions
 * Learn how to find overlap peaks betweeen replicates
 
+## File formats
+
+**WIG format:**
+
+Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
+
+**BedGraph format:**
+
+The BedGraph format also allows display of continuous-valued data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
 
 ## Filtering peaks
 
