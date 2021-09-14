@@ -8,21 +8,38 @@ Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu
 
 Approximate time:
 
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/10
-
 ## Learning Objectives
 
-* Learn how to filter out peaks at blacklisted regions
-* Learn how to find overlap peaks betweeen replicates
+* Understand the BED file format and related file formats
+* Utilize the bedtools suite of tools filter peak calls 
+* Utilize the bedtools suite to compare peaks betweeen replicates
 
 
-## Handling peak files with `bedtools`
+## Handling peak calls 
 
-In this section, our goal is to refine our called peaks from macs2. We will do two consecutive filterings: first, filter out peaks that are within the blacklisted region; second, find overlap peaks between two biological replicates. We will use a suite of tools called `bedtools` to perform the task.
+In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format**. We will discuss the output files that we obtained from MACS2 peak calling, specifically describing the contents of the narrowPeak files and how it relates to BED. You will then get acquainted with **`bedtools`, a new suite of tools that is very helpful when working with BED files and other related file formats**, and use it to complete the folowing tasks with the WT and KO peak calls from this PRDM16 dataset:
 
-## `bedtools`
+1. Filter out peaks that overlap with the blacklisted regions
+2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
 
-The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) from [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah is such an easy and versatile tool to perform these tasks. 
+
+### BED file formats
+
+#### BED
+Take content from slide deck here
+
+#### narrowPeak
+A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
+
+**DON'T HAVE TO KEEP THIS IMAGE** can write out the text version or whatever works best 
+
+<p align="center">
+<img src="../img/narrowPeak.png">
+</p>
+
+### `bedtools`
+
+The **bedtools utilities are a swiss-army knife of tools for a wide-range of genomics analysis tasks**. The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) was devloped in [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah, and is widely used amongst the bioinformatics community. It is such an easy and versatile tool to perform these tasks described above. 
 
 <p align="center">
 <img src="../img/bedtools.png" width="700">
@@ -36,36 +53,27 @@ As the name implies, this suite of tools works with **Bed** files, but it also w
 
 > **NOTE:** When working with multiple files to perform arithmetic on genomic coordinates, it is essential that all files have coordinate information from the same version of the genome and the coordinate system (0-based or 1-based)!
 
-## BED file format
-
-**Take content from slide deck!**
-
-
-## Filtering peaks overlapping with blacklist regions
-
-### Setting up
-
-Let's start an interactive session. 
+`bedtools` is available as a module on O2. To set yourself up for the rest of the lesson, make sure you are **logged into O2 and on a compute node**.
 
 ```bash
-$ srun --pty -p short -t 0-12:00 --mem 8G --reservation=HBC bash	
-
-$ cd ~/chipseq_workshop/results/
+$ srun --pty -p interactive -t 0-12:00 --mem 2G /bin/bash
 ```
-	
-Load the modules for `bedtools` and `samtools`:
+
+Next, load the modules for `bedtools` and `samtools`:
 	
 ```bash
 $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
 ```
 
+
 ### `bedtools intersect`
 
-The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools evaluates A (file 1) and finds regions that overlap in B (file 2). We will use this command to do the filtering.
+The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools evaluates A (file 1) and finds regions that overlap in B (file 2). We will use this command to do both the filtering of peaks (from blacklisted regions) and assessing the overlap of peaks (between replicates).
 
 <p align="center">
 <img src="../img/bedtools_intersect.png" width="600">
 </p>
+
 
 To find out more information on the parameters available when intersecting, use the help flag:
 
@@ -73,11 +81,37 @@ To find out more information on the parameters available when intersecting, use 
 $ bedtools intersect -h
 ```
 
-## Filtering out peaks in blacklisted regions
+Alternatively, you can use the [web-based documentation](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) which is much easier to read. The "options" summary shows the **large number of arguments available that allow us to do so much more than just a simple A versus B comparison**. It allows one to have fine control as to how the intersections are reported, and work with different types of files - amongst may other features.
 
-We discussed blacklisted regions in the previous lesson, where we mentioned that although we could have filtered out blacklisted regions from BAM files, we would instead perform the filtering after peak calling. So here we are! As you will see, filtering blacklisted regions using `bedtools` is quick and straightforward.
+### Filtering peaks overlapping with blacklist regions
 
-We have deposited the blacklist regions for mouse `mm10` version in `~/chipseq_workshop/reference/mm10-blacklist.v2.bed`. More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z), and we downloaded the blacklist regions from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
+We discussed blacklisted regions in the [filtering lesson](05_filtering_BAM_files.md), as it is commonplace to filter before peak calling. When it is performed at the stage the `bedtools intersect` is also used, the difference being the input file type (BAM instead of BED). The filtering works just as well if applied post-peak calling.
+
+The blacklisted regions typically appear uniquely mappable so simple mappability filters do not remove them. These regions are often found at specific types of repeats such as centromeres, telomeres and satellite repeats.
+
+<p align="center">
+<img src="../img/blacklist.png" width="600">
+</p>
+
+We have a BED file of blacklist regions for mouse `mm10` prepared at `/n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed`. Copy this file over to your project into the `reference_data` folder.
+
+```bash
+cp /n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed  ~/chipseq_workshop/reference_data
+```
+
+> **How were the 'blacklists compiled?** These blacklists were empirically derived from large compendia of data using a combination of automated heuristics and manual curation. Blacklists were generated for various species and genome versions including human, mouse, worm and fly. The lists can be ]downloaded here](http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/) or from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). For human, they used 80 open chromatin tracks (DNase and FAIRE datasets) and 12 ChIP-seq input/control tracks spanning ~60 cell lines in total. These blacklists are applicable to functional genomic data based on short-read sequencing (20-100bp reads). These are not directly applicable to RNA-seq or any other transcriptome data types.
+
+Next, we will want to navigate to our results directory:
+
+```bash
+$ cd ~/chipseq_workshop/results/
+```
+
+
+To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
+
+
+More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z), and we downloaded the blacklist regions from [here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). To filter out blacklisted region for `wt_sample1`, we use the following code. Note that we use the flag `-v`, to report entries in A that have no overlaps with B.
 
 ```bash
 bedtools intersect \
