@@ -99,31 +99,29 @@ We will be using the newest version of this tool, MACS2. The underlying algorith
 
 ### Setting up
 
-To run MACS2, we will first start an interactive session using 1 core (do this only if you don't already have one) and load the macs2 library:
+To run MACS2, we will first start an interactive session using 1 core (do this only if you don't already have one) and load the macs2 module along with any dependencies:
 
 ```bash
-$ srun --pty -p interactive -t 0-12:00 --mem 1G --reservation=HBC2 /bin/bash
+$ srun --pty -p interactive -t 0-2:30 --mem 1G  /bin/bash
 
-$ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309
+$ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309 # UPDATE IF NEWER MODULES
 ```
 
 We will also need to create a directory for the output generated from MACS2:
 
 ```bash
-$ mkdir -p ~/chipseq/results/macs2
+# Create macs2 directory in results
+$ mkdir -p ~/chipseq_workshop/results/macs2
 ```
 
 Now change directories to the `results` folder:
 
 ```bash
-$ cd ~/chipseq/results/
+$ cd ~/chipseq_workshop/results/
 ```
 
-Since we only created a filtered BAM file for a single sample, **we will need to copy over BAM files for all 6 files**. We have created these for you and you can copy them over using the command below:
+Since we only created a filtered BAM file for a single sample, **we will use the BAM files we have generated for you**. Rather than copying them over, we will have you point to them within your command:
 
-```bash
-$ cp /n/groups/hbctraining/chip-seq/bowtie2/*.bam ~/chipseq/results/bowtie2/
-```
 
 ### MACS2 parameters
 
@@ -159,57 +157,27 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 > **NOTE:** Relaxing the q-value does not behave as expected in this case since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks but with MACS2 relaxing thresholds also results in wider peaks.
 
-Now that we have a feel for the different ways we can tweak our command, let's set up the command for our run on Nanog-rep1:
+Now that we have a feel for the different ways we can tweak our command, let's set up the command for each of our wildtype replicates:
 
 ```
-$ macs2 callpeak -t bowtie2/H1hesc_Nanog_Rep1_aln.bam \
-	-c bowtie2/H1hesc_Input_Rep1_aln.bam \
- 	-f BAM -g 1.3e+8 \
-	-n Nanog-rep1 \
-	--outdir macs2
+macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
+    -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_input_final.bam \
+    -f BAM -g mm \
+    -n wt_sample1 \
+    --outdir macs2 2> macs2/wt_sample1_macs2.log
+
+$ macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip_final.bam \
+    -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_input_final.bam \
+    -f BAM -g mm \
+    -n wt_sample2 \
+    --outdir macs2 2> macs2/wt_sample2_macs2.log
 ```
 
-The tool is quite verbose so you should see lines of text being printed to the terminal, describing each step that is being carried out. If that runs successfully, go ahead and **re-run the same command but this time let's capture that information into a log file using `2>` to re-direct the stadard error to file**:
+The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. You can use `less` to look at the log file and see what information is being reported.
 
-```
-$ macs2 callpeak -t bowtie2/H1hesc_Nanog_Rep1_aln.bam \
-	-c bowtie2/H1hesc_Input_Rep1_aln.bam \
- 	-f BAM -g 1.3e+8 \
-	-n Nanog-rep1 \
-	--outdir macs2 2> macs2/Nanog-rep1-macs2.log
-```
-
-Ok, now let's do the same peak calling for the rest of our samples:
-
-```bash
-macs2 callpeak -t bowtie2/H1hesc_Nanog_Rep2_aln.bam -c bowtie2/H1hesc_Input_Rep2_aln.bam -f BAM -g 1.3e+8 --outdir macs2 -n Nanog-rep2 2> macs2/Nanog-rep2-macs2.log
-	 
-macs2 callpeak -t bowtie2/H1hesc_Pou5f1_Rep1_aln.bam -c bowtie2/H1hesc_Input_Rep1_aln.bam -f BAM -g 1.3e+8 --outdir macs2 -n Pou5f1-rep1 2> macs2/Pou5f1-rep1-macs2.log
-	 
-macs2 callpeak -t bowtie2/H1hesc_Pou5f1_Rep2_aln.bam -c bowtie2/H1hesc_Input_Rep2_aln.bam -f BAM -g 1.3e+8 --outdir macs2 -n Pou5f1-rep2 2> macs2/Pou5f1-rep2-macs2.log
-
-```
 
 ## MACS2 Output files
 
-### File formats
-Before we start exploring the output of MACS2, we'll briefly talk about the new file formats you will encounter.
-
-**narrowPeak:**
-
-A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
-
-<img src="../img/narrowPeak.png">
-
-**WIG format:**
-
-Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
-
-**BedGraph format:**
-
-The BedGraph format also allows display of continuous-valued data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
-
-### MACS2 output files
 
 	$ cd macs2/
 	
@@ -231,6 +199,12 @@ Now, there should be 6 files output to the results directory for each of the 4 s
 Let's first obtain a summary of how many peaks were called in each sample. We can do this by counting the lines in the `.narrowPeak` files:
 
 	$ wc -l *.narrowPeak
+	
+### narrowPeak
+
+A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
+
+<img src="../img/narrowPeak.png">
 
 We can also generate plots using the R script file that was output by MACS2. There is a `_model.R` script in the directory. Let's load the R module and run the R script in the command line using the `Rscript` command as demonstrated below:
 
