@@ -41,9 +41,9 @@ There are various tools that are available for peak calling. One of the more **c
 
 
 ## MACS2
-A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites it is also suited for larger regions.
+A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites it is also suited for larger regions. MACS improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** 
 
-We will be using the newest version of this tool, MACS2. The underlying algorithm for peak calling remains the same as before, but it comes with some enhancements in functionality. MACS2 improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
+We will be using the newest version of this tool, **MACS2**. The **underlying algorithm for peak calling remains the same as before**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
 > **NOTE:** While MACS2 can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will obtain many false positive peaks identified. 
 
