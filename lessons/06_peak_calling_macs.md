@@ -8,8 +8,6 @@ Contributors: Meeta Mistry, Radhika Khetani
 
 Approximate time: 80 minutes
 
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/9
-
 ## Learning Objectives
 
 * Describe the different components of the MACS2 peak calling algorithm
@@ -20,31 +18,43 @@ Approximate time: 80 minutes
 
 Peak calling, the next step in our workflow, is a computational method used to identify areas in the genome that have been enriched with aligned reads as a consequence of performing a ChIP-sequencing experiment. 
 
+<p align="center">
 <img src="../img/chip_workflow_june2017_step2.png" width="700">
+	</p>
 
 For ChIP-seq experiments, what we observe from the alignment files is a **strand asymmetry with read densities on the +/- strand, centered around the binding site**. The 5' ends of the selected fragments will form groups on the positive- and negative-strand. The distributions of these groups are then assessed using statistical measures and compared against background (input or mock IP samples) to determine if the site of enrichment is likely to be a real binding site.
 
-<img src="../img/plos_chipseq_arrow.png"  align="middle"></div>
+<p align="center">
+<img src="../img/plos_chipseq_arrow.png" width = "700">
+</p>
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
-There are various tools that are available for peak calling. One of the more commonly used peak callers is MACS2, and we will demonstrate it in this session. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
+There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this session. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
 
-> **NOTE:** Our dataset is investigating two transcription factors and so our focus is on identifying short degenerate sequences that present as punctate binding sites. ChIP-seq analysis algorithms are specialized in identifying one of **two types of enrichment** (or have specific methods for each): **broad peaks** or broad domains (i.e. histone modifications that cover entire gene bodies) or **narrow peaks** (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also 'mixed' binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
+
+## Types of binding profiles
+
+...Identifying short degenerate sequences that present as punctate binding sites. ChIP-seq analysis algorithms are specialized in identifying one of **two types of enrichment** (or have specific methods for each): **broad peaks** or broad domains (i.e. histone modifications that cover entire gene bodies) or **narrow peaks** (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also 'mixed' binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
+
+Talk about histone marks here - maybe some more info on cofactors, enhancers....
 
 ## MACS2
-
 A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites it is also suited for larger regions.
 
-MACS improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** MACS can be easily used either for the ChIP sample alone, or along with a control sample which increases specificity of the peak calls. The MACS workflow is depicted below. In this lesson, we will describe the steps in more detail.
+We will be using the newest version of this tool, MACS2. The underlying algorithm for peak calling remains the same as before, but it comes with some enhancements in functionality. MACS2 improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
-<img src="../img/macs_workflow.png" width="500">
+> **NOTE:** While MACS2 can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will obtain many false positive peaks identified. 
 
+<p align="center">
+<img src="../img/macs_workflow.png" width="400">
+</p>
+	
 ### Removing redundancy
 
 MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with the **same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
 
-**We do not need to worry about this since we filtered out during the duplicates [post-alignment filtering step](05_filtering_BAM_files.md).**
+**We do not need to worry about this since we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
 
 
 ### Modeling the shift size
@@ -55,8 +65,9 @@ To find paired peaks to **build the model**, MACS first scans the whole dataset 
 
 MACS randomly **samples 1,000 of these high-quality peaks**, separates their positive and negative strand tags, and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. MACS shifts all the tags by d/2 toward the 3' ends to the most likely protein-DNA interaction sites.
 
+<p align="center">
 <img src="../img/peak_shift3.png" width="400">
-
+</p>
 
 ### Scaling libraries
 
@@ -66,7 +77,9 @@ For experiments in which sequence depth differs between input and treatment samp
 
 To calculate λBG from tag count, MAC2 requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
 
+<p align="center">
 <img src="../img/mappable.png" width="300">
+</p>
 
 > #### How do I obtain the effective genome length?
 > The MACS2 software has some pre-computed values for commonly used organisms (human, mouse, worm and fly). If you wanted you could compute a more accurate values based on your organism and build. The [deepTools docs](https://deeptools.readthedocs.io/en/develop/content/feature/effectiveGenomeSize.html) has additional pre-computed values for more recent builds but also has some good materials on how to go about computing it.
@@ -83,7 +96,10 @@ Instead of using a uniform λ estimated from the whole genome, MACS uses a dynam
 
 In this way lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
 
+<p align="center">
 <img src="../img/lambda.png" width="300">
+</p>
+
 
 A region is considered to have a significant tag enrichment if the p-value  < 10e-5 (this can be changed from the default). This is a Poisson distribution p-value based on λ.
 
@@ -93,18 +109,14 @@ Overlapping enriched peaks are merged, and each tag position is extended 'd' bas
 
 Each peak is considered an independent test and thus, when we encounter thousands of significant peaks detected in a sample we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS2, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
 
-## Running MACS2
-
-We will be using the newest version of this tool, MACS2. The underlying algorithm for peak calling remains the same as before, but it comes with some enhancements in functionality. 
-
-### Setting up
+## Running MACS2 
 
 To run MACS2, we will first start an interactive session using 1 core (do this only if you don't already have one) and load the macs2 module along with any dependencies:
 
 ```bash
 $ srun --pty -p interactive -t 0-2:30 --mem 1G  /bin/bash
 
-$ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309 # UPDATE IF NEWER MODULES
+$ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309
 ```
 
 We will also need to create a directory for the output generated from MACS2:
@@ -173,21 +185,25 @@ $ macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/res
     --outdir macs2 2> macs2/wt_sample2_macs2.log
 ```
 
-The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. You can use `less` to look at the log file and see what information is being reported.
+The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. **You can use `less` to look at the log file and see what information is being reported.**
+	
+Move the log files to the `log` directory we had created during our project setup:
 
+```bash
+$ mv macs2/*.log ../logs/
+```
 
 ## MACS2 Output files
 
+Change directories into `macs2`, and list the output files that we have generated.
 
-	$ cd macs2/
+```bash
+$ cd macs2/
 	
-	$ ls -lh
-	
-Let's first move the log files to the `log` directory:
+$ ls -lh
+```
 
-	$ mv *.log ../../logs/
-	
-Now, there should be 6 files output to the results directory for each of the 4 samples, so a total of 24 files:
+There should be 6 files output to the results directory for each of the 4 samples, so a total of 24 files:
 
 * `_peaks.narrowPeak`: BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue
 * `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment
@@ -198,32 +214,26 @@ Now, there should be 6 files output to the results directory for each of the 4 s
 
 Let's first obtain a summary of how many peaks were called in each sample. We can do this by counting the lines in the `.narrowPeak` files:
 
-	$ wc -l *.narrowPeak
+```bash
+$ wc -l *.narrowPeak
+```
 	
-### narrowPeak file format
+### File formats: BED vs narrowPeak
 
+#### BED
+Take content from slide deck here
+
+#### narrowPeak
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
 
+<p align="center">
 <img src="../img/narrowPeak.png">
+</p>
 
-We can also generate plots using the R script file that was output by MACS2. There is a `_model.R` script in the directory. Let's load the R module and run the R script in the command line using the `Rscript` command as demonstrated below:
 
 
-	$ module load gcc/6.2.0 R/3.4.1
-	
-	$ Rscript Nanog-rep1_model.r
-	
-> **NOTE:** We need to load the `gcc/6.2.0` before loading R. You can find out which modules need to be loaded first by using module spider R/3.4.1` 
-	
-Now you should see a pdf file in your current directory by the same name. Create the plots for each of the samples and move them over to your laptop using `Filezilla`. 
+### Other peak calling software
 
-Open up the pdf file for Nanog-rep1. The first plot illustrates **the distance between the modes from which the shift size was determined**. 
-
-<img src="../img/model-macs.png" width="400">
-
-The second plot is the  **cross-correlation plot**. This is a graphical representation of the Pearson correlation of positive- and negative- strand tag densities, shifting the strands relative to each other by increasing distance. We will talk about this in more detail in the next lesson.
-
-> **NOTE:** [SPP](http://www.nature.com.ezp-prod1.hul.harvard.edu/nbt/journal/v26/n12/full/nbt.1508.html) is another very commonly used tool for *narrow* peak calling. While we will not be going through the steps for this peak caller in this workshop, we do have [a lesson on SPP](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/peak_calling_spp.html) that we encourage you to browse through if you are interested in learning more.
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
