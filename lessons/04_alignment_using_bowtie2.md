@@ -165,7 +165,7 @@ Finally, you have the raw sequence data from the original FASTQ file stored for 
 
 ### Changing file format from SAM to BAM
 
-While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equavalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM. Samtools is a program taht consists of many utilities for working with the Sequence Alignment/Map (SAM) format. Here, we will use the `samtools view` command to conver our SAM file into its binary compressed version (BAM) and save it to file.
+While the SAM alignment file from Bowtie2 is human readable, we need a BAM alignment file for downstream analysis. A BAM file is a binary equivalent version of SAM file, in other words, the same file in a compressed format. Therefore, BAM file is not human readable, and it is much smaller in size. BAM file is the typical format used in bioinformatics tools. We will use [Samtools](http://samtools.github.io) to convert the file format from SAM to BAM. Samtools is a program taht consists of many utilities for working with the Sequence Alignment/Map (SAM) format. Here, we will use the `samtools view` command to convert our SAM file into its binary compressed version (BAM) and save it to file.
 
 > NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we can delete it to save space.
 
