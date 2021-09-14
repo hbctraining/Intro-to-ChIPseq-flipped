@@ -119,11 +119,18 @@ $ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
-Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. When a command is run it will often generate two types of output: the standard output accomplished by the process and diagnostic output referred to as standard error. By convention, both are output to the screen, but we can redirect it to file using redirection operators. To redirect the standard output to file, we can use the `>` and to redirect the standard error to file we can use `2>`. Tools generally follow the convention of the which type of information is in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We will often redirect the standard error from a process to a log file so that we have this information for any downstream troubleshooting, which we could use as follows:
+Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. 
+
+When a command is run it will often generate two types of output: the output accomplished by the process generally referred to as standard output and diagnostic output generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file, we can use the `>` and to redirect the standard error to file we can use `2>`. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We will often redirect the standard error from a process to a log file so that we have this information for any downstream troubleshooting. 
+
+We could redirect our standard error from our `bowtie2` command as follows:
 
 ```
-# Redirection of standard error
-fastqc *.fastq -o ~/chipseq/results/fastqc 2> ../logs/fastqc_log.txt
+# DO NOT RUN
+bowtie2 -p 2 -q --local \
+-x /n/groups/shared_databases/bowtie2_indexes/mm10 \
+-U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
 ```
 
 If a tool doesn't have an output argument, then we need to be sure to redirect it from our screen to file. Show the code below on how we use it.
