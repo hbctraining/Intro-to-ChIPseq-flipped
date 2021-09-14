@@ -200,7 +200,7 @@ Let's first obtain a summary of how many peaks were called in each sample. We ca
 
 	$ wc -l *.narrowPeak
 	
-### narrowPeak
+### narrowPeak file format
 
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
 
