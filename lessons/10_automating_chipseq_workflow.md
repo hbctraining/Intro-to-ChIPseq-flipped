@@ -87,7 +87,7 @@ To ensure that all the output files from the workflow are properly named with sa
 ```
 # grab base of filename for naming outputs
 base=`basename $fq .fastq.gz`
-echo "Sample name is $base"           
+echo "Start processing $base ..."            
 ```
 
 > **Remember `basename`?**
@@ -101,31 +101,29 @@ We'll create output directories, but with the `-p` option. This will make sure t
 # make all of the output directories
 # The -p option means mkdir will create the whole path if it 
 # does not exist and refrain from complaining if it does exist
-mkdir -p ~/chipseq/results/fastqc
-mkdir -p ~/chipseq/results/bowtie2/intermediate_bams
+mkdir -p ~/chipseq_workshop/results/fastqc
+mkdir -p ~/chipseq_workshop/results/bowtie2
 ```
 
-Now that we have already created our output directories, we can now create variables using those directories. 
+Now that we have already created our output directories, we can create variables using those directories. 
 
 ```
 # directory with bowtie genome index
-genome=~/chipseq/reference_data/chr12
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
 
 # set up output filenames and locations
-fastqc_out=~/chipseq/results/fastqc/
+fastqc_out=~/chipseq_workshop/results/fastqc
+bowtie_results=~/chipseq_workshop/results/bowtie2
 
 ## set up file names
-align_out=~/chipseq/results/bowtie2/${base}_unsorted.sam
-align_bam=~/chipseq/results/bowtie2/${base}_unsorted.bam
-align_sorted=~/chipseq/results/bowtie2/${base}_sorted.bam
-align_filtered=~/chipseq/results/bowtie2/${base}_aln.bam
+align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
+align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
+align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
+align_final=~/chipseq/results/bowtie2/${base}_final.bam
 
-## set up more variables for 2 additional directoties to help clean up the results folder
-bowtie_results=~/chipseq/results/bowtie2
-intermediate_bams=~/chipseq/results/bowtie2/intermediate_bams
 ```
 
-Creating these variables makes it easier to see what is going on in a long command wherein we can use we can now use `align_out` instead of `~/chipseq/results/bowtie2/${base}_unsorted.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in the one location instead of throughout the script. 
+Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `~/chipseq_workshop/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
 
 ### Keeping track of tool versions
 
@@ -133,7 +131,7 @@ All of our variables are now staged. Next, let's make sure all the modules are l
 
 ```
 # set up the software environment
-module load fastqc/0.11.5
+module load fastqc/0.11.3
 module load gcc/6.2.0
 module load bowtie2/2.2.9
 module load samtools/1.9
@@ -142,10 +140,10 @@ export PATH=/n/app/bcbio/tools/bin:$PATH 	# for using 'sambamba'
 
 ### Preparing for future debugging
 
-In the script, it is a good idea to use `echo` for debugging. `echo` basically displays the string of characters specified within the quotations. When you have strategically place `echo` commands specifying what stage of the analysis is next, in case of failure you can determine the last `echo` statement displayed to troubleshoot the script.
+In the script, it is a good idea to use `echo` for debugging. `echo` displays the string of characters specified within the quotations. When you strategically place `echo` commands indicating the stage of the analysis, in case of failure you can determine the last `echo` statement displayed to troubleshoot the script. For example, we could add the below `echo` command before we perform the FastQC analysis.
 
 ```
-echo "Processing file $fq"
+echo "FastQC analysis ..."
 ```
 
 > You can also use `set -x`:
@@ -161,25 +159,22 @@ Let's write up the commands to run the tools we have already tested, with a coup
 
 ```
 # Run FastQC
-fastqc $fq
+fastqc -o $fastqc_out $fq
 
 # Run bowtie2
-bowtie2 -p 6 -q --local -x $genome -U $fq -S $align_out
+bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
 
 # Create BAM from SAM
-samtools view -h -S -b -@ 6 -o $align_bam $align_out
+samtools view -h -S -b -o $align_bam $align_sam
 
 # Sort BAM file by genomic coordinates
-sambamba sort -t 6 -o $align_sorted $align_bam
+samtools sort $align_bam -o $align_sorted 
 
 # Filter out multi-mappers and duplicates
-sambamba view -h -t 6 -f bam -F "[XS] == null and not unmapped and not duplicate" $align_sorted > $align_filtered
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
 
 # Create indices for all the bam files for visualization and QC
-samtools index $align_filtered
-
-# Move intermediate files out of the bowtie2 directory
-mv $bowtie_results/${base}*sorted* $intermediate_bams
+samtools index $align_final
 ```
 
 ### Last addition to the script
@@ -198,68 +193,69 @@ Your script should now look like this:
 ```
 #!/bin/bash/
 
-# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Bowtie2 is the aligner used, and the outputted BAM file is sorted by genomic coordinates and has multi-mappers and duplicate reads removed using sambamba.
+# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file that is ready for peak calling. Bowtie2 is the aligner used, and the BAM file is sorted by genomic coordinates and has multi-mappers and duplicate reads removed using samtools.
 # USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 
 # initialize a variable with an intuitive name to store the name of the input fastq file
 fq=$1
 
 # grab base of filename for naming outputs
-base=`basename $fq .fastq`
-echo "Sample name is $base"    
+base=`basename $fq .fastq.gz`
+echo "Start processing $base ..."    
 
 # directory with bowtie genome index
-genome=~/chipseq/reference_data/chr12
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
 
 # make all of the output directories
 # The -p option means mkdir will create the whole path if it 
 # does not exist and refrain from complaining if it does exist
-mkdir -p ~/chipseq/results/fastqc
-mkdir -p ~/chipseq/results/bowtie2/intermediate_bams
+mkdir -p ~/chipseq_workshop/results/fastqc
+mkdir -p ~/chipseq_workshop/results/bowtie2
 
 # set up output filenames and locations
-fastqc_out=~/chipseq/results/fastqc/
+fastqc_out=~/chipseq_workshop/results/fastqc
+bowtie_results=~/chipseq_workshop/results/bowtie2
 
 ## set up file names
-align_out=~/chipseq/results/bowtie2/${base}_unsorted.sam
-align_bam=~/chipseq/results/bowtie2/${base}_unsorted.bam
-align_sorted=~/chipseq/results/bowtie2/${base}_sorted.bam
-align_filtered=~/chipseq/results/bowtie2/${base}_aln.bam
-
-## set up more variables for 2 additional directoties to help clean up the results folder
-bowtie_results=~/chipseq/results/bowtie2
-intermediate_bams=~/chipseq/results/bowtie2/intermediate_bams
+align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
+align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
+align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
+align_final=~/chipseq/results/bowtie2/${base}_final.bam
 
 # set up the software environment
-module load fastqc/0.11.5
+module load fastqc/0.11.3
 module load gcc/6.2.0  
 module load bowtie2/2.2.9
 module load samtools/1.9
 export PATH=/n/app/bcbio/tools/bin:$PATH 	# for using 'sambamba'
 
-echo "Processing file $fq"
+echo "FastQC analysis ..."
 
-# Run FastQC and move output to the appropriate folder
-fastqc $fq
-mv *_fastqc.* ~/chipseq/results/fastqc/
+# Run FastQC and place the output to the appropriate folder
+fastqc -o $fastqc_out $fq
+
+echo "Bowtie2 alignment ..."
 
 # Run bowtie2
-bowtie2 -p 6 -q --local -x $genome -U $fq -S $align_out
+bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
+
+echo "Convert SAM to BAM ..."
 
 # Create BAM from SAM
-samtools view -h -S -b -@ 6 -o $align_bam $align_out
+samtools view -h -S -b -o $align_bam $align_sam
+
+echo "Filtering BAM file ..."
 
 # Sort BAM file by genomic coordinates
-sambamba sort -t 6 -o $align_sorted $align_bam
+samtools sort $align_bam -o $align_sorted 
 
 # Filter out duplicates
-sambamba view -h -t 6 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_filtered
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
 
 # Create indices for all the bam files for visualization and QC
-samtools index $align_filtered
+samtools index $align_final
 
-# Move intermediate files out of the bowtie2 directory
-mv $bowtie_results/${base}*sorted* $intermediate_bams
+echo "The process for $base is finished!"
 ```
 
 ### Saving and running script
@@ -267,16 +263,16 @@ mv $bowtie_results/${base}*sorted* $intermediate_bams
 We should all have an interactive session with 6 cores, so we can run the script as follows:
 
 ```bash
-$ sh chipseq_analysis_on_input_file.sh ~/chipseq/raw_data/H1hesc_Nanog_Rep1_chr12.fastq
+$ sh chipseq_automating.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
 ```
 
 ## Submitting jobs **in serial** to the SLURM scheduler
 
 The above script will run in an interactive session **one file at a time**. But the whole point of writing this script was to run it on all files at once. How do you think we can do this?
 
-To run the above script **"in serial"** for all of the files on a worker node via the job scheduler, we can create a separate submission script that will need 2 components:
+To run the above script **"in serial"** for all of the files via the job scheduler, we can create a separate submission script that will need 2 components:
 
-1. **SLURM directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
+1. **SLURM directives** at the **beginning** of the script. This is to let scheduler know what resources we need in order to run our job on the compute node(s).
 2. a **`for`** loop that iterates through and runs the above script for all the fastq files.
 
 Below is what this second script (`chipseq_analysis_on_allfiles.slurm`) would look like **\[DO NOT RUN THIS\]**:
@@ -289,33 +285,33 @@ Below is what this second script (`chipseq_analysis_on_allfiles.slurm`) would lo
 #SBATCH -p short 		# partition name
 #SBATCH -t 0-2:00 		# hours:minutes runlimit after which job will be killed
 #SBATCH -n 6 		# number of cores requested -- this needs to be greater than or equal to the number of cores you plan to use to run your job
-#SBATCH --job-name Nanog_Rep1 		# Job name
+#SBATCH --job-name chipseq 		# Job name
 #SBATCH -o %j.out			# File to which standard out will be written
 #SBATCH -e %j.err 		# File to which standard error will be written
 
 # this `for` loop, will take chip-seq fastq files as input and output filtered BAM files ready for peak calling.
 
-for fq in ~/chipseq/raw_data/*.fastq
+for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
 do
   echo "running analysis on $fq"
-  sh chipseq_analysis_on_input_file.sh $fq
+  sh chipseq_automating.sh $fq
 done
 ```
 
-**But we don't want to run the analysis on these 6 samples one after the other!** We want to run them "in parallel" as 6 separate jobs. 
+**But we don't want to run the analysis on these 8 samples one after the other!** We want to run them "in parallel" as 8 separate jobs. 
 
 > **Note:** If you create and run the above script, or something similar to it, i.e. with SLURM directives at the top, you should give the script name `.run` or `.slurm` as the extension. This will make it obvious that it is meant to submit jobs to the SLURM scheduler. 
 
-To the run the above script you would have used the following command: `sbatch chipseq_analysis_on_allfiles.slurm`.  
+To the run the above script, you would have used the following command: `sbatch chipseq_analysis_on_allfiles.slurm`.  
 
 ## Submitting jobs **in parallel** to the SLURM scheduler
 
 Parallelization will save you a lot of time with real (large) datasets. To parallelize our analysis, we will still need to write a second script that will call the original script we just wrote. We will still use a `for` loop, but we will be creating a regular shell script and we will be specifying the SLURM directives a little differently. 
 
-Use `vim` to start a new shell script called `chipseq_analysis_on_allfiles-for_slurm.sh`: 
+Use `vim` to start a new shell script called `chipseq_run_allfiles.sh`: 
 
 ```bash
-$ vim chipseq_analysis_on_allfiles_for-slurm.sh
+$ vim chipseq_run_allfiles.sh
 ```
 
 This script loops through the same files as in the previous (demo) script, but the command being submitted within the `for` loop is `sbatch` with SLURM directives specified on the same line:
@@ -323,19 +319,19 @@ This script loops through the same files as in the previous (demo) script, but t
 ```bash
 #! /bin/bash
 
-for fq in ~/chipseq/raw_data/*.fastq
+for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
 do
 
 sbatch -p short -t 0-2:00 -n 6 --job-name chipseq-analysis -o %j.out -e %j.err \
---wrap="sh ~/chipseq/scripts/chipseq_analysis_on_input_file.sh $fq"
+--wrap="sh ~/chipseq_workshop/scripts/chipseq_automating.sh $fq"
 
 sleep 1	    # wait 1 second between each job submission
   
 done
 ```
-> Please note that after the `sbatch` directives the command `sh ~/chipseq/scripts/chipseq_analysis_on_input_file.sh $fq` is in quotes.
+> Please note that after the `sbatch` directives, the command `sh ~/chipseq_workshop/scripts/chipseq_automating.sh $fq` is in quotes.
 
-What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted.
+Lastly, you run the script with `sh chipseq_run_allfiles.sh`. What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted.
 
 You can use `sacct login_ID` to check progress.
 
