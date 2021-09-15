@@ -20,7 +20,7 @@ There are various strategies for visualizing enrichment patterns, and we will ex
 
 ### File formats for peak visualization
 
-**Take content from slide deck**
+**Take content from slide deck**: https://github.com/hbctraining/Intro-to-ChIPseq/blob/master/lectures/Fileformats.pdf
 
 #### Wiggle and bigwig file format
 
