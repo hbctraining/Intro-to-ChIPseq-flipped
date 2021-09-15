@@ -116,7 +116,7 @@ _Note: This command can take up to 10 minutes to complete._
 
 ### `bamCompare`
 
-Alternatively, we could use `bamCompare` to **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it require two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. We use the default method used to compare the two samples, which is the log2 ratio. Any of the parameters described above can also be used. 
+Alternatively, we could use `bamCompare` to **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it require two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. The default `--operation` used to compare the two samples is the **log2 ratio**, however you also have the option to add, subtract and mean. Any of the parameters described above can also be used. 
 
 ```bash
 ## DO NOT RUN
