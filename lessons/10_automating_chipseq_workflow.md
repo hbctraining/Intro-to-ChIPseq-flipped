@@ -1,25 +1,26 @@
 ---
 title: "Automating QC and Alignment"
-author: "Meeta Mistry, Radhika Khetani"
-date: "March 20th, 2018"
+author: "Meeta Mistry, Radhika Khetani, Jihe Liu"
+date: "Sept 15th, 2021"
 ---
 
-Contributors: Meeta Mistry, Radhika Khetani
+Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu
 
 Approximate time: 80 minutes
 
 ## Learning Objectives
 
-* Write a shell script to generate filtered BAM files for all samples
+* Write a shell script to streamline the analysis for QC and alignment 
+* Submit slurm jobs for all samples using the automating script
 * Describe the difference between serial and parallel jobs
 
 ## Automating the ChIP-seq analysis path from sequence reads to BAM files
 
-Once you have optimized tools and parameters using a single sample (using an interactive session), you can write a script to run the whole or a portion of the workflow on multiple samples in parallel (batch submission with a shell script).
+Once you have optimized tools and parameters using a single sample, you can write a script to run the whole or a portion of the workflow on multiple samples in parallel (batch submission with a shell script).
 
-Writing a reusable shell script ensures that every sample is run with the exact same parameters, and helps to keep track of all the tools and their versions. The shell script is like a lab notebook; in the future, you (or your colleagues) can go back and check the workflow for methods and versions, which goes a long way to making your work more efficient and reproducible.
+Writing a reusable shell script ensures that every sample is run with the exact same parameters, and helps to keep track of all the tools and their versions. The shell script is like a lab notebook; in the future, you (or your colleagues) can go back and check the workflow for methods and versions, making your work more efficient and reproducible.
 
-Before we start with the script, let's check how many cores our interactive session has by using `sacct`. 
+Before we start the script, let's check how many cores our interactive session has by using `sacct`. 
 
 ```bash
 $ sacct
@@ -33,7 +34,7 @@ $ srun --pty -p short -t 0-12:00 -c 6 --mem 4G --reservation=HBC2 /bin/bash
 
 ### More Flexibility with variables
 
-We can write a shell script that will run on a specific file, but to make it more flexible and efficient we would prefer that it lets us give it an input fastq file when we run the script. To be able to provide an input to any shell script, we need to use **Positional Parameters**.
+We can write a shell script that runs on a specific file, but to make it more flexible and efficient, we would prefer that it accepts an input fastq file when we run the script. To be able to provide an input to any shell script, we need to use **Positional Parameters**.
 
 For example, we can refer to the components of the following command as numbered variables **within** the actual script:
 
@@ -56,14 +57,14 @@ The variables $1, $2, $3,...$9 and so on are **positional parameters** in the co
 
 > [This is an example of a simple script that used the concept of positional parameters and the associated variables](http://steve-parker.org/sh/eg/var3.sh.txt). You should try this script out after the class to get a better handle on positional parameters for shell scripting.
 
-Let's use this new concept in the script we are writing. We want the first positional parameter ($1) to be the name of our fastq file. We could just use the variable `$1` throughout the script to refer to the fastq file, but this variable name is not intuitive, so we want to create a new variable called `fq` and copy the contents of `$1` into it.
+Let's use this new concept in the script we are creating. We want the first positional parameter ($1) to be the name of our fastq file. We could just use the variable `$1` throughout the script to refer to the fastq file, but this variable name is not intuitive, so we want to create a new variable called `fq` and copy the contents of `$1` into it.
 
-First, we need to start a new script called `chipseq_analysis_on_input_file.sh` in the `~/chipseq/scripts/` directory:
+First, we need to start a new script called `chipseq_automating.sh` in the `~/chipseq_workshop/scripts/` directory:
 
 ```bash
-$ cd ~/chipseq/scripts/
+$ cd ~/chipseq_workshop/scripts/
 
-$ vim chipseq_analysis_on_input_file.sh
+$ vim chipseq_automating.sh
 ```
 
 ```bash
@@ -81,17 +82,17 @@ fq=$1
 >
 > using the `fq` variable => `fastqc $fq`
 
-To ensure that all the output files from the workflow are properly named with sample IDs we should extract the "base name" (or sample ID) from the name of the input file.
+To ensure that all the output files from the workflow are properly named with sample IDs, we should extract the "base name" (or sample ID) from the name of the input file.
 
 ```
 # grab base of filename for naming outputs
-base=`basename $fq _chr12.fastq`
+base=`basename $fq .fastq.gz`
 echo "Sample name is $base"           
 ```
 
 > **Remember `basename`?**
 >
-> 1. the `basename` command: this command takes a path or a name and trims away all the information before the last `\` and if you specify the string to clear away at the end, it will do that as well. In this case, if the variable `$fq` contains the path *"~/chipseq/raw_data/H1hesc_Nanog_Rep1_chr12.fastq"*, `basename $fq _chr12.fastq` will output "H1hesc_Nanog_Rep1".
+> 1. the `basename` command: this command takes a path or a name, and trims away all the information before the last `\`. If you specify the string to clear away at the end, it will do that as well. In this case, if the variable `$fq` contains the path *"~/chipseq/raw_data/H1hesc_Nanog_Rep1_chr12.fastq"*, `basename $fq _chr12.fastq` will output "H1hesc_Nanog_Rep1".
 > 2. to assign the value of the `basename` command to the `base` variable, we encapsulate the `basename...` command in backticks. This syntax is necessary for assigning the output of a command to a variable.
 
 We'll create output directories, but with the `-p` option. This will make sure that `mkdir` will create the directory only if it does not exist, and it won't throw an error if it does exist.
