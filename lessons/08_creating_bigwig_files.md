@@ -1,5 +1,5 @@
 ---
-title: "Visualization of peaks"
+title: "Creating files for assessing peak enrichment"
 author: "Meeta Mistry, Jihe Liu"
 date: "Aug 19th, 2021"
 ---
@@ -12,11 +12,10 @@ Approximate time:
 * Understand what is bigWig file
 * Learn how to generate bigWig files using `deepTools`
 
-## Visualization of ChIP-seq data
+## Creating files for assessing peak enrichemnt
 
-The first stage of ChIP-seq analysis uses common processing pipelines, which involves the alignment of raw reads to the genome, data filtering, and identification of enriched signal regions (peak calling). In the second stage, individual software programs allow detailed analysis of those peaks, biological interpretation, and visualization of ChIP-seq results.
+Now that we have identified the regions in the genome that are enriched through some interaction with PRDM16, we can take those regions and visually assess the amount of signal observed. This can be done by uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway). After loading the data, you can explore the genome and specific loci to look for where peaks were called and validate with the presence of read pileups. Alternatively, you can create profile plots and heatmaps to look at the signal aggregated over all binding sites. **In order to perform any of assessments described above, you will need an appropriate input file.** The goal of this lesson is to introduce you to different file formats used for ChIP-seq data visualization and how to generate these files using [`deepTools`](https://deeptools.readthedocs.io/en/develop/index.html).
 
-There are various strategies for visualizing enrichment patterns, and we will explore a few of them. To start, we will create bigWig files for our samples, a standard file format commonly used for ChIP-seq data visualization.
 
 ### File formats for peak visualization
 
