@@ -177,7 +177,6 @@ _**Once you have figured out what argument to use, run FastQC with 4 threads/cor
 </details>
 
 2. Do you notice any difference in running time? Does multi-threading speed up the run?
-3. Is there anything in the ouput that suggests this is no longer running serially?
                    
 ***
 
