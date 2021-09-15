@@ -26,7 +26,9 @@ In this lesson, we will introduce you to an important file format that you will 
 ### BED file formats
 
 #### BED
-Take content from slide deck here
+Take content from slide deck here: https://github.com/hbctraining/Intro-to-ChIPseq/blob/master/lectures/Fileformats.pdf
+
+Talk about zero and one-based
 
 #### narrowPeak
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
