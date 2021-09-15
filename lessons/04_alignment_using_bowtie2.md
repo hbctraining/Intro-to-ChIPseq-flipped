@@ -269,7 +269,7 @@ rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 **Exercise:**
 
 1. After your job has completed, check the resulting `.out` and `.err` files. What information do you obtain from each file? 
-2. Take a quick peek at a sample SAM file using `less`. Does the information you see line up with the fields we described above?
+2. Take a quick peek at a sample BAM file using `samtools view`. Does the information you see line up with the fields we described above?
 3. What is the alignment rate for the `wt_sample2_chip`? Do you think the alignment is good?
 
 > _**NOTE:** After performing read alignment, it's useful to evaluate the mapping rate for each sample by taking look at the log files. Additionally, it is common to aggregate QC metrics and visualize them with plots using tools such as [MultiQC](http://multiqc.info). This is important to do prior to moving on to the next steps of the analysis._
