@@ -41,7 +41,7 @@ There are various tools that are available for peak calling. One of the more **c
 
 
 ## MACS2
-A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites it is also suited for larger regions. MACS improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** 
+A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites, it is also suited for larger regions. MACS improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** 
 
 We will be using the newest version of this tool, **MACS2**. The **underlying algorithm for peak calling remains the same as before**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
@@ -53,14 +53,14 @@ We will be using the newest version of this tool, **MACS2**. The **underlying al
 	
 ### Removing redundancy
 
-MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with the **same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
+MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with **the same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
 
-*We do not need to worry about this since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
+*We do not need to worry about this, since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
 
 
 ### Modeling the shift size
 
-The tag density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks). MACS takes advantage of this bimodal pattern to empirically model the shifting size to better locate the precise binding sites.
+The tag density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks). MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
 
 To find paired peaks to **build the model**, MACS first scans the whole dataset searching for highly significant enriched regions. *This is done only using the ChIP sample!* Given a sonication size (`bandwidth`) and a high-confidence fold-enrichment (`mfold`), MACS slides two `bandwidth` windows across the genome to find regions with **tags more than `mfold` enriched relative to a random tag genome distribution**. 
 
@@ -97,7 +97,7 @@ Instead of using a uniform λ estimated from the whole genome, MACS uses a dynam
 
 **λlocal = max(λBG, λ1k, λ5k, λ10k).** 
 
-In this way lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
+In this way, lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
 
 <p align="center">
 <img src="../img/lambda.png" width="300">
@@ -110,7 +110,7 @@ Overlapping enriched peaks are merged, and each tag position is extended 'd' bas
 
 ### Estimation of false discovery rate
 
-Each peak is considered an independent test and thus, when we encounter thousands of significant peaks detected in a sample we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS2, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
+Each peak is considered an independent test. Therefore, when we encounter thousands of significant peaks detected in a sample, we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS2, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
 
 ## Running MACS2 
 
