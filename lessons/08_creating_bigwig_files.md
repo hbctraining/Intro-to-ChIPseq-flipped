@@ -12,9 +12,9 @@ Approximate time:
 * Understand the different file formats available for peak visualization
 * Learn how to generate bigWig files using `deepTools`
 
-## Creating files for assessing peak enrichment
+## Setting up for QC on peak calls
 
-Now that we have identified the regions in the genome that are enriched through some interaction with PRDM16, we can **take those regions and visually assess the amount of signal observed**. This can be done by uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups. Alternatively, you can create profile plots and heatmaps to look at the signal aggregated over all binding sites. **In order to perform any of assessments described above, you will need an appropriate input file.** 
+Now that we have identified regions in the genome that are enriched through some interaction with PRDM16, we can **take those regions and visually assess the amount of signal observed**. This can be done by uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups. Alternatively, you can create profile plots and heatmaps to look at the signal aggregated over all binding sites. **In order to perform any of assessments described above, you will need an appropriate input file.** 
 
 The goal of this lesson is to introduce you to **different file formats used for ChIP-seq data visualization and how to generate these files** using [`deepTools`](https://deeptools.readthedocs.io/en/develop/index.html).
 
@@ -61,7 +61,7 @@ Once on a compute node, begin by creating a directory for the output.
 
 ```bash
 $ cd ~/chipseq_workshop/results/
-$ mkdir -p deeptools/bigWig
+$ mkdir -p visualization/bigWig
 ```
 
 We then need to **create an index file for the BAM file**. Often, when working with BAM files you will find that many tools require an index (an associated `.bai` file). You can think of an index similar to that which is located at the back of a textbook - when you are interested in a particular subject, you look for the keyword in the index and identify the pages that contain the relevant information. Similarily, indexing the BAM file aims to achieve fast retrieval of alignments overlapping a specified region without going through the whole alignment file. 
@@ -90,12 +90,17 @@ $ module load python/2.7.12 deeptools/3.0.2
 
 ### `bamCoverage`
 
+This command takes as **input a BAM file and generates a coverage track (bigWig or bedGraph) as output**. The coverage is calculated as the number of reads per bin, where bins are short consecutive counting windows that can be defined by the user. BigWig files have a much smaller data footprint compared to BAM files, especially as your bin size increases, and you can also apply various types of normalization. deepTools normalization options include scaling factor, Reads Per Kilobase per Million mapped reads (RPKM), and counts per million (CPM).
+
 We will use the `bamCoverage` command to **create a bigWig file for `wt_sample2_chip`**. We will specify `binSize` of 20, as an additional parameter. There are a few other parameters that you could explore (but we will not use). 
 
-* `normalizeUsing`: Possible choices: RPKM, CPM, BPM, RPGC.
-* `binSize`: size of bins in bases
+* `normalizeUsing`: Possible choices: RPKM, CPM, BPM, RPGC. By default no normalization is applied.
+* `binSize`: size of bins in bases (default is 50)
+* `--effectiveGenomeSize`: the portion of the genome that is mappable. It is useful to consider this when computing your scaling factor.
 * `smoothLength`: defines a window, larger than the `binSize`, to average the number of reads over. This helps produce a more continuous plot.
 * `centerReads`: reads are centered with respect to the fragment length as specified by `extendReads`. This option is useful to get a sharper signal around enriched regions.
+
+We will be using the bare minimum of parameters as shown in the code below. We decrease the bin soze to increase our resolution of the track (this also means larger file size). If you are interested, feel free to test out some of the other parameters to create different bigWig files. You can load them into a genome viewer and observe the differences.
 
 ```bash
 $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
@@ -103,11 +108,15 @@ $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
 --binSize 20
 ```
 
+_Note: This command can take up to 10 minutes to complete._
+
+> #### When should I be normalizing my bigWig files?
+> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We have not normalized in this workshop because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
+
 
 ### `bamCompare`
 
-
-Alternatively, we could use `bamCompare` to **create a bigWig file in which we normalize the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it require two files as input (`b1` and `b2`). [Here](https://deeptools.readthedocs.io/en/develop/content/help_faq.html#when-should-i-use-bamcoverage-or-bamcompare) are details about the difference between `bamCompare` and `bamCoverage`.
+Alternatively, we could use `bamCompare` to **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it require two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. We use the default method used to compare the two samples, which is the log2 ratio. Any of the parameters described above can also be used. 
 
 ```bash
 ## DO NOT RUN
@@ -117,4 +126,10 @@ $ bamCompare -b1 ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
 -o ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw \
 --binSize 20
 ```
+
+You can find more details about the difference between `bamCompare` and `bamCoverage` [linked here](https://deeptools.readthedocs.io/en/develop/content/help_faq.html#when-should-i-use-bamcoverage-or-bamcompare).
+
+***
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+
 
