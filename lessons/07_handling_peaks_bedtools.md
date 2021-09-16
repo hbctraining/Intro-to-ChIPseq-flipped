@@ -105,7 +105,7 @@ $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-bla
 > 
 > More information about the blacklist region is described in this [paper](https://www.nature.com/articles/s41598-019-45839-z). This is a more recent resource and the authors compiled lists that can be [downloaded here](https://github.com/Boyle-Lab/Blacklist/tree/master/lists). _This is the source for the bed file used in this workshop._ 
 
-Next, we will want to navigate to our results directory:
+Next, we will navigate to our results directory:
 
 ```bash
 $ cd ~/chipseq_workshop/results/
@@ -145,9 +145,7 @@ $ wc -l macs2/wt_sample2_peaks_filtered.bed
 
 ### Finding overlapping peaks between replicates
 
-The next use of `bedtools intersect` is to assess the **concordance between replicates**. We will do this for both the WT and KO sample groups. **This is a crude assessment of reproducibility**, there are more quantitative methods to do so but are outside the scope of this workshop.  
-
-We will evaluate all peaks in the first replicate and see how many overlap in the second replicate. By default if two regions overlap by a minimum of one basepair, it is counted as an overlap. Since the default is a bit lenient, we have added some additional flags (described below) to increase the stringency for our final set of confident peaks per sample group. 
+The next use of `bedtools intersect` is to assess the **concordance between replicates**. We will do this for both the WT and KO sample groups. We will evaluate all peaks in the first replicate and see how many overlap in the second replicate. By default if two regions overlap by a minimum of one basepair, it is counted as an overlap. Since the default is a bit lenient, we have added some additional flags (described below) to increase the stringency for our final set of confident peaks per sample group. 
 
 - `-wo`: Write the original A (file 1) and B (file 2) entries plus the number of base pairs of overlap between the two features.
 - `-f`: Minimum overlap required as a fraction of A. The value ranges from 0 to 1. We will use 0.3, requiring the overlap region being at least 30% of A.
@@ -169,9 +167,15 @@ Finally, let's check how many confident peaks we are left with:
 wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
 
-> A snippet from the [ChIP-seq guidelines and practices of the ENCODE and modENCODE consortia](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/) on the criteria used for identifying reproducible peaks:
+> ### Other appraoches for assessing peak reproducibility
+> Historically, the ENCODE standard was using the overlaps that we described above but with a set of given criteria. This was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size back then. In the paper [Landt et al, 2018](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/) describe the approach as:
 > 
-> _"**Historical Note:** A simple heuristic for establishing reproducibility was previously used as a standard for depositing ENCODE data and was in effect when much of the currently available data was submitted. According to this standard, either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common. As with the current standards, this was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size."_
+> _"...either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common."_ 
+> 
+>  Since then, the field has moved towards more statistically motivated apparoaches like the [Irreproducibility Discovery Rate (IDR)](https://sites.google.com/site/anshulkundaje/projects/idr). The IDR framework was developed by Qunhua Li and Peter Bickel's group. It compares a pair of ranked lists of regions/peaks and assigns values that reflect its reproducibility. You can read more about IDR and how it works in this [linked lesson]().
+> 
+> IDR analysis is extensively used by the ENCODE and modENCODE projects and is part of their ChIP-seq guidelines and standards. However, more recently there has been dicussion about the two approaches converging on similar results and so it remains to be seen what the gold standard will be.
+
 
 
 ***
