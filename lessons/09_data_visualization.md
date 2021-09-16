@@ -13,7 +13,7 @@ Approximate time:
 * Learn how to visualize ChIP-seq data using `deeptools`
 * Learn how to interpret the profile plots and analyze the enrichment patterns at particular locations in the genome
 
-## Profile plots
+## Qualitative assessment of peak enrichment
 
 After creating the bigWig files, we are ready to perform data visualization. We first need to prepare an intermediate file that will be used with the `plotHeatmap` and `plotProfile` commands.
 
