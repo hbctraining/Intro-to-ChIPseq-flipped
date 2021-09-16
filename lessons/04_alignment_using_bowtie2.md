@@ -29,7 +29,7 @@ Now that we have assessed the quality of our sequence data, we are ready to alig
 In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and there are on the on the range of millions of them for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to sequencing errors, and also non-unique alignment due to the nature of short reads.
 
 <p align="center">
-<img src="../img/alignment_theory.png" width="700">
+<img src="../img/Alignment_errors.png" width="700">
 </p>
 
 There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is Bowtie2.
