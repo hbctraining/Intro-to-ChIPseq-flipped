@@ -148,8 +148,8 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 * `-t`: The IP data file (this is the only REQUIRED parameter for MACS)
 * `-c`: The control or mock data file
-* `-f`: format of input file; Default is "AUTO" which will allow MACS to decide the format automatically.
-* `-g`: mappable genome size which is defined as the genome size which can be sequenced; some precompiled values provided.
+* `-f`: format of input file; Default is "AUTO", which will allow MACS to decide the format automatically.
+* `-g`: mappable genome size, which is defined as the genome size that can be sequenced; some precompiled values provided.
 
 **Output arguments**
 
@@ -159,8 +159,8 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 **Shifting model arguments**
 
-* `-s`: size of sequencing tags. Default, MACS will use the first 10 sequences from your input treatment file to determine it
-* `--bw`: The bandwidth which is used to scan the genome ONLY for model building. Can be set to the expected sonication fragment size.
+* `-s`: size of sequencing tags. By default, MACS will use the first 10 sequences from your input treatment file to determine it
+* `--bw`: The bandwidth, which is used to scan the genome ONLY for model building. Can be set to the expected sonication fragment size.
 * `--mfold`: upper and lower limit for model building
 
 **Peak calling arguments**
@@ -170,7 +170,7 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 * `--nolambda`: do not consider the local bias/lambda at peak candidate regions
 * `--broad`: broad peak calling
 
-> **NOTE:** Relaxing the q-value does not behave as expected in this case since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks but with MACS2 relaxing thresholds also results in wider peaks.
+> **NOTE:** Relaxing the q-value does not behave as expected in this case, since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks. But with MACS2, relaxing thresholds also results in wider peaks.
 
 Now that we have a feel for the different ways we can tweak our command, let's set up the command for each of our wildtype replicates:
 
