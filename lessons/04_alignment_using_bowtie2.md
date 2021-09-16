@@ -89,7 +89,7 @@ $ mkdir ~/chipseq_workshop/results/bowtie2
 We then need to load the module. We could find out more about bowtie2 on O2:
 
 ```bash
-# Check modules for bowtie2
+# Check modules for bowtie2 and any dependencies
 $ module spider bowtie2
 ```
 
