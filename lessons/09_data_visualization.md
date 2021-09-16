@@ -6,14 +6,15 @@ date: "Aug 11th, 2021"
 
 Approximate time:
 
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/12
-
 ## Learning Objectives
 
-* Learn how to visualize ChIP-seq data using `deeptools`
-* Learn how to interpret the profile plots and analyze the enrichment patterns at particular locations in the genome
+* ...
 
 ## Qualitative assessment of peak enrichment
+
+The quality of ChIP-seq experiments can be especially difficult to evaluate when little is known about the factor and its binding motif, as is the case with PRDM16, our protein of interest. The ENCODE Consortium has developed and uses metrics for several aspects of ChIP-seq quality, together with traditional site-inspection-based evaluation. When applied and interpreted as a group, these metrics and approaches provide a valuable overall assessment of experimental success and data quality.
+
+We have shown that  there is an overlap of the peaks that have been identified in each replicate. Now that we have a consensus set - can we look at those regions to see what kind of signal we observe in each rep?
 
 After creating the bigWig files, we are ready to perform data visualization. We first need to prepare an intermediate file that will be used with the `plotHeatmap` and `plotProfile` commands.
 
