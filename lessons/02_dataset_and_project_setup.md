@@ -8,8 +8,8 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Introduce the dataset and biological context
-* Recognize the need for data management and project organization
+* Describe the dataset and biological context
+* Explain the need for data management and project organization
 
 
 ## Introduction to the dataset
@@ -26,11 +26,11 @@ _Image adapted from: [American Society of Hematology](https://www.hematology.org
 
 ### PRDM16
 
-The transcriptional regulator **PRDM16 is a chromatin-modifying enzyme** that belongs to the larger PRDM (Positive Regulatory Domain) protein family, that is structurally defined by the **presence of a conserved N-terminal histone methyltransferase PR domain** (Hohenauer and Moore, 2012). 
+The transcriptional regulator **PRDM16 is a chromatin-modifying enzyme** that belongs to the larger PRDM (Positive Regulatory Domain) protein family, that is structurally defined by the **presence of a conserved N-terminal histone methyltransferase PR domain** ([Hohenauer and Moore, 2012](https://journals.biologists.com/dev/article/139/13/2267/45169/The-Prdm-family-expanding-roles-in-stem-cells-and)). 
 
-* PRDM16 has been shown to function *in vitro* as a histone 3 lysine 9 (H3K9) and histone 3 lysine 4 (H3K4) mono-methyltransferase (Pinheiro et al., 2012, Zhou et al., 2016). 
-* PRDM16 also regulates gene expression by forming complexes with transcriptional co-factors and other histone-modifying proteins (Chi and Cohen, 2016). 
-* PRDM16 was previously shown to control embryonic and post-natal neural stem cell maintenance and differentiation in the brain (Chuikov et al., 2010, Inoue et al., 2017, Shimada et al., 2017). 
+* PRDM16 has been shown to function *in vitro* as a histone 3 lysine 9 (H3K9) and histone 3 lysine 4 (H3K4) mono-methyltransferase ([Pinheiro et al., 2012](https://www.sciencedirect.com/science/article/pii/S0092867412009385), [Zhou et al., 2016](https://www.sciencedirect.com/science/article/pii/S109727651600188X)). 
+* PRDM16 also regulates gene expression by forming complexes with transcriptional co-factors and other histone-modifying proteins ([Chi and Cohen, 2016](https://www.sciencedirect.com/science/article/pii/S104327601500226X?casa_token=VOBAb4QhyXgAAAAA:c69XzQwZ86M4BcPt02cNKjn163X5pBZMTQHJX4D2HdMvgO3hrQE7N6L0YmFSWwucs2GhXPhBtw)). 
+* PRDM16 was previously shown to control embryonic and post-natal neural stem cell maintenance and differentiation in the brain ([Chuikov et al., 2010](https://www.nature.com/articles/ncb2101), [Inoue et al., 2017](https://journals.biologists.com/dev/article/144/3/385/48274/Prdm16-is-crucial-for-progression-of-the), [Shimada et al., 2017](http://genesdev.cshlp.org/content/31/11/1134.short)). 
 
 
 **How PRDM16 functions to regulate transcriptional programs in the developing cerebral cortex remains largely unknown.**
@@ -126,7 +126,7 @@ chipseq_workshop/
 ```
 
 ```bash
-$ mkdir raw_data reference_data scripts logs meta
+$ mkdir raw_data reference_data scripts logs meta results
 
 $ tree     # this will show you the directory structure you just created
 ```
@@ -174,13 +174,14 @@ After setting up the directory structure, it is useful to have a **[README file]
 ## This directory contains data generated during the Introduction to ChIP-seq workshop
 ## Date: 
 
-There are five subdirectories in this directory:
+There are six subdirectories in this directory:
 
 raw_data : contains raw data
 meta:  contains...
 logs:
 results:
 scripts:
+reference_data:
 ```
 
 *** 
