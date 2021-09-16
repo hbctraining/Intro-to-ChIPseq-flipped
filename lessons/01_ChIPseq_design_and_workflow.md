@@ -8,30 +8,55 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
+* Identify public research consortia for gene regulation and the resources they provide
 * Review experimental design considerations for a ChIP experiment
 * Understand the steps involved in a ChIP-seq analysis workflow
 
 
-## Considerations for ChIP-seq
-
-In chromatin immunoprecipitation (ChIP) experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. In ChIP-seq, the immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
+## Unraveling the epigenetic landscape
+A precise map of binding sites for transcription factors, core transcriptional machinery and other DNA-binding proteins is critical for gaining a full understanding of transcriptional regulation. To that end, there are various consortia that have formed to collect data across studies and make it publicly available. Ultimately, resources like this enable researchers to piece together the epigenomic landscape contributing to cell identity, development, lineage specification, and disease. 
 
 <p align="center">
-<img src="../img/chipseq_overall.png" width="400">
+<img src="../img/epigenomic_mapping.png" width="600">
 </p>
 
-ChIP-seq has now been widely used for many transcription factors, histone modifications, chromatin modifying complexes, and other chromatin-associated proteins in a wide variety of organisms. As such, **there is much diversity in the way ChIP-seq experiments are designed and the way analyses are executed.**
+_Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Projects can teach us about how we are who we are"](https://portlandpress.com/biochemist/article/37/5/24/773/From-DNA-to-a-human-What-the-ENCODE-and-Roadmap)_
 
-In this lesson, we describe a few simple guidelines for setting up a ChIP-seq experiment and outline the analysis workflow.
+
+### The ENCODE project
+
+The [ENCODE (Encyclopedia of DNA Elements) Project](https://www.encodeproject.org/) was planned as a follow-up to the Human Genome Project. It is a **public research consortium aimed to assign function to all elements in the human and mouse genome**. Coinciding with the completion of the Human Genome Project in 2003, the ENCODE Project began as a worldwide effort involving more than 30 research groups and more than 400 scientists. 
+
+ENCODE has produced vast amounts of data that can be accessed through the project's freely accessible database, the ENCODE Portal. The ENCODE "Encyclopedia" organizes these data into two levels of annotations: 1) integrative-level annotations, including a registry of candidate cis-regulatory elements and 2) ground-level annotations derived directly from experimental data.
+
+> *NOTE:* For those working on other model organisms, there is also the modENCODE (MODel organism ENCyclopedia Of DNA Elements) project, targeting the identification of functional elements in selected model organism genomes, specifically _Drosophila melanogaster_ and _Caenorhabditis elegans_.
+
+
+### NIH Roadmap Epigenomics Mapping Consortium
+
+The [NIH Roadmap Epigenome Project](http://www.roadmapepigenomics.org/) has continued this journey, with a focus on human epigenomic data. This project was launched in 2008 with the goal of elucidating how epigenetic regulation contributes to human development and disease. **The Roadmap Epigenomics** uses many of the same technologies used by ENCODE, but **almost excusively focused on epigenetic features such as DNA methylation and histone modifications**, while ENCODE emphasized identifying sites of DNA binding factor occupancy.
+
+The data is presented as  **an atlas, where users can explore epigenome maps for stem cells and primary ex vivo tissues** selected to represent the normal counterparts of tissues and organ systems frequently involved in human disease. Data can be viewed in the browser or downloaded locally.
+
+
+## ChIP-seq: A method for detecting and characterizing protein–DNA interactions
+
+In this workshop we will be focusing on the ChIP-seq technology. Chromatin immunoprecipitation followed by sequencing (ChIP-seq) is a central method in epigenomic research. In ChIP experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. The immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
+
+<p align="center">
+<img src="../img/chip_expt_workflow.png" width="400">
+</p>
+
+_Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Projects can teach us about how we are who we are"](https://portlandpress.com/biochemist/article/37/5/24/773/From-DNA-to-a-human-What-the-ENCODE-and-Roadmap)_
+
+
+ChIP-seq has been widely used for many transcription factors, histone modifications, chromatin modifying complexes, and other chromatin-associated proteins in a wide variety of organisms. As such, **there is much diversity in the way ChIP-seq experiments are designed and the way analyses are executed.**
+
+In this lesson, we describe a few general guidelines for setting up a ChIP-seq experiment and outline the basic analysis workflow.
 
 ## Experimental design considerations
 
 When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we also encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
-
-> #### What is ENCODE?
-> The ENCODE (Encyclopedia of DNA Elements) Project was planned as a follow-up to the Human Genome Project. It aims to identify all functional elements in the human genome. Coinciding with the completion of the Human Genome Project in 2003, the ENCODE Project began as a worldwide effort involving more than 30 research groups and more than 400 scientists.
-> 
-> Over the years, the ENCODE Consortium has become involved with additional projects whose goals run in parallel. A popular one is the modENCODE (MODel organism ENCyclopedia Of DNA Elements) project, targeting the identification of functional elements in selected model organism genomes, specifically Drosophila melanogaster and Caenorhabditis elegans.
 
 Below, is the **decision tree** that was presented earlier in the workshop (lecture). From this, we highlight some important points below:
 
