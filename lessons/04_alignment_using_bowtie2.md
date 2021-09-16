@@ -85,18 +85,20 @@ Now we are ready to perform the read alignment. Let's first create a `bowtie2` d
 
 ```bash
 # Create bowtie2 directory
-mkdir ~/chipseq_workshop/results/bowtie2
+$ mkdir ~/chipseq_workshop/results/bowtie2
 ```
 
 We then need to load the module. We could find out more about bowtie2 on O2:
 
 ```bash
+# Check modules for bowtie2
 $ module spider bowtie2
 ```
 
 Notice that before we load bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
 
 ```bash
+# Load bowtie2 and the necessary compiler
 $ module load gcc/6.2.0 bowtie2/2.2.9
 ```
 
@@ -119,11 +121,7 @@ $ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
-Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use `2>`. 
-
-When a command is run it will often generate two types of output: the output accomplished by the process generally referred to as standard output and diagnostic output generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file, we can use the `>` and to redirect the standard error to file we can use `2>`. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We will often redirect the standard error from a process to a log file so that we have this information for any downstream troubleshooting. 
-
-We could redirect our standard error from our `bowtie2` command as follows:
+Bowtie2 does not generate log summary files. Rather this information gets printed to screen. If we want to capture that and save it in a file we can access later we can use the `2>` operator. To redirect the standard error from the `bowtie2` command we could do the following:
 
 ```
 # DO NOT RUN
@@ -133,7 +131,7 @@ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
 ```
 
-If a tool doesn't have an output argument, then we need to be sure to redirect it from our screen to file. Show the code below on how we use it.
+> _**NOTE: What is the `2>` operator doing?** Whenever we run a command, it generates two types of output: the output accomplished by the process, which is generally referred to as standard output, and the diagnostic output, which is generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file (if there is no option for specifying in the command), we can use the `>` operator and to redirect the standard error to file we can use the `2>` operator. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We often redirect the standard error from the screen to a log file so that we have this information for any downstream troubleshooting. 
 
 ## Alignment output: SAM/BAM file format
 
