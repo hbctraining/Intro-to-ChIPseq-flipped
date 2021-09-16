@@ -21,20 +21,33 @@ The goal of this lesson is to introduce you to **different file formats used for
 
 ## File formats for peak visualization
 
-**Take content from slide deck**: https://github.com/hbctraining/Intro-to-ChIPseq/blob/master/lectures/Fileformats.pdf
+There are several different types of file formats that can hold data associated with high-throughput sequencing data, these file formats have a distinct structure and hold specific types of data. We have already encountered the sequence data format - FASTQ, the alignment file formats - SAM and BAM, the peak call format - BED, among others. In this section we want to introduce you to a few additional formats that can be used to visualizing peaks.
+
+The commonality among these file formats is that they represent the peak location in a manner similar to the BED format (shown below). 
+
+<p align="center">
+  <img src="../img/bed.png" width="450">
+</p>
 
 
 ### BedGraph format
 
-The BedGraph format also allows display of continuous-valued data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
+The BedGraph format also allows display of continuous data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
+
+<p align="center">
+  <img src="../img/bedgraph.png" width="650" border="1">
+</p>
 
 
-### Wiggle format
+### Wiggle and bigwig formats
 
 Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
 
-### bigwig
-The bigWig format is an indexed binary format useful for dense, continuous data to be displayed in a genome browser as a graph/track. 
+<p align="center">
+  <img src="../img/wiggle.png" width="600">
+</p>
+
+The bigWig format is an indexed *binary* format useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. 
 
 
 ## Creating bigWig files
