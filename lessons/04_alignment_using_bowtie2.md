@@ -26,7 +26,7 @@ Now that we have assessed the quality of our sequence data, we are ready to alig
 <img src="../img/chipseq_alignworkflow_sept2021.png" width="600">
 </p>
 
-In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors, and also non-unique alignment due to the nature of short reads.
+In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors, and also non-unique alignment due to the nature of short reads and high percentages of genome repetitive regions (e.g. repetitive regions = 50% of human genome).
 
 <p align="center">
 <img src="../img/Alignment_errors.png" width="700">
@@ -39,7 +39,7 @@ There are many different tools that have been developed for alignment of next-ge
 
 [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that supports gapped, local and paired-end alignment modes and works best for reads that are **at least 50 bp** (shorter read lengths should use Bowtie1). 
 
-By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _soft-clipping_ for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
+By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _**soft-clipping**_ for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
 
 > #### How do other aligners compare?
 > We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
