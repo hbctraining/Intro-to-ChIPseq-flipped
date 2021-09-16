@@ -169,7 +169,9 @@ Finally, let's check how many confident peaks we are left with:
 wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
 
-> **_Historical Note_:** A simple heuristic for establishing reproducibility was previously used as a standard for depositing ENCODE data and was in effect when much of the currently available data was submitted. According to this standard, either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common. As with the current standards, this was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size.
+> A snippet from the [ChIP-seq guidelines and practices of the ENCODE and modENCODE consortia](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/) on the criteria used for identifying reproducible peaks:
+> 
+> _"**Historical Note:** A simple heuristic for establishing reproducibility was previously used as a standard for depositing ENCODE data and was in effect when much of the currently available data was submitted. According to this standard, either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common. As with the current standards, this was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size."_
 
 
 ***
