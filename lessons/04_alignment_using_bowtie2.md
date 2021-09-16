@@ -46,7 +46,7 @@ By default, Bowtie2 will perform a global *end-to-end read alignment*, which is 
 
 ### Soft-clipping 
 
-Soft-clipping allows for more accurate alignment by ignoring portions at the ends of the reads that do match well to the reference genome. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. Soft-clipped bases are retained in the sequence and simply marked. In contrast to trimming, which deletes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it.
+Soft-clipping allows for more accurate alignment by ignoring portions at the ends of the reads that do match well to the reference genome. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. In contrast to trimming, which removes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it.
 
 
 <p align="center">
