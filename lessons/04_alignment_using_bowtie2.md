@@ -6,9 +6,7 @@ date: "Aug 17th, 2021"
 
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
 
-Approximate time:
-
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/7
+Approximate time: 45 min
 
 ## Learning Objectives
 
@@ -197,7 +195,7 @@ $ samtools view -h -S -b \
 
 ## Running alignment on a single sample
 
-Genome alignment can take a while to finish,so we won't run it on an interactibve session. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
+Genome alignment can take a while to finish, so we won't run it in an interactive session. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
 
 ```bash
 # Create a SBATCH script
