@@ -21,9 +21,9 @@ Approximate time:
 
 Now that we have assessed the quality of our sequence data, we are ready to align the reads to the reference genome. 
 
-**CHANGE THIS WORKFLOW TO ONLY INCLUDE ALIGNMENT (grey out filtering)**
+
 <p align="center">
-<img src="../img/chip_workflow_june2017_step1_align.png" width="400">
+<img src="../img/chipseq_alignworkflow_sept2021.png" width="600">
 </p>
 
 In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and there are on the on the range of millions of them for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to sequencing errors, and also non-unique alignment due to the nature of short reads.
