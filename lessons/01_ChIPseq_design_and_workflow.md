@@ -113,6 +113,9 @@ Below we list some general guidelines and things to think about when sending you
 
 * Sequence the input controls to equal or higher depth than your ChIP samples
 
+### Resources
+* [Thermofisher Step-by-step guide to a successfuk ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
+* [Profiling of transcription factor binding events by ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5544034/)
 
 ## Understanding the ChIP-seq analysis workflow
 
