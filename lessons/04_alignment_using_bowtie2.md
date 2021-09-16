@@ -68,16 +68,14 @@ To create an index for your analysis, you can use the `bowtie2-build` command. T
 $ bowtie2-build <path_to_reference_genome.fa> <prefix_to_name_indexes>
 ```
 
-**We will not be creating a genome index.**
-
-The O2 cluster has a designated directory (`/n/groups/shared_databases/`) with shared databases for human and other commonly used model organisms that all users can readily access. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool-specific data, and data from public databases, such as NCBI and PDB. Therefore, when using a tool that requires a reference file, it is worth taking a quick look at this directory and checking whether your desired reference is already deposited here.
+**We will not be creating a genome index.** Genome indices tend to be very large files, which would take up a lot of storage in our O2 space. Instead of generating our own index, the O2 cluster has a designated directory (`/n/groups/shared_databases/`) with shared databases for human and other commonly used model organisms that all users can readily access. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool-specific data, and data from public databases, such as NCBI and PDB. Therefore, when using a tool that requires a reference file, it is worth taking a quick look at this directory and checking whether your desired reference is already deposited here.
 
 ```bash
 $ ls -l /n/groups/shared_databases/
 ```
-> *NOTE:* Disadvantages of using the shared databases include not knowing exactly what is the reference version (i.e. release) or the exact parameters used to generate it. When using shared databases, it is important that it is clear how the reference was generated and its version.
+> *NOTE:* Disadvantages of using the shared databases include not knowing exactly what is the reference version (i.e. release) or the exact parameters used to generate it. **When using shared databases, it is important that it is clear how the reference was generated and its version.**
 
-For our dataset, we will need the `mm10` build of the reference genome. You can find those indices at `/n/groups/shared_databases/bowtie2_indexes/mm10`. **Rather than copying the files over, we will just point to the directory when necessary** so we will directly refer to it. 
+For our dataset, we will need the `mm10` build of the reference genome. You can find those indices at `/n/groups/shared_databases/bowtie2_indexes/mm10`. **Rather than copying the files over, we will just point to the directory when necessary** using its full path. 
 
 ### Bowtie2: Alignment
 
@@ -131,7 +129,7 @@ bowtie2 -p 2 -q --local \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
 ```
 
-> _**NOTE: What is the `2>` operator doing?** Whenever we run a command, it generates two types of output: the output accomplished by the process, which is generally referred to as standard output, and the diagnostic output, which is generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file (if there is no option for specifying in the command), we can use the `>` operator and to redirect the standard error to file we can use the `2>` operator. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We often redirect the standard error from the screen to a log file so that we have this information for any downstream troubleshooting. 
+> _**NOTE: What is the `2>` operator doing?** Whenever we run a command, it generates two types of output: the output accomplished by the process, which is generally referred to as standard output, and the diagnostic output, which is generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file (if there is no option for specifying in the command), we can use the `>` operator and to redirect the standard error to file we can use the `2>` operator. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We often redirect the standard error from the screen to a log file so that we have this information for any downstream troubleshooting._ 
 
 ## Alignment output: SAM/BAM file format
 
