@@ -8,8 +8,6 @@ Contributors: Mary Piper, Radhika Khetani, Jihe Liu
 
 Approximate time: 
 
-**Link to issue describing the modifications to be made**: https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/5
-
 ## Learning Objectives
 
 * Understand the basics of a FASTQ file
@@ -18,7 +16,7 @@ Approximate time:
 ## Quality control of sequence reads
 
 <p align="center">
-  <img src="../img/chip_workflow_june2017_step1_QC.png" width="400">
+  <img src="../img/chipseq_fastqcworkflow_sept2021.png" width="600">
 </p>
 
 Now that we set up files and directory structure, we are ready for our ChIP-seq analysis. For any NGS analysis, the first step in the workflow is to evaluate the quality of the reads, prior to alignment them to the reference genome and downstream analyses. 
