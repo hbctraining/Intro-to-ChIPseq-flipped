@@ -26,29 +26,27 @@ There are several different types of file formats that can hold data associated 
 The commonality among these file formats is that they represent the peak location in a manner similar to the BED format (shown below). 
 
 <p align="center">
-  <img src="../img/bed.png" width="450">
+  <img src="../img/bed.png" width="500">
 </p>
 
 
 ### BedGraph format
 
-The BedGraph format also allows display of continuous data in track format. This display type is useful for probability scores and transcriptome data. This track type is similar to the wiggle (WIG) format, but unlike the wiggle format, data exported in the bedGraph format are preserved in their original state. For the purposes of visualization, these can be interchangeable.
+In addition to accomodating peak calls (discrete data), the BedGraph format also allows display of continuous data as a track on a genome browser. This display type is useful for including and plotting some quantitative information, e.g. intensity. For the purposes of visualization, bedgraph and bigWig are pratically interchangeable, with the bigWig file being a lot smaller for a given dataset.
 
 <p align="center">
-  <img src="../img/bedgraph.png" width="650" border="1">
+  <img src="../img/bedgraph.png" width="650">
 </p>
 
+### Wiggle and bigWig formats
 
-### Wiggle and bigwig formats
-
-Wiggle format (WIG) allows the display of continuous-valued data in a track format. Wiggle format is line-oriented. It is composed of declaration lines and data lines, and require a separate wiggle track definition line. There are two options for formatting wiggle data: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
+The Wiggle format (wig) also allows the display of continuous data. This format is "line" oriented, and has declaration lines and data lines. It also requires a separate wiggle track definition line as a header. There are two options for how data in wiggle files are represented: variableStep and fixedStep. These formats were developed to allow the file to be written as compactly as possible.
 
 <p align="center">
-  <img src="../img/wiggle.png" width="600">
+  <img src="../img/wiggle.png" width="650">
 </p>
 
-The bigWig format is an indexed *binary* format useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. 
-
+The bigWig format is an indexed *binary* form of the wiggle file format, and is useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. As mentioned above, the visual representation of this format is very similar to Bedgraph.
 
 ## Creating bigWig files
 
@@ -64,12 +62,11 @@ For this workshop, we will focus on creating bigWig files, as we will be using t
 
 ### Setting up 
 
-The command for creating a bigWig file is fairly computationally heavy and so we will make use of the muti-threading functionality in `deepTools`. This means that we will also need to request more cores for our interactive session. *If you are already logged on to a compute node, you will want to exit and start a new session*. Note that we will ask for **6 cores, and also increase our memory to 8G**.
+The command for creating a bigWig file is fairly computationally heavy and so we will make use of the muti-threading functionality in `deepTools`. This means that we will also need to request more cores for our interactive session. *If you are already logged on to a compute node, you will need to exit and start a new session*. Note that we will ask for **6 cores, and also increase our memory to 8G**.
 
 ```bash
 $ srun --pty -p interactive -t 0-12:00 --mem 8G -c 6 /bin/bash
 ```
-
 Once on a compute node, begin by creating a directory for the output.
 
 ```bash
@@ -77,9 +74,9 @@ $ cd ~/chipseq_workshop/results/
 $ mkdir -p visualization/bigWig
 ```
 
-We then need to **create an index file for the BAM file**. Often, when working with BAM files you will find that many tools require an index (an associated `.bai` file). You can think of an index similar to that which is located at the back of a textbook - when you are interested in a particular subject, you look for the keyword in the index and identify the pages that contain the relevant information. Similarily, indexing the BAM file aims to achieve fast retrieval of alignments overlapping a specified region without going through the whole alignment file. 
+We then need to **create an index file for the BAM file**. Often, when working with BAM files you will find that many tools require an index (an associated `.bai` file). You can think of an index similar to that which is located at the back of a textbook - when you are interested in a particular subject, you look for the keyword in the index and identify the pages that contain the relevant information. Similarily, indexing the BAM file aims to achieve fast retrieval of alignments overlapping a specified region without going through the whole alignment file. Essentially, a `bai` file along with the `bam` ensures that downstream applications are able to use the information with the `bam` file much more speedily.
 
-We will use [SAMtools](http://samtools.sourceforge.net/) again, specifically the **`samtools index`** command, to index th BAM file.
+We will use [SAMtools](http://samtools.sourceforge.net/) again, specifically the **`samtools index`** command, to index the BAM file.
 
 Let's load the `samtools` module:
 
@@ -87,7 +84,7 @@ Let's load the `samtools` module:
 $ module load gcc/6.2.0 samtools/1.9
 ```
 
-Create index for the `wt_sample2_chip_final` BAM file that we created in earlier lesson:
+Create an index for the `wt_sample2_chip_final.bam` file that we created in earlier lesson:
 
 ```bash
 $ samtools index ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam
