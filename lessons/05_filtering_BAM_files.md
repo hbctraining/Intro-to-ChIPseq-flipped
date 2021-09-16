@@ -16,7 +16,7 @@ Approximate time:
 ## Filtering reads
 
 <p align="center">
- <img src="../img/chipseq_peakworkflow_sept2021.png" width="600">
+ <img src="../img/chipseq_filterworkflow_sept2021.png" width="600">
 </p>
 
 
