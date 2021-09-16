@@ -1,15 +1,15 @@
 ---
 title: "Experimental design considerations and understanding the ChIP-seq workflow"
 author: "Mary Piper, Radhika Khetani, Meeta Mistry, Shannan Ho Sui"
-date: "March 14th, 2018"
+date: "September 15th, 2021"
 ---
 
 Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* ...
-* Understand the possible routes of analysis in the ChIP-seq workflow
+* Review experimental design considerations for a ChIP experiment
+* Understand the steps involved in a ChIP-seq analysis workflow
 
 
 ## Considerations for ChIP-seq
@@ -26,10 +26,10 @@ In this lesson, we describe a few simple guidelines for setting up a ChIP-seq ex
 
 ## Experimental design considerations
 
-When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
+When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we also encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
 
-> #### ENCODE: Encyclopedia of DNA Elements
-> The ENCODE Project was planned as a follow-up to the Human Genome Project. It aims to identify all functional elements in the human genome. Coinciding with the completion of the Human Genome Project in 2003, the ENCODE Project began as a worldwide effort involving more than 30 research groups and more than 400 scientists.
+> #### What is ENCODE?
+> The ENCODE (Encyclopedia of DNA Elements) Project was planned as a follow-up to the Human Genome Project. It aims to identify all functional elements in the human genome. Coinciding with the completion of the Human Genome Project in 2003, the ENCODE Project began as a worldwide effort involving more than 30 research groups and more than 400 scientists.
 > 
 > Over the years, the ENCODE Consortium has become involved with additional projects whose goals run in parallel. A popular one is the modENCODE (MODel organism ENCyclopedia Of DNA Elements) project, targeting the identification of functional elements in selected model organism genomes, specifically Drosophila melanogaster and Caenorhabditis elegans.
 
@@ -117,6 +117,17 @@ Below we list some general guidelines and things to think about when sending you
 
 ## Understanding the ChIP-seq analysis workflow
 
+In the same way that the experimental design setup is a process, the analysis also takes some thought and decision making. Below we have depicted and end-to-end analysis workflow for ChIP-sequencing data. **Our focus for this workshop will be on the top half of this workflow diagram**.
+
+All of the tools and software required to get us from raw sequence reads to peak calls are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applcable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thororughly understand the output. You will notice on the workflow we have also indicated the different file formats encountered with ChI
+
+
+
+<p align="center">
+<img src="../img/chipseq_fullworkflow_sept2021.png" width="700">
+</p>
+
+> **NOTE:** Boxes in green cover topics that will not be covered here, but will be a focus of the ChIP-seq Part II workshop (_material development in progress_). It is also worth noting that the green boxes also represent analysis steps which require a working knowledge of R.
 
 
 ## Resources:
