@@ -8,8 +8,6 @@ Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
 
 Approximate time:
 
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/8
-
 ## Learning Objectives
 
 * Understand the purpose of filtering alignment reads
@@ -17,7 +15,9 @@ Approximate time:
 
 ## Filtering reads
 
-**ADD A WORKFLOW IMAGE HERE**
+<p align="center">
+ <img src="../img/chipseq_peakworkflow_sept2021.png" width="600">
+</p>
 
 
 A key issue when working with a ChIP-seq data is to **move forward with only the uniquely mapping reads**.  Allowing for multiply mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). To increase our confidence in peak calling and improve data reproducibility, we need to **filter out both multi-mapping reads and duplicate reads**.
