@@ -114,25 +114,20 @@ Below we list some general guidelines and things to think about when sending you
 * Sequence the input controls to equal or higher depth than your ChIP samples
 
 
-
 ## Understanding the ChIP-seq analysis workflow
 
 In the same way that the experimental design setup is a process, the analysis also takes some thought and decision making. Below we have depicted and end-to-end analysis workflow for ChIP-sequencing data. **Our focus for this workshop will be on the top half of this workflow diagram**.
 
-All of the tools and software required to get us from raw sequence reads to peak calls are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applcable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thororughly understand the output. You will notice on the workflow we have also indicated the different file formats encountered with ChI
-
-
+All of the software required to get us from **raw sequence reads to peak calls** are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applicable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thororughly understand the output. Each step of the workflow will require a specific file format. You will notice that we have annotated these file formats on the workflow below. We will describe these file formats in more detail in the respective lessons.
 
 <p align="center">
 <img src="../img/chipseq_fullworkflow_sept2021.png" width="700">
 </p>
 
-> **NOTE:** Boxes in green cover topics that will not be covered here, but will be a focus of the ChIP-seq Part II workshop (_material development in progress_). It is also worth noting that the green boxes also represent analysis steps which require a working knowledge of R.
+> **NOTE:** Boxes in green cover topics that will not be covered here, but will be a focus of the ChIP-seq Part II workshop (_material development in progress_). It is also worth noting that the green boxes also represent analysis steps which require a working knowledge of R. The color fade indicates that there are some parts of "Peak Call QC" which are covered in this workshop with the use of command-line tools, and other methods which are R-based and will be covered in Part II. 
 
-
-## Resources:
-
-https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html
+***
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
 
 
 
