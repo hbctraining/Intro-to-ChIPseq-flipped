@@ -32,7 +32,7 @@ The commonality among these file formats is that they represent the peak locatio
 
 ### BedGraph format
 
-In addition to accomodating peak calls (discrete data), the BedGraph format also allows display of continuous data as a track on a genome browser. This display type is useful for including and plotting some quantitative information, e.g. intensity. For the purposes of visualization, bedgraph and bigWig are pratically interchangeable, with the bigWig file being a lot smaller for a given dataset.
+In addition to accomodating peak calls (discrete data), the BedGraph format also allows display of continuous data as a track on a genome browser. This display type is useful for including and plotting some quantitative information, e.g. intensity. For the purposes of visualization, bedGraph and bigWig are pratically interchangeable, with the bigWig file being a lot smaller for a given dataset.
 
 <p align="center">
   <img src="../img/bedgraph.png" width="650">
@@ -46,7 +46,7 @@ The Wiggle format (wig) also allows the display of continuous data. This format 
   <img src="../img/wiggle.png" width="650">
 </p>
 
-The bigWig format is an indexed *binary* form of the wiggle file format, and is useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. As mentioned above, the visual representation of this format is very similar to Bedgraph.
+The bigWig format is an indexed *binary* form of the wiggle file format, and is useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. As mentioned above, the visual representation of this format is very similar to bedGraph.
 
 ## Creating bigWig files
 
@@ -100,7 +100,10 @@ $ module load python/2.7.12 deeptools/3.0.2
 
 ### `bamCoverage`
 
-This command takes as **input a BAM file and generates a coverage track (bigWig or bedGraph) as output**. The coverage is calculated as the number of reads per bin, where bins are short consecutive counting windows that can be defined by the user. BigWig files have a much smaller data footprint compared to BAM files, especially as your bin size increases, and you can also apply various types of normalization. deepTools normalization options include scaling factor, Reads Per Kilobase per Million mapped reads (RPKM), and counts per million (CPM).
+This command takes as **input a BAM file and generates a coverage track (bigWig or bedGraph) as output**. The coverage is calculated as the number of reads per bin, where bins are short consecutive sections of the genome (bins) that can be defined by the user. bigWig files have a much smaller data footprint compared to BAM = files, especially as the bin size increases, and you can also apply various types of normalization, if you choose to. 
+
+> #### When should I normalize the data in my bigWig files?
+> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
 
 We will use the `bamCoverage` command to **create a bigWig file for `wt_sample2_chip`**. We will specify `binSize` of 20, as an additional parameter. There are a few other parameters that you could explore (but we will not use). 
 
@@ -110,7 +113,7 @@ We will use the `bamCoverage` command to **create a bigWig file for `wt_sample2_
 * `smoothLength`: defines a window, larger than the `binSize`, to average the number of reads over. This helps produce a more continuous plot.
 * `centerReads`: reads are centered with respect to the fragment length as specified by `extendReads`. This option is useful to get a sharper signal around enriched regions.
 
-We will be using the bare minimum of parameters as shown in the code below. We decrease the bin soze to increase our resolution of the track (this also means larger file size). If you are interested, feel free to test out some of the other parameters to create different bigWig files. You can load them into a genome viewer and observe the differences.
+We will be using the bare minimum of parameters as shown in the code below. We decrease the bin size to increase the resolution of the track (this also means larger file size). If you are interested, feel free to test out some of the other parameters to create different bigWig files. You can load them into a genome viewer like IGV and observe the differences.
 
 ```bash
 $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
@@ -120,13 +123,9 @@ $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
 
 _Note: This command can take up to 10 minutes to complete._
 
-> #### When should I be normalizing my bigWig files?
-> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We have not normalized in this workshop because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
-
-
 ### `bamCompare`
 
-Alternatively, we could use `bamCompare` to **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it require two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. The default `--operation` used to compare the two samples is the **log2 ratio**, however you also have the option to add, subtract and mean. Any of the parameters described above can also be used. 
+As an alternate to calculating genome coverage with `bamCoverage`, we could use `bamCompare`. `bamCompare` will **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it requires two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. The default `--operation` used to compare the two samples is the **log2 ratio**, however you also have the option to add, subtract and average. Any of the parameters described above for `bamCoverage` can also be used. 
 
 ```bash
 ## DO NOT RUN
@@ -141,5 +140,3 @@ You can find more details about the difference between `bamCompare` and `bamCove
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
-
-
