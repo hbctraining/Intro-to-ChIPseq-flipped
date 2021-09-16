@@ -60,7 +60,7 @@ To perform the Bowtie2 alignment, a genome index is required. The index is anala
 
 Bowtie2 indexes the genome with an FM Index based on the **Burrows-Wheeler Transform** method to keep memory requirements low for the alignment process. A thorough description of the Burrows-Wheeler Transform and the FM Index can be found in this [resource paper](https://www.cs.jhu.edu/~langmea/resources/bwt_fm.pdf).
 
-To create an index for your analysis, you can use the `bowtie2-build` command. There are various arguments you can provide, but in its simplest form all you needs as input is the path to the reference genome FASTA file, and a prefix to name your indices once its created.
+To create an index for your analysis, you can use the `bowtie2-build` command. There are various arguments you can provide, but in its simplest form all you need as input is the path to the reference genome FASTA file, and a prefix to name your indices once its created.
 
 ```bash
 #### DO NOT RUN THIS CODE ####
