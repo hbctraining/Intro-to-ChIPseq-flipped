@@ -98,22 +98,23 @@ Finally, let's make sure we have the required modules loaded to use `deepTools`:
 $ module load python/2.7.12 deeptools/3.0.2 
 ```
 
-### `bamCoverage`
+### bamCoverage from deepTools
 
-This command takes as **input a BAM file and generates a coverage track (bigWig or bedGraph) as output**. The coverage is calculated as the number of reads per bin, where bins are short consecutive sections of the genome (bins) that can be defined by the user. bigWig files have a much smaller data footprint compared to BAM = files, especially as the bin size increases, and you can also apply various types of normalization, if you choose to. 
+This command takes a **BAM file as input** and evaluates which areas of the genome have reads associated with them, i.e. how much of the genome is "covered" with reads. The coverage is calculated as the number of reads per bin, where bins are short consecutive sections of the genome (bins) that can be defined by the user. The **output of this command can be either a bedGraph or a bigWig file**. We will be generating a bigWig file, since that format has a much smaller data footprint, especially as the bin size increases.
 
-> #### When should I normalize the data in my bigWig files?
-> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
-
-We will use the `bamCoverage` command to **create a bigWig file for `wt_sample2_chip`**. We will specify `binSize` of 20, as an additional parameter. There are a few other parameters that you could explore (but we will not use). 
-
-* `normalizeUsing`: Possible choices: RPKM, CPM, BPM, RPGC. By default no normalization is applied.
+These are some parameters of bamCoverage that are worth considering:
+* `normalizeUsing`: Possible choices: RPKM, CPM, BPM, RPGC. By default, no normalization is applied.
 * `binSize`: size of bins in bases (default is 50)
 * `--effectiveGenomeSize`: the portion of the genome that is mappable. It is useful to consider this when computing your scaling factor.
 * `smoothLength`: defines a window, larger than the `binSize`, to average the number of reads over. This helps produce a more continuous plot.
 * `centerReads`: reads are centered with respect to the fragment length as specified by `extendReads`. This option is useful to get a sharper signal around enriched regions.
 
+> #### When should I normalize the data in my bigWig files?
+> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
+
 We will be using the bare minimum of parameters as shown in the code below. We decrease the bin size to increase the resolution of the track (this also means larger file size). If you are interested, feel free to test out some of the other parameters to create different bigWig files. You can load them into a genome viewer like IGV and observe the differences.
+
+Let's **create a bigWig file for `wt_sample2_chip`**, with a `binSize` of 20.
 
 ```bash
 $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
@@ -121,7 +122,7 @@ $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
 --binSize 20
 ```
 
-_Note: This command can take up to 10 minutes to complete._
+_**Note: This command can take up to 10 minutes to complete.**_
 
 ### `bamCompare`
 
