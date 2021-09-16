@@ -26,7 +26,7 @@ Now that we have assessed the quality of our sequence data, we are ready to alig
 <img src="../img/chipseq_alignworkflow_sept2021.png" width="600">
 </p>
 
-In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors, and also non-unique alignment due to the nature of short reads and high percentages of genome repetitive regions (e.g. repetitive regions = 50% of human genome).
+In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors, and also non-unique alignment due to the short length of reads and high percentage of repetitive regions in the genome (e.g. repetitive regions = >50% of the human genome).
 
 <p align="center">
 <img src="../img/Alignment_errors.png" width="700">
