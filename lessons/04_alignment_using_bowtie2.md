@@ -1,19 +1,19 @@
 ---
 title: "Alignment using Bowtie2"
-author: "Mary Piper, Radhika Khetani, Jihe Liu"
+author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger"
 date: "Aug 17th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
+Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
 Approximate time: 45 min
 
 ## Learning Objectives
 
-* Understanding the basics of alignment theory
-* Learn how to align reads to the genome using Bowtie2
-* Understand SAM and BAM file format, and learn how to convert SAM file to BAM file
-* Run alignment script and evaluate the alignment result
+* Describe the basics of alignment theory
+* Align reads to the genome using Bowtie2
+* Explain components of the SAM and BAM file formats, and be able to convert SAM files to BAM files
+* Run an alignment script and evaluate the alignment result
 
 ## Alignment to Genome
 
@@ -30,14 +30,14 @@ In theory, this sounds like a very simple case of string matching. We take the s
 <img src="../img/Alignment_errors.png" width="700">
 </p>
 
-There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is Bowtie2.
+There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml).
 
 
 ## Bowtie2
 
-[Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) is a fast and accurate alignment tool that supports gapped, local and paired-end alignment modes and works best for reads that are **at least 50 bp** (shorter read lengths should use Bowtie1). 
+Bowtie2 is a fast and accurate alignment tool that supports gapped, local and paired-end alignment modes and works best for reads that are **at least 50 bp** (shorter read lengths should use [Bowtie1](http://bowtie-bio.sourceforge.net/index.shtml)). 
 
-By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _**soft-clipping**_ for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
+By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _**soft-clipping**_ (discussed below) for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
 
 > #### How do other aligners compare?
 > We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
@@ -84,17 +84,17 @@ Now we are ready to perform the read alignment. Let's first create a `bowtie2` d
 $ mkdir ~/chipseq_workshop/results/bowtie2
 ```
 
-We then need to load the module. We could find out more about bowtie2 on O2:
+We then need to load the module. We could find out more about Bowtie2 on O2:
 
 ```bash
-# Check modules for bowtie2 and any dependencies
+# Check modules for Bowtie2 and any dependencies
 $ module spider bowtie2
 ```
 
-Notice that before we load bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
+Notice that before we load Bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
 
 ```bash
-# Load bowtie2 and the necessary compiler
+# Load the necessary compiler and Bowtie2
 $ module load gcc/6.2.0 bowtie2/2.2.9
 ```
 
@@ -113,7 +113,7 @@ Below is an example of the **full command to run bowtie2 on a single FASTQ file 
 # DO NOT RUN
 $ bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
--U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
 ```
 
@@ -123,7 +123,7 @@ Bowtie2 does not generate log summary files. Rather this information gets printe
 # DO NOT RUN
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
--U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
 ```
 
@@ -131,7 +131,7 @@ bowtie2 -p 2 -q --local \
 
 ## Alignment output: SAM/BAM file format
 
-The output from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment Map format**. The SAM file is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
+The output from the Bowtie2 aligner is an unsorted SAM file, also known as **Sequence Alignment/Map format**. The SAM file is a **tab-delimited text file** that contains information for each individual read and its alignment to the genome. While we will go into some features of the SAM format, the paper by [Heng Li et al](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
 The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of alignment, etc., this will change depending on the aligner being used. Each section begins with character ‘@’ followed by [**a two-letter record type code**](https://www.samformat.info/sam-format-header). These are followed by two-letter tags and values.
 
@@ -219,8 +219,8 @@ Let's specify the job submission options as below (don't forget the shebang line
 In the body of the script, add the code required to:
 
 * Load the necessary modules
-* Run bowtie2 to obtain alignment SAM file, and a log file that captures the alignment summary
-* Convert SAM file to BAM file using samtools. 
+* Run bowtie2 to obtain a SAM file, and a log file that captures the alignment summary
+* Convert the SAM file to a BAM file using samtools. 
 
 Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
 
@@ -242,7 +242,7 @@ module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
  
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
--U ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz \
+-U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
 -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
  
 samtools view -h -S -b \
