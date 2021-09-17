@@ -133,7 +133,7 @@ $ mkdir -p chipseq_workshop/results/fastqc
 **To run FastQC we need to specify two arguments**: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input. We will be using one of the WT replicates as input:
 
 ```bash
-$ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz
+$ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
 ```
 
 > _NOTE_: FastQC can also accept multiple files as input. In order to do this, you just need to separate each file name with a space. FastQC also recognizes multiple files with the use of wildcard characters.
@@ -170,7 +170,7 @@ _**Once you have figured out what argument to use, run FastQC with 4 threads/cor
 
  <details>
    <summary><i>Code</i></summary>
-   <code>$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz  
+   <code>$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz  
    </code> 
 </details>
 
