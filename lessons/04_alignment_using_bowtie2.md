@@ -124,7 +124,7 @@ Bowtie2 does not generate log summary files. Rather this information gets printe
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/logs/wt_sample2_chip_bowtie2.log
 ```
 
 > _**NOTE: What is the `2>` operator doing?** Whenever we run a command, it generates two types of output: the output accomplished by the process, which is generally referred to as standard output, and the diagnostic output, which is generally referred to as standard error. By convention, both are output to the screen, but we can redirect either output to file using redirection operators. To redirect the standard output to file (if there is no option for specifying in the command), we can use the `>` operator and to redirect the standard error to file we can use the `2>` operator. Tools generally follow the convention of which type of information is contained in each output, but some tools will send the non-diagnostic output to standard error, and vice versa. We often redirect the standard error from the screen to a log file so that we have this information for any downstream troubleshooting._ 
@@ -243,7 +243,7 @@ module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/data/wt_sample2_chip_bowtie2.log
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/logs/wt_sample2_chip_bowtie2.log
  
 samtools view -h -S -b \
 -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
