@@ -207,7 +207,7 @@ $ cd macs2/
 $ ls -lh
 ```
 
-There should be 6 files output to the results directory for each of the 4 samples, so a total of 24 files:
+There should be 6 files output to the results directory for each sample (2 replicates), so a total of 12 files:
 
 * `_peaks.narrowPeak`: BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue
 * `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment (the ratio between the ChIP-seq tag count and λlocal)
