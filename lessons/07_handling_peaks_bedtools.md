@@ -40,7 +40,7 @@ The numbering system at the bottom of the image is one-based and is generally pr
 <img src="../img/Interbase.png" width="300">
 </p>
 
-BED files require at least 3 fields indicating the location of the feature: the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
+BED files require at least **3 fields** indicating the **location of the feature**: the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
 
 
 <p align="center">
@@ -50,8 +50,6 @@ BED files require at least 3 fields indicating the location of the feature: the 
 #### narrowPeak
 
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
-
-**DON'T HAVE TO KEEP THIS IMAGE** can write out the text version or whatever works best 
 
 <p align="center">
 <img src="../img/narrowPeak.png">
