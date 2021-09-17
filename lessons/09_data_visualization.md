@@ -189,12 +189,13 @@ To create this profile plot, we will need to compute yet another matrix. For thi
 
 You can use the matrix we have computed to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
 
-Yikes! This is not what we were expecting. **There appears to be very little enrichment in the +/- 4kb window around the TSS.** How doe interpret this? And what do we do next?
+Yikes! This is not what we were expecting. **There appears to be very little enrichment in the +/- 4kb window around the TSS.** How do we interpret this? 
 
 <p align="center">
 <img src="../img/09_plot3_wt_tss.png" width="500">
 </p>
 
+It is disappointing to see something like this if you are investigating a transcription factor known to bind at promoter regions of genes. However, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. Regulation of transcription is the most common form of gene control. The action of transcription factors allows for unique expression of each gene in different cell types and during development. [_Nature Scitable_](https://www.nature.com/scitable/definition/transcription-factor-transcription-factors-167/)
 
 
 ## Plotting with histone methylation pattern
