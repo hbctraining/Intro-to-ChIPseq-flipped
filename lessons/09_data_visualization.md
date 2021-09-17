@@ -119,34 +119,40 @@ The figure should like the one displayed below. We observe that the **replicate 
 
 The KO samples in the dataset represent two separate pools of E15.5 Prdm16 conditional knockout cortices. It would be good to **evaluate PRDM binding sites** in samples where the PRDM16 is rendered non-functional, and **see how read density compares to the WT**.
 
-1. Modify the `computeMatrix` command we previously used so the input bigWigs are now KO the KO replicates. You will also want to change the name of the ouput file to `ko_matrix.gz`.
+1. Modify the `computeMatrix` command we previously used so the input bigWigs are now `wt_sample2_chip.bw` and `ko_sample2_chip.bw`. You will also want to change the name of the ouput file to `wt_ko_matrix.gz`.
 2. Compute the matrix.
-3. Draw the profile plot. Be sure to modify the `--samplesLabel` to KO.
+3. Draw the profile plot. Be sure to modify the `--samplesLabel`.
 4. Comment on the plot.
 
 <details>
-  <summary>Code</summary>
+  <summary>Solution</summary>
   
- <p><pre>
- 
+  ```
+  # Navigate to results directory
   computeMatrix reference-point --referencePoint center \
-    -b 4000 -a 4000 \
-    -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
-    -S visualization/bigWig/ko_sample1_chip.bw visualization/bigWig/ko_sample2_chip.bw \
-    --skipZeros \
-    -o ~/chipseq_workshop/results/visualization/ko_matrix.gz \
-    -p 6
+  -b 4000 -a 4000 \
+  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+  -S visualization/bigWig/wt_sample2_chip.bw visualization/bigWig/ko_sample2_chip.bw \
+  --skipZeros \
+  -o visualization/wt_ko_matrix.gz \
+  -p 6
 
-    plotProfile -m ~/chipseq_workshop/results/visualization/ko_matrix.gz \
-    -out ~/chipseq_workshop/results/visualization/figures/plot2_ko_replciates.png \
-    --regionsLabel "" \
-    --perGroup \
-    --colors red blue \
-    --samplesLabel "KO_replicate1" "KO_replicate2" \
-    --refPointLabel "PRDM16 binding sites"
-    
-  </pre></p>
- </details>
+  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
+  -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_ko.png \
+  --regionsLabel "" \
+  --perGroup \
+  --colors blue red \
+  --samplesLabel "WT_replicate1" "KO_replicate2" \
+  --refPointLabel "PRDM16 binding sites"
+  ```
+  
+We observed that the WT sample shows significantly higher enrichment at PRDM16-binding regions, compared to the KO sample. The result matches our expectation.
+  
+  <p align="center">
+  <img src="../img/09_plot4_wt_ko.png" width="500">
+  </p>
+
+</details>
 
 ***
 
@@ -186,39 +192,7 @@ We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions
 <img src="../img/09_plot2_wt_encode.png" width="500">
 </p>
 
-**Exercise**
 
-The study also included PRDM16-knockout experiment (we refer to as `ko`). How does the `ko` sample looks like compared to the `wt` sample? We placed the bigWig file for one of the `ko`sample at the location `/n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/ko_sample2_chip.bw`. Use this, and the bigWig file you generated earlier for `wt`, to plot the peaks. Do you see a difference between `wt` and `ko` samples? Does that match your expectation?
-
-<details>
-  <summary>Solution</summary>
-  
-  ```
-  # Navigate to results directory
-  computeMatrix reference-point --referencePoint center \
-  -b 4000 -a 4000 \
-  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
-  -S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/ko_sample2_chip.bw \
-  --skipZeros \
-  -o ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
-  -p 6
-
-  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
-  -out ~/chipseq_workshop/results/visualization/figures/plot4_wt_ko.png \
-  --regionsLabel "" \
-  --perGroup \
-  --colors blue red \
-  --samplesLabel "PRDM16_WT" "PRDM16_KO" \
-  --refPointLabel "PRDM16 binding sites"
-  ```
-  
-  We observed that the `wt` sample shows significant higher enrichment at PRDM16-binding regions, compared to the `ko` sample. The result matches our expectation, because PRDM16 is knocked out in `ko` sample.
-  
-  <p align="center">
-  <img src="../img/09_plot4_wt_ko.png" width="500">
-  </p>
-
-</details>
 
 
 ***
