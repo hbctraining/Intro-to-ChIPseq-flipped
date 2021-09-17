@@ -128,14 +128,14 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   <summary>Code</summary>
   
  <p><pre>
+ 
   computeMatrix reference-point --referencePoint center \
     -b 4000 -a 4000 \
     -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
-    -S visualization/bigWig/ko_sample2_chip.bw visualization/bigWig/ko_sample2_chip.bw \
+    -S visualization/bigWig/ko_sample1_chip.bw visualization/bigWig/ko_sample2_chip.bw \
     --skipZeros \
     -o ~/chipseq_workshop/results/visualization/ko_matrix.gz \
     -p 6
-
 
     plotProfile -m ~/chipseq_workshop/results/visualization/ko_matrix.gz \
     -out ~/chipseq_workshop/results/visualization/figures/plot2_ko_replciates.png \
@@ -144,8 +144,9 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
     --colors red blue \
     --samplesLabel "KO_replicate1" "KO_replicate2" \
     --refPointLabel "PRDM16 binding sites"
+    
   </pre></p>
-
+ </details>
 
 ***
 
