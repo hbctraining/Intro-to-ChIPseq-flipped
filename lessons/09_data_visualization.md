@@ -208,7 +208,7 @@ Yikes! This is not what we were expecting. **There appears to be very little enr
 
 It is disappointing to see something like this if you are investigating a transcription factor known to bind at promoter regions of genes. But that is not the case for us. PRDM16 binding is an unknown to us. 
 
-### So where is PRDM16 binding? Can we still consider it a transcription factor?
+#### So where is PRDM16 binding? Can we still consider it a transcription factor?
 While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
 
 > **NOTE**: Later in the ChIP-seq workflow (not covered in this workshop), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located.
