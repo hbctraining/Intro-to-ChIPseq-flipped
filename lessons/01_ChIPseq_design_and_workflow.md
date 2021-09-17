@@ -140,6 +140,8 @@ Below we list some general guidelines and things to think about when sending you
 ### Resources
 * [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
 * [Profiling of transcription factor binding events by ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5544034/)
+* [BenchSci Blog](https://blog.benchsci.com/chromatin-immunoprecipitation-chip-principles-and-how-to-obtain-quality-results)
+* ENCODE Data Standards and Processing Pipeline Information for [Histone](https://www.encodeproject.org/chip-seq/histone/) and [Transcription Factors](https://www.encodeproject.org/chip-seq/transcription_factor/)
 
 ## Understanding the ChIP-seq analysis workflow
 
