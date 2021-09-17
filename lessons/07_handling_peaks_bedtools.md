@@ -31,11 +31,24 @@ In this lesson, we will introduce you to an important file format that you will 
 ### BED file formats
 
 #### BED
-Take content from slide deck here: https://github.com/hbctraining/Intro-to-ChIPseq/blob/master/lectures/Fileformats.pdf
 
-Talk about zero and one-based
+BED file format is a tab-delimited (columns separated by tabs), containing information about the coordinates for particular genome features, such as the coordinates for every called peak. Genomic coordinates can be represented in two different ways as shown in the image below.
+
+The numbering system at the bottom of the image is one-based and is generally preferred by biologists, while the top numbering system is zero-based and is preferred by programmers. For instance, if we were to specify the coordinates for the sequence `ATG` in the image, biologists would most likely to indicate 1 to 3, whereas programmers would be more likely to suggest 0 to 3. The benefits to having a zero-based system is the ease of calculating distance or length of sequences. We can easily determine the length of the ATG sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one. Therefore, many file formats, including **the BED file format**, that are used in computation are zero-based. 
+
+<p align="center">
+<img src="../img/interbase.png" width="600">
+</p>
+
+BED files require at least 3 fields indicating the location of the feature: the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
+
+
+<p align="center">
+<img src="../img/bed_file.png" width="600">
+</p>
 
 #### narrowPeak
+
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
 
 **DON'T HAVE TO KEEP THIS IMAGE** can write out the text version or whatever works best 
