@@ -23,7 +23,7 @@ In this lesson, we will introduce you to an important file format that you will 
 2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
 
 <p align="center">
-<img src="../img/chipseq_bedtoolsworkflow_sept2021.png">
+<img src="../img/chipseq_bedtoolsworkflow_sept2021.png" width="500">
 </p>
 
 ### BED file formats
