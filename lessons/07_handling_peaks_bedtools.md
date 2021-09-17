@@ -39,8 +39,6 @@ BED file format is a tab-delimited (columns separated by tabs), containing infor
 <img src="../img/bed_file.png" width="800">
 </p>
 
-##### 0- and 1-based coordinates
-
 The coordinates in BED files are 0-based. What does this mean? Among standard file formats, genomic coordinates can be represented in two different ways as shown in the image below.
 
 <p align="center">
