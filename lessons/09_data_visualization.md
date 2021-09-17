@@ -53,7 +53,7 @@ $ cd ~/chipseq_workshop/results/
 $ cp /n/groups/hbctraining/harwell-datasets//workshop_material/results/visualization/bigWig/*chip.bw visualization/bigWig/
 ```
 
-### Assessing read density between replicates
+## Assessing read density between replicates
 
 We have already shown that for our WT samples there are a good number of overlapping regions. Using `bedtools` we were able to extract a bed file of those consensus peaks. The next question is, **what kind of signal is observed for each replicate across these shared regions?**
 
@@ -156,7 +156,46 @@ We observed that the WT sample shows significantly higher enrichment at PRDM16-b
 
 ***
 
-We explored profiles at the center of region. How about the TSS region? Compute the matrix with TSS as the reference point, and then plot the corresponding profile. What does the profile look like? Could you think of why it looks like that?
+## Evaluating enrichment around the TSS
+
+Because many cis-regulatory elements (i.e. promoters, enhancers, and silencers) are close to transcription start site (TSS) of their targets, a common visualization technique is to evaluate the aggregated read density around the TSS. 
+
+To create this profile plot, we will need to compute yet another matrix. For this plot, we will need to change the following parameters:
+
+* `-R`: Our regions file will change. Rather than using our PRDM16 binding sites, we will use a BED file which contains the start and end coordinate for every genes in the mm10 genome.
+* `reference-point`: The reference point will be TSS. Specifying this means that the window will be centered around the start coordinate of each region.
+* `-S`: The bigWig files input will be similar to the first plot we created, pointing to the two WT ChIP samples.
+
+> **NOTE**: The mm10 genes BED file was obtained from the [UCSC table browser](https://genome.ucsc.edu/cgi-bin/hgTables).
+
+
+**Since this matrix takes especially long to compute, we have created it for you**. _The code is provided in the drop-down below if you are interested in seeing the changes that were made._
+
+<details>
+  <summary>Code</summary>
+  
+  ```bash
+  # Navigate to results directory
+  computeMatrix reference-point --referencePoint TSS \
+  -b 4000 -a 4000 \
+  -R /n/groups/hbctraining/harwell-datasets/chipseq_workshop/reference/mm10-allknownGenes.bed \
+  -S visualization/bigWig/wt_sample1_chip.bw visualization/bigWig/wt_sample2_chip.bw \
+  --skipZeros \
+  -o visualization/wt_tss_matrix.gz \
+  -p 6
+  
+  ```
+</details>
+
+You can use the matrix we have computed to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
+
+Yikes! This is not what we were expecting. **There appears to be very little enrichment in the +/- 4kb window around the TSS.** How doe interpret this? And what do we do next?
+
+<p align="center">
+<img src="../img/09_plot3_wt_tss.png" width="500">
+</p>
+
+
 
 ## Plotting with histone methylation pattern
 After plotting the binding pattern for PRDM16, we then ask: how does PRDM16 regulates the gene expression? Let's explore one of the possibilities here: histone methylation. Histone methylation could up-regulate or down-regulate the gene expression, depending on the position of methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3), and speculate the mechanism of regulation accordingly. The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)), which we have put in our training directory (`/n/groups/hbctraining/harwell-datasets/encode-chipseq/`). To fasten the computing process, we could submit a running job, instead of running on an interactive node. Create a sbatch script as below (with the name `plot2.sbatch`, and then run the script using `sbatch plot2.sbatch` command.
