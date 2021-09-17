@@ -20,9 +20,9 @@ Peak calling, the next step in our workflow, is a computational method used to i
 
 <p align="center">
 <img src="../img/chipseq_peakworkflow_sept2021.png" width="700">
-	</p>
+</p>
 
-For ChIP-seq experiments, what we observe from the alignment files is a **strand asymmetry with read densities on the +/- strand, centered around the binding site**. The 5' ends of the selected fragments will form groups on the positive- and negative-strand. The distributions of these groups are then assessed using statistical measures and compared against background (input or mock IP samples) to determine if the site of enrichment is likely to be a real binding site.
+For ChIP-seq experiments, what we observe from the alignment files is a **strand asymmetry with read densities on the +/- strand, centered around the binding site**. The 5' ends of the selected fragments will form groups on the positive- and negative-strand. The distributions of these groups are then assessed using statistical measures and compared against background (input or IgG samples) to determine if the site of enrichment is likely to be a real binding site.
 
 <p align="center">
 <img src="../img/plos_chipseq_arrow.png" width = "700">
@@ -30,22 +30,20 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
-### Types of binding profiles
-
-...Identifying short degenerate sequences that present as punctate binding sites. ChIP-seq analysis algorithms are specialized in identifying one of **two types of enrichment** (or have specific methods for each): **broad peaks** or broad domains (i.e. histone modifications that cover entire gene bodies) or **narrow peaks** (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also 'mixed' binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
-
-Talk about histone marks here - maybe some more info on cofactors, enhancers....
-
-
-There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this session. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
+There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this lesson. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
 
 
 ## MACS2
-A commonly used tool for identifying transcription factor binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites, it is also suited for larger regions. MACS improves the spatial resolution of binding sites through **combining the information of both sequencing tag position and orientation.** 
+A commonly used tool for identifying binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites (narrow peaks), it is also suited for larger regions (broad peaks). 
+
+> ### Peak calling depends on your expected binding profile
+> Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or broad domains (i.e. histone modifications that cover entire gene bodies) or narrow peaks (i.e. a transcription factor binding). There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson]().
+>
+> When investigating a new protein and you are not sure what type of binding profile to expect, we advise peak calling for both narrow and broad profiles. This will require additional time for some exploration to determine what is best for your data. A powerful method would be one that could evalutate the data and be able to apply an appropriate technique for the features found without previous knowledge of the type of enrichment.
 
 We will be using the newest version of this tool, **MACS2**. The **underlying algorithm for peak calling remains the same as before**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
-> **NOTE:** While MACS2 can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will obtain many false positive peaks identified. 
+> **NOTE:** While MACS2 can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will find many false positive peaks identified. 
 
 <p align="center">
 <img src="../img/macs_workflow.png" width="400">
@@ -55,16 +53,20 @@ We will be using the newest version of this tool, **MACS2**. The **underlying al
 
 MACS provides different options for dealing with **duplicate tags** at the exact same location, that is tags with **the same coordination and the same strand**. The default is to keep a single read at each location. The `auto` option, which is very commonly used, tells MACS to calculate the maximum tags at the exact same location based on binomal distribution using 1e-5 as the pvalue cutoff. An alternative is to set the `all` option, which keeps every tag. If an `integer` is specified, then at most that many tags will be kept at the same location. This redundancy is consistently applied for both the ChIP and input samples.
 
-*We do not need to worry about this, since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**
+> _We do not need to worry about this option, since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**_
 
 
 ### Modeling the shift size
 
 The tag density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks). MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
 
-To find paired peaks to **build the model**, MACS first scans the whole dataset searching for highly significant enriched regions. *This is done only using the ChIP sample!* Given a sonication size (`bandwidth`) and a high-confidence fold-enrichment (`mfold`), MACS slides two `bandwidth` windows across the genome to find regions with **tags more than `mfold` enriched relative to a random tag genome distribution**. 
+To identify the shift size:
 
-MACS randomly **samples 1,000 of these high-quality peaks**, separates their positive and negative strand tags, and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. MACS shifts all the tags by d/2 toward the 3' ends to the most likely protein-DNA interaction sites.
+1. MACS scans the whole sample **searching for all highly significant enriched regions**. *This is done only using the ChIP sample!* 
+   * These regions are identified by MACS sliding two `bandwidth` windows across the genome to find regions with **tags more than `mfold` enriched relative to a random tag genome distribution**. 
+2. MACS randomly **samples 1,000 of these high-quality peaks** identified in #1. 
+3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
+4. MACS **shifts all reads in the sample by d/2** toward the 3' ends to the most likely protein-DNA interaction sites
 
 <p align="center">
 <img src="../img/peak_shift3.png" width="400">
@@ -76,7 +78,7 @@ For experiments in which sequence depth differs between input and treatment samp
 
 ### Effective genome length
 
-To calculate λBG from tag count, MAC2 requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
+To calculate λBG (a parameter discussed in "Peak detection" below) from tag count, MAC2 requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
 
 <p align="center">
 <img src="../img/mappable.png" width="300">
@@ -93,20 +95,19 @@ After MACS shifts every tag by *d/2*, it then slides across the genome using a w
 <img src="../img/peak_detection.png" width="300">
 </p>
 
-Instead of using a uniform λ estimated from the whole genome, MACS uses a dynamic parameter, λlocal, defined for each candidate peak. The lambda parameter is estimated from the control sample and is deduced by **taking the maximum value across various window sizes:** 
-
-**λlocal = max(λBG, λ1k, λ5k, λ10k).** 
-
-In this way, lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
+Instead of using a uniform λ estimated from the whole genome (computed using only the input control), MACS uses a λlocal defined for each candidate peak. The λlocal parameter is deduced by **taking the maximum λ value across the λ computed across various window sizes** (as shown below): 
 
 <p align="center">
 <img src="../img/lambda.png" width="300">
 </p>
 
+**λlocal = max(λ300bp, λ1KB, λ5KB, λ10KB, λBG).** 
 
-A region is considered to have a significant tag enrichment if the p-value  < 10e-5 (this can be changed from the default). This is a Poisson distribution p-value based on λ.
+> λBG represents the background λ estimated using the whole genome (i.e. the largest window size)
 
-Overlapping enriched peaks are merged, and each tag position is extended 'd' bases from its center. The location in the peak with the highest fragment pileup, hereafter referred to as the summit, is predicted as the precise binding location. The ratio between the ChIP-seq tag count and λlocal is reported as the fold enrichment.
+In this way, lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
+
+Next, a Poisson distribution p-value is computed based on λ. A region is considered to have a significant tag enrichment if the p-value < 1e-5. Any overlapping enriched peaks are merged into a single peak.
 
 ### Estimation of false discovery rate
 
@@ -146,7 +147,7 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 **Input file options**
 
-* `-t`: The IP data file (this is the only REQUIRED parameter for MACS)
+* `-t`: The ChIP data file (this is the only REQUIRED parameter for MACS)
 * `-c`: The control or mock data file
 * `-f`: format of input file; Default is "AUTO", which will allow MACS to decide the format automatically.
 * `-g`: mappable genome size, which is defined as the genome size that can be sequenced; some precompiled values provided.
@@ -209,11 +210,12 @@ $ ls -lh
 There should be 6 files output to the results directory for each of the 4 samples, so a total of 24 files:
 
 * `_peaks.narrowPeak`: BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue
-* `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment
-* `_summits.bed`: peak summits locations for every peak. To find the motifs at the binding sites, this file is recommended
+* `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment (the ratio between the ChIP-seq tag count and λlocal)
+* `_summits.bed`: The location in the peak with the highest fragment pileup. These are the predicted precise binding location and recommended to use for motif finding.
 * `_model.R`: an R script which you can use to produce a PDF image about the model based on your data and cross-correlation plot
 * `_control_lambda.bdg`: bedGraph format for input sample
 * `_treat_pileup.bdg`: bedGraph format for treatment sample
+
 
 Let's first obtain a summary of how many peaks were called in each sample. We can do this by counting the lines in the `.narrowPeak` files:
 
