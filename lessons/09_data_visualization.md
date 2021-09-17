@@ -208,8 +208,8 @@ Yikes! This is not what we were expecting. **There appears to be very little enr
 
 It is disappointing to see something like this if you are investigating a transcription factor known to bind at promoter regions of genes. But that is not the case for us. PRDM16 binding is an unknown to us. 
 
-#### So where is PRDM16 binding? Can we still consider it a transcription factor?
-While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
+#### Can we still consider PRDM16 a transcription factor?
+Yes, we can. While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
 
 > **NOTE**: Later in the ChIP-seq workflow (not covered in this workshop), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located.
 
@@ -218,7 +218,19 @@ While some some transcription factors bind to promoter regions, other transcript
 
 Now that we have learned that very few sites bind to the promoter regions of genes, our next hypothesis is that **PRDM16 is binding to enhancer regions**. One way of assessing this is to obtain a BED file of regions that correspond to [enhancer regions in mouse genome](https://genome.ucsc.edu/cgi-bin/hgTrackUi?db=mm10&c=chrX&g=encode3RenEnhancerEpdNewPromoter). While this is a totally valid avenue to explore, we will be taking another route in this workshop.
 
-Early in the workshop we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to show you how to make use of it to interrogate your data.
+Early in the workshop we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to show you how to make use of it to interrogate your data. If you recall, we are working with whole brain lysates were obtained from mice at E15.5. If we are making any comparisons, we want to ensure we are using data generated using a similar set of cells. Gene regulation patterns are highly variable across development, and we want to make sure we are capturing patterns in the radial glia (when upper layer neurons are being generated.
+
+
+we sought to determine the histone methylation pattern within PRDM16 binding regions using the ENCODE project datasets collected from E14.5 mouse brains 
+(Stamatoyannopoulos et al., 2012). 
+
+- H3K4me3, an epigenetic modification enriched in promoter regions
+- H3K4me, a chromatin mark associated with poised and active enhancers 
+- H3K27me3, a polycomb modification linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010). 
+- 
+- We found moderate H3K4me3 and H3K4me levels in regions bound by PRDM16, whereas there was little overlap with H3K27me3 (Figure 6A).
+- H3K27ac is an epigenetic modification associated with the higher activation of transcription and therefore defined as an active enhancer mark.
+
 
 After plotting the binding pattern for PRDM16, we then ask: how does PRDM16 regulates the gene expression? Let's explore one of the possibilities here: histone methylation. Histone methylation could up-regulate or down-regulate the gene expression, depending on the position of methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3), and speculate the mechanism of regulation accordingly. The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)), which we have put in our training directory (`/n/groups/hbctraining/harwell-datasets/encode-chipseq/`). To fasten the computing process, we could submit a running job, instead of running on an interactive node. Create a sbatch script as below (with the name `plot2.sbatch`, and then run the script using `sbatch plot2.sbatch` command.
 
