@@ -22,6 +22,9 @@ In this lesson, we will introduce you to an important file format that you will 
 1. Filter out peaks that overlap with the blacklisted regions
 2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
 
+<p align="center">
+<img src="../img/chipseq_bedtoolsworkflow_sept2021.png">
+</p>
 
 ### BED file formats
 
