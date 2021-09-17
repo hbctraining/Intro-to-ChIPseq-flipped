@@ -1,16 +1,16 @@
 ---
 title: "FastQC for quality assessment"
-author: "Mary Piper, Radhika Khetani, Jihe Liu, Meeta Mistry"
+author: "Mary Piper, Radhika Khetani, Jihe Liu, Meeta Mistry, Will Gammerdinger"
 date: "Aug 5th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani, Jihe Liu
+Contributors: Mary Piper, Radhika Khetani, Jihe Liu, Will Gammerdinger
 
 Approximate time: 
 
 ## Learning Objectives
 
-* Understand the basics of a FASTQ file
+* Explain the components of a FASTQ file
 * Evaluate the quality of the sequencing data using FastQC
 
 ## Quality control of sequence reads
@@ -77,7 +77,7 @@ Now we understand what information is stored in a FASTQ file, the next step is t
 The main features of FastQC are:
 
 * Imports data in FASTQ files (or BAM files)
-* Evaluates the reads automatically and identify potential issues of the data
+* Evaluates the reads automatically and identifies potential issues in the data
 * Generates a HTML-based quality report with graphs and tables
 
 ### Running FastQC  
@@ -136,7 +136,7 @@ $ mkdir -p chipseq_workshop/results/fastqc
 $ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz
 ```
 
-> _NOTE_: FastQC can also accept multiple files as input. you just need to separate each file name with a space. FastQC also recognizes multiple files with the use of wildcard characters.
+> _NOTE_: FastQC can also accept multiple files as input. In order to do this, you just need to separate each file name with a space. FastQC also recognizes multiple files with the use of wildcard characters.
 
 **You may have noticed that it takes a few minutes to run this single sample through FastQC. How can we speed it up?**
 
@@ -199,7 +199,7 @@ In order to view the HTML report in our browser, we need to transfer it over to 
 > FileZilla is a file transfer (FTP) client with lots of useful features and an intuitive graphical user interface. It basically allows you to reliably move files securely between two computers using a point and click environment. It has cross-platform compatability so you can install it on any operating system.
 
 
-**Filezilla - Step 1**
+**FileZilla - Step 1**
 
 Open *FileZilla*, and click on the File tab. Choose 'Site Manager'.
 
@@ -219,17 +219,23 @@ Within the 'Site Manager' window, do the following:
 6. Password: password for training_account
 7. Click 'Connect'
 
+> NOTE: While using the temporary training accounts on the O2 cluster, two-factor authentication ***IS NOT*** required. However, if you explore this lesson when using your personal account, two-factor authentication ***IS*** required. 
+> 
+> In order to connect your laptop using FileZilla to the O2 cluster, follow steps 1-7 as outlined above. Once you have clicked 'Connect', you will receive a Duo push notification (but no indication in FileZilla) which you must approve within the short time window. Following Duo approval, FileZilla will connect to the O2 cluster. Additionally, each file transfer you carry out will also need Duo approval.
+
+
+
 <p align="center">
 <img src="../img/filezilla_login.png" width="400">	
 </p>
 
-You will see messages in the top window panel, indicating whether or not you have successfully connected to O2. If this if your first time using Filezilla, we recommend that you take some time to get familiar with the basics of the interface. This [tutorial](https://wiki.filezilla-project.org/FileZilla_Client_Tutorial_(en)) is a helpful resource.
+You will see messages in the top window panel, indicating whether or not you have successfully connected to O2. If this if your first time using FileZilla, we recommend that you take some time to get familiar with the basics of the interface. This [tutorial](https://wiki.filezilla-project.org/FileZilla_Client_Tutorial_(en)) is a helpful resource.
 
-**Filezilla Interface**
+**FileZilla Interface**
 
 You will see two panels in the interface. On the left hand side, you will see files from your laptop; on the right hand side, you will see your home directory on O2. Both panels have a directory tree at the top and a detailed listing of the selected directory's contents underneath. On the right hand panel, navigate to where the HTML files are located on O2 `~/chipseq_workshop/results/fastqc/`. Then on the left hand panel, select where you would like to copy those files to on your computer.
 
-Copy the HTML report over by double clicking it or drag it over to the left hand side panel. Once finished, you can leave the Filezilla interface. Locate the HTML report on your computer, and open it up in a browser.
+Copy the HTML report over by double clicking it or drag it over to the left hand side panel. Once finished, you can leave the FileZilla interface. Locate the HTML report on your computer, and open it up in a browser.
 
 ### Interpreting the FastQC HTML report
 
@@ -277,7 +283,7 @@ The **[Sequence duplication level](https://www.bioinformatics.babraham.ac.uk/pro
 
 #### Over-represented sequences
 
-**[Over-represented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)** could come from actual biological significance, or biases introduced during the sequencing. With ChIP-seq, you expect to see over-represented sequences in the immunoprecipitation sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences in fastqc report doesn’t mean you have a bad experiment. If you observe over-represented sequences in the input sample, that usually suggests some bias in the protocol to specific regions. Here, there is no over-represented sequences in our `wt_sample2_chip` sample. 
+**[Over-represented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)** could come from actual biological significance, or biases introduced during the sequencing. With ChIP-seq, you expect to see over-represented sequences in the immunoprecipitation sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences in FastQC report doesn’t mean you have a bad experiment. If you observe over-represented sequences in the input sample, that usually suggests some bias in the protocol to specific regions. Here, there is no over-represented sequences in our `wt_sample2_chip` sample. 
 
 #### K-mer content
 
@@ -287,18 +293,18 @@ The **[Kmer content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/H
 	<img src="../img/03_fastqc_kmer_content.png" width="600">
 </p>
 
-For our sample, we observe a significant amount of K-mer content and FastQC suggests a "Failure". However, for ChIP-seq data a "Failure" of this metric is expected and is actually a sign of good signal in your data. Remember that the DNA sequences we have collected are from binding sites of our protein of interest. We would hope that there is ome enrichment of K-mers amongst the binding sites (i.e shared motifs). We don't expect this same result for the FastQC analysis of our input sample.
+For our sample, we observe a significant amount of K-mer content and FastQC suggests a "Failure". However, for ChIP-seq data a "Failure" of this metric is expected and is actually a sign of good signal in your data. Remember that the DNA sequences we have collected are from binding sites of our protein of interest. We would hope that there is some enrichment of K-mers amongst the binding sites (i.e shared motifs). We don't expect this same result for the FastQC analysis of our input sample.
 
 
 ### Conclusion
 
-Based on the metrics and plots generated by FastQC, we have a a pretty good quality sample to move forward with. Typically, you would generate these reports for all samples in your dataset and kepp track of any samples that did not fare as well. We focused on the interpretation of selected plots that are particularly relevant for ChIP-seq, but if you would like to go through the remaining plots and metrics, FastQC has a well-documented [manual page](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) with [more details](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) (under the Analysis Modules directory) about all the plots in the report.
+Based on the metrics and plots generated by FastQC, we have a pretty good quality sample to move forward with. Typically, you would generate these reports for all samples in your dataset and keep track of any samples that did not fare as well. We focused on the interpretation of selected plots that are particularly relevant for ChIP-seq, but if you would like to go through the remaining plots and metrics, FastQC has a well-documented [manual page](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) with [more details](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) (under the Analysis Modules directory) about all the plots in the report.
 
 
 > #### Additional resources
 > 
 > * We recommend looking at [this post](http://bioinfo-core.org/index.php/9th_Discussion-28_October_2010) for more information on what bad plots look like and what they mean for your data. 
-> * We also have a [slidedeck](https://github.com/hbctraining/Intro-to-rnaseq-hpc-O2/raw/master/lectures/error_profiles_mm.pdf) of error profiles for Illumina sequencing, where we discuss specific FASTQC plots and possible sources of these types of errors.
+> * We also have a [slidedeck](https://github.com/hbctraining/Intro-to-rnaseq-hpc-O2/raw/master/lectures/error_profiles_mm.pdf) of error profiles for Illumina sequencing, where we discuss specific FastQC plots and possible sources of error.
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
