@@ -15,7 +15,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop Introduction]() | Meeta |
-| 09:45 - 11:00 | [Introduction to ChIP-seq]() | [Dr. Shannan Ho Sui]() |
+| 09:45 - 11:00 | [Introduction to ChIP-seq]() | [Dr. Shannan Ho Sui](https://bioinformatics.sph.harvard.edu/people/shannan-ho-sui) |
 | 11:00- 11:05 | Break|  |
 | 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Radhika |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Jihe |
