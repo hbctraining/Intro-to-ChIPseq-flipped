@@ -34,14 +34,14 @@ ENCODE has produced vast amounts of data that can be accessed through the projec
 
 ### NIH Roadmap Epigenomics Mapping Consortium
 
-The [NIH Roadmap Epigenome Project](http://www.roadmapepigenomics.org/) has continued this journey, with a focus on human epigenomic data. This project was launched in 2008 with the goal of elucidating how epigenetic regulation contributes to human development and disease. **The Roadmap Epigenomics** uses many of the same technologies used by ENCODE, but **almost excusively focused on epigenetic features such as DNA methylation and histone modifications**, while ENCODE emphasized identifying sites of DNA binding factor occupancy.
+The [NIH Roadmap Epigenomics Project](http://www.roadmapepigenomics.org/) has continued this journey, with a focus on human epigenomic data. This project was launched in 2008 with the goal of elucidating how epigenetic regulation contributes to human development and disease. **The Roadmap Epigenome** uses many of the same technologies used by ENCODE, but **almost excusively focused on epigenetic features such as DNA methylation and histone modifications**, while ENCODE emphasized identifying sites of DNA binding factor occupancy.
 
 The data is presented as  **an atlas, where users can explore epigenome maps for stem cells and primary ex vivo tissues** selected to represent the normal counterparts of tissues and organ systems frequently involved in human disease. Data can be viewed in the browser or downloaded locally.
 
 
 ## ChIP-seq: A method for detecting and characterizing protein–DNA interactions
 
-In this workshop we will be focusing on the ChIP-seq technology. Chromatin immunoprecipitation followed by sequencing (ChIP-seq) is a central method in epigenomic research. In ChIP experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. The immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
+In this workshop we will be focusing on the ChIP-seq technology. <u>Ch</u>romatin <u>I</u>mmuno<u>p</u>recipitation followed by sequencing (ChIP-seq) is a central method in epigenomic research. In ChIP experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. The immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
 
 <p align="center">
 <img src="../img/chip_expt_workflow.png" width="400">
@@ -66,7 +66,7 @@ Below, is the **decision tree** that was presented earlier in the workshop (lect
 
 
 ### Starting material
-Ensure that you have a sufficient amount of starting material because the ChIP will only enrich for a small proportion. For a standard protocol, you want approximately 2 x 10^6 cells per immunoprecipitation. If it is difficult to obtain that many samples from your experiment, consider using low input methods. Ultimately, higher amounts of starting material yield more consistent and reproducible protein-DNA enrichments.
+Ensure that you have a sufficient amount of starting material because the ChIP will only enrich for a small proportion. For a standard protocol, you want approximately 2 x 10<sup>6</sup> cells per immunoprecipitation. If it is difficult to obtain that many samples from your experiment, consider using low input methods. Ultimately, higher amounts of starting material yield more consistent and reproducible protein-DNA enrichments.
 
 > NOTE on pooling to increase the amount of starting material. Is it okay? Under what circumstances?
 
@@ -86,7 +86,7 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 
 A ChIP-Seq peak should be compared with the same region of the genome in a matched control sample because only a fraction of the DNA in our ChIP sample corresponds to actual signal amidst background noise. 
 
-There are a number of **artefacts that tend to generate pileups of reads that could be interpreted as a false positive peaks**. These include:
+There are a number of **artifacts that tend to generate pileups of reads that could be interpreted as a false positive peaks**. These include:
 * Open chromatin regions that are fragmented more easily than closed regions due to the accessibility of the DNA
 * The presence of repetitive sequences
 * An uneven distribution of sequence reads across the genome due to DNA composition
@@ -118,8 +118,8 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 Below we list some general guidelines and things to think about when sending your samples to the sequencing facility:
 
 #### Read length
-* Read length shoudl be between 50- to 150-bp
-* Single-end reads is sufficient in most cases
+* Read length should be between 50- to 150-bp
+* Single-end reads are sufficient in most cases
     * Longer reads and paired-end reads will improve mappability
     * Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements
 * Balance cost with value of more informative reads
@@ -139,14 +139,14 @@ Below we list some general guidelines and things to think about when sending you
 * Sequence the input controls to equal or higher depth than your ChIP samples
 
 ### Resources
-* [Thermofisher Step-by-step guide to a successfuk ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
+* [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
 * [Profiling of transcription factor binding events by ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5544034/)
 
 ## Understanding the ChIP-seq analysis workflow
 
-In the same way that the experimental design setup is a process, the analysis also takes some thought and decision making. Below we have depicted and end-to-end analysis workflow for ChIP-sequencing data. **Our focus for this workshop will be on the top half of this workflow diagram**.
+In the same way that the experimental design setup is a process, the analysis also takes some thought and decision making. Below we have depicted an end-to-end analysis workflow for ChIP-sequencing data. **Our focus for this workshop will be on the top half of this workflow diagram**.
 
-All of the software required to get us from **raw sequence reads to peak calls** are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applicable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thororughly understand the output. Each step of the workflow will require a specific file format. You will notice that we have annotated these file formats on the workflow below. We will describe these file formats in more detail in the respective lessons.
+All of the software required to get us from **raw sequence reads to peak calls** are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applicable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thoroughly understand the output. Each step of the workflow will require a specific file format. You will notice that we have annotated these file formats on the workflow below. We will describe these file formats in more detail in the respective lessons.
 
 <p align="center">
 <img src="../img/chipseq_fullworkflow_sept2021.png" width="700">
