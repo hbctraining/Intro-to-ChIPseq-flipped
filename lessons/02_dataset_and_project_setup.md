@@ -71,7 +71,10 @@ Some relevant metadata for our dataset is provided below:
 
 Our dataset consists of two WT samples and two KO samples. For each of the IP samples, we have a corresponding input sample as illustrated in the schematic below.
 
-**Add image here**
+<p align="center">
+<img src="../img/expt_design_prdm16.png" width="700">
+</p>
+
 
 ## Implementing data management best practices
 
