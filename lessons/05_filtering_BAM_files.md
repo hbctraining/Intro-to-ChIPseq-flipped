@@ -33,18 +33,25 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > * You are expecting binding in repetitive regions (also, use paired-end sequencing) 
 > * You have included UMIs into your experimental setup.
 
-The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. We do not have this option with Bowtie2 and so the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. The **filtering will consist of two steps**:
+The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. We do not have this option with Bowtie2 and so the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. 
 
-1. Sort BAM files by genomic coordinates
-2. Filter the reads to keep only uniquely mapping reads (this will also remove any unmapped reads)
+This **lesson will consist of two steps**:
+
+1. Sort BAM files by genomic coordinates (using `samtools`).
+2. Filter the reads to keep only uniquely mapping reads (using `sambamba`). This will also remove any unmapped reads.
 
 Before we begin, you will want to make sure you are **logged into O2.** To start an interactive session with 2 cores and 10G of memory (sorting can be memory-intensive) us the command below:
 
 ```bash
 $ srun --pty -p interactive -t 0-2:30 --mem 10G -n 1 --reservation=HBC2 /bin/bash
 ```
-
 > **Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
+
+We will also load the required modules for this lesson:
+
+```bash
+module load gcc/6.2.0 samtools/1.13 sambamba/0.7.1
+```
 
 
 ### 1. Sort BAM files by genomic coordinates
