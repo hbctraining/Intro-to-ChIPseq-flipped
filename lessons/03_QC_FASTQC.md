@@ -169,10 +169,13 @@ $ fastqc --help
 
 _**Once you have figured out what argument to use, run FastQC with 4 threads/cores.**_
 
- <details>
-   <summary><i>Code</i></summary>
-   <code>$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz  
-   </code> 
+<details>
+  <summary>Solution</summary>
+  
+ <p><pre>
+ $ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz  
+ </pre></p>
+  
 </details>
 
 2. Do you notice any difference in running time? Does multi-threading speed up the run?
