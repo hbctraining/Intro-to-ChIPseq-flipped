@@ -204,7 +204,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.g
 -out ~/chipseq_workshop/results/visualization/figures/plot1_wt_TSS.png \
 --regionsLabel "" \
 --perGroup \
---colors blue red \
+--colors red blue \
 --samplesLabel "WT_replicate1" "WT_replicate2" \
 --refPointLabel "TSS" \
 --yMax 12
