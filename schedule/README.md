@@ -84,20 +84,24 @@
 
 
 * Downloadable Answer Keys (Day 2 exercises): 
-  * ...
+  * [Data Management and project organization](homework/Day1_readme_answerkey.md)
+  * [QC and Alignment questions](homework/Day1_answer_key.md)
 
 * Downloadable Answer Keys (Day 3 exercises): 
-  * ...
+  * 
 
-* [Automation Script])
+* [Automation Script]()
 
 ***
 
 ## Resources
 
+
 ***
 
 ## Building on this workshop
+* [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
+
 
 ***
 *These materials have been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
