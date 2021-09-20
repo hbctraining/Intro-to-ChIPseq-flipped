@@ -41,7 +41,7 @@ A commonly used tool for identifying binding sites is named [Model-based Analysi
 
 We will be using the newest version of this tool, **MACS2**. The **underlying algorithm for peak calling remains the same as before**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
-> **NOTE:** While MACS2 can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will find many false positive peaks identified. 
+> **NOTE:** While MACS can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will find many false positive peaks identified. 
 
 <p align="center">
 <img src="../img/macs_workflow.png" width="400">
@@ -76,14 +76,14 @@ For experiments in which sequence depth differs between input and treatment samp
 
 ### Effective genome length
 
-To calculate λBG (a parameter discussed in "Peak detection" below) from tag count, MAC2 requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
+To calculate λBG (a parameter discussed in "Peak detection" below) from tag count, MACS requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
 
 <p align="center">
 <img src="../img/mappable.png" width="300">
 </p>
 
 > #### How do I obtain the effective genome length?
-> The MACS2 software has some pre-computed values for commonly used organisms (human, mouse, worm and fly). If you wanted you could compute a more accurate values based on your organism and build. The [deepTools docs](https://deeptools.readthedocs.io/en/develop/content/feature/effectiveGenomeSize.html) has additional pre-computed values for more recent builds but also has some good materials on how to go about computing it.
+> The MACS software has some pre-computed values for commonly used organisms (human, mouse, worm and fly). If you wanted you could compute a more accurate values based on your organism and build. The [deepTools docs](https://deeptools.readthedocs.io/en/develop/content/feature/effectiveGenomeSize.html) has additional pre-computed values for more recent builds but also has some good materials on how to go about computing it.
 
 ### Peak detection
 
@@ -113,11 +113,9 @@ Each peak is considered an independent test. Therefore, when we encounter thousa
 
 ## Running MACS2 
 
-To run MACS2, we will first start an interactive session using 1 core (do this only if you don't already have one) and load the macs2 module along with any dependencies:
+To run MACS2, we will first load the macs2 module along with any dependencies:
 
 ```bash
-$ srun --pty -p interactive -t 0-2:30 --mem 1G  /bin/bash
-
 $ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309
 ```
 
@@ -134,7 +132,7 @@ Now change directories to the `results` folder:
 $ cd ~/chipseq_workshop/results/
 ```
 
-Since we only created a filtered BAM file for a single sample, **we will use the BAM files we have generated for you**. Rather than copying them over, we will have you point to them within your command:
+Since we only created a filtered BAM file for a single sample, **we will use the BAM files we have generated for you**. Rather than copying them over, we will have you point to them within your peak calling command.
 
 
 ### MACS2 parameters
@@ -205,14 +203,12 @@ $ cd macs2/
 $ ls -lh
 ```
 
-There should be 6 files output to the results directory for each sample (2 replicates), so a total of 12 files:
+There should be 4 files output to the results directory for each sample (2 replicates), so a total of 8 files:
 
 * `_peaks.narrowPeak`: BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue
 * `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment (the ratio between the ChIP-seq tag count and λlocal)
 * `_summits.bed`: The location in the peak with the highest fragment pileup. These are the predicted precise binding location and recommended to use for motif finding.
 * `_model.R`: an R script which you can use to produce a PDF image about the model based on your data and cross-correlation plot
-* `_control_lambda.bdg`: bedGraph format for input sample
-* `_treat_pileup.bdg`: bedGraph format for treatment sample
 
 
 Let's first obtain a summary of how many peaks were called in each sample. We can do this by counting the lines in the `.narrowPeak` files:
@@ -241,9 +237,14 @@ $ wc -l *.narrowPeak
 
 ***
 
-In the next lesson, we will delve deeper into the output files and understanding what information is stored in them.
+In the next lesson, we will delve deeper into the output files and gain an understanding of the different file formats.
 
 ### Other peak calling software
+We have used this lesson to describe to you the inner workings of the MACS2 peak caller. This is a very popular tool in the field, however there are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
+
+* [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
+* [EPIC](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implentation of an older tool called SICER)
+* [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
 
 
 ***
