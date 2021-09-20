@@ -55,6 +55,8 @@ A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called 
 <img src="../img/narrowPeak.png">
 </p>
 
+Each row in the narrowPeak file represents a called peak.
+
 ### `bedtools`
 
 The **bedtools suite is like a swiss-army knife of tools for a wide-range of genomics analysis tasks**. The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) was devloped in [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah, and is widely used amongst the bioinformatics community. It is such an easy and versatile tool to perform these tasks described above. 
