@@ -319,7 +319,7 @@ This script loops through the same files as in the previous (demo) script, but t
 ```bash
 #! /bin/bash
 
-for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
+for fq in ~/chipseq_workshop/raw_data/ko_sample1_chip.fastq.gz ~/chipseq_workshop/raw_data/ko_sample2_chip.fastq.gz
 do
 
 sbatch -p short -t 0-2:00 -n 6 --job-name chipseq-analysis -o %j.out -e %j.err \
