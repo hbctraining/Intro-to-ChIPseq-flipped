@@ -45,7 +45,7 @@ The coordinates in BED files are 0-based. What does this mean? Among standard fi
 <img src="../img/Interbase.png" width="300">
 </p>
 
-If we were to specify the **coordinates for the sequence `ATG`** in the image, biologists would most likely use the 1-based (bottom) method and indicate 1 to 3, whereas programmers would be more likely to use the zero-based method and suggest 0 to 3. The benefits to having a **zero-based system** is the **ease of calculating distance or length** of sequences. We can easily determine the length of the `ATG` sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one after the subtraction. Therefore, many file formats used in computation, including **the BED file format**, use zero-based coordinates. 
+If we were to specify the **coordinates for the sequence `ATG`** in the image, biologists would most likely use the 1-based (bottom) method and indicate 4 to 6, whereas programmers would be more likely to use the zero-based method and suggest 3 to 6. The benefits to having a **zero-based system** is the **ease of calculating distance or length** of sequences. We can easily determine the length of the `ATG` sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one after the subtraction. Therefore, many file formats used in computation, including **the BED file format**, use zero-based coordinates. 
 
 #### narrowPeak
 
