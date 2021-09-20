@@ -143,9 +143,9 @@ A major factor to consider when choosing your sequencing depth is the type of bi
 
 *Image source: [Park P., Nature Reviews Genetics (2009) **10**: 669–680](https://www.nature.com/articles/nrg2641).*
 
-* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (see image above).
-* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. E.g. H3K36me3 (see image above).
-* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment. E.g. H3K27me3 (see image above).
+* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (red and orange in the image above).
+* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. E.g. H3K27me3 (blue in the image above).
+* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment. E.g. H3K36me3 (green in the image above).
 
 The table below is adapted from the ENCODE data standards page, which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
 
