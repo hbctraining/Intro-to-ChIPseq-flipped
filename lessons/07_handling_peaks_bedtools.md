@@ -32,7 +32,7 @@ In this lesson, we will introduce you to an important file format that you will 
 
 #### BED
 
-BED file format is a tab-delimited (columns separated by tabs), containing information about the coordinates for particular genome features, such as the coordinates for every called peak. BED files require at least **3 fields** indicating the **location of the feature**: the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
+The BED file format is a tab-delimited (columns separated by tabs) file, containing information about the coordinates for particular genome features, such as the coordinates for every called peak. BED files require at least **3 fields** indicating the **location of the feature**: the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
 
 
 <p align="center">
