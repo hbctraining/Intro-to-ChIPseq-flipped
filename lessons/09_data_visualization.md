@@ -229,14 +229,14 @@ If you are investigating a transcription factor known to bind at promoter region
 One way of assessing this using profile plot is to obtain a BED file of regions that correspond to [enhancer regions in mouse genome](https://genome.ucsc.edu/cgi-bin/hgTrackUi?db=mm10&c=chrX&g=encode3RenEnhancerEpdNewPromoter). While this is a totally valid avenue to explore, we will be taking another route in this workshop.
 
 ### ENCODE data
-Early in the workshop we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to **show you how to make use of it to interrogate your data**. In our dataset, we are working with whole brain lysates were obtained from mice at E15.5. If we are making any comparisons, we want to ensure we are using data generated from a similar set of cells. Gene regulation patterns are highly variable across development, and we want to make sure we are capturing patterns in the radial glia when upper layer neurons are being generated.
+Early in the workshop, we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to **show you how to make use of it to interrogate your data**. In our dataset, we are working with whole brain lysates were obtained from mice at E15.5. If we are making any comparisons, we want to ensure we are using data generated from a similar set of cells. Gene regulation patterns are highly variable across development, and we want to make sure we are capturing patterns in the radial glia when upper layer neurons are being generated.
 
 In 2012, [Stamatoyannopoulos et al.](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-8-418) released a large dataset as part of the Mouse ENCODE project, which included numerous cell types, tissues, and developmental time points. From here, we were able to find data corresponding to various **histone marks using samples collected from E14.5 mouse brains**.
 
 > _The mouse ENCODE data used in this workshop was taken from reference epigenome [ENCSR205YGI](https://www.encodeproject.org/reference-epigenomes/ENCSR205YGI/)._
 
 ### Histone modifications
-A major component of chromatin that plays a key role in regulation is the modification of histones [AJ Bannister, 2011](https://www.nature.com/articles/cr201122). The best studied modifications are those that occur on the N-terminal ‘tail’ regions of the histones (which project from the nucleosome), but the list is ever-growing and the complexity of their action is only just beginning to be understood.
+A major component of chromatin that plays a key role in regulation is the modification of histones ([AJ Bannister, 2011](https://www.nature.com/articles/cr201122)). The best studied modifications are those that occur on the N-terminal ‘tail’ regions of the histones (which project from the nucleosome), but the list is ever-growing and the complexity of their action is only just beginning to be understood.
 
 For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet). We can utilize this knowledge to test our hypotheses about PRDM16 function:
 
