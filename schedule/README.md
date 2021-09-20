@@ -37,7 +37,7 @@
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox]() the **day before the next class**.
+   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/czRTtxT1fAHN1Ya6mIw7) the **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -63,7 +63,7 @@
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox]() the **day before the next class**.
+   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/HOtwHGI6pH9Ha8txuvo3) the **day before the next class**.
    
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
