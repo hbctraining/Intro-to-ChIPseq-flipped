@@ -95,7 +95,7 @@ _Image acquired from the [Harvard Biomedical Data Management Website](https://da
 > To start an interactive session with 2 cores:
 > 
 > ```bash
-> $ srun --pty -p interactive -t 0-12:00 --mem 1G -n 1 --reservation=HBC2 /bin/bash
+> $ srun --pty -p interactive -t 0-12:00 --mem 1G  /bin/bash
 > ```
 > 
 > **Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
