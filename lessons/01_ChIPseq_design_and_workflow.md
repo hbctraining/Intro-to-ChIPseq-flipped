@@ -135,7 +135,7 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 
 ### Types of binding profiles
 
-A major factor to consider when choosing your sequencing depth is the type of binding profile you are expecting. There are three types of binding profiles, generally speaking: narrow, broad and mixed. These are depicted in the image below:
+A major factor to consider when choosing your sequencing depth is the type of binding profile you are expecting. There are three types of binding profiles, generally speaking: narrow, broad and mixed. The variations in profiles are depicted in the image below:
 
 <p align="center">
 <img src="../img/binding_profiles.jpg" width="500">
@@ -143,11 +143,24 @@ A major factor to consider when choosing your sequencing depth is the type of bi
 
 *Image source: [Park P., Nature Reviews Genetics (2009) **10**: 669–680](https://www.nature.com/articles/nrg2641).*
 
-* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (red and orange in the image above).
-* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. E.g. H3K27me3 (blue in the image above).
-* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment. E.g. H3K36me3 (green in the image above).
+* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. *E.g. CTCF and RNA polymerase II (red and orange in the image above).*
+* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. *E.g. H3K36me3 and H3K27me3 (green and blue in the image above).*
+* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment.
 
-The table below is adapted from the ENCODE data standards page, which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
+The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
+
+|Broad Marks	| Narrow Marks |	Exceptions |
+|---------------|---------------|---------------|
+|H3F3A|H2AFZ|H3K9me3|
+|H3K27me3|H3ac||
+|H3K36me3|H3K27ac||
+|H3K4me1|H3K4me2||
+|H3K79me2|H3K4me3||
+|H3K79me3|H3K9ac||
+|H3K9me1|||
+|H3K9me2|||
+|H4K20me1|||
+|H3K9me3|||
 
 ### Sequencing considerations
 
