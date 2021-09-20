@@ -55,7 +55,7 @@ A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called 
 <img src="../img/narrowPeak.png">
 </p>
 
-Each row in the narrowPeak file represents a called peak, and an example file is shown below:
+Each row in the narrowPeak file represents a called peak. Below is an the example of a narrowPeak file, displaying the coordinate and statistical information for a handful of called peaks.
 
 <p align="center">
 <img src="../img/narrow_peak_example.png">
