@@ -39,14 +39,11 @@ The BED file format is tab-delimited (columns separated by tabs) and contains in
 <img src="../img/bed_file.png" width="800">
 </p>
 
-The coordinates in BED files are 0-based. What does this mean? Among standard file formats, genomic coordinates can be represented in two different ways as shown in the image below.
+The coordinates in BED files are 0-based. What does this mean? Among standard file formats, genomic coordinates can be represented in two different ways as shown in the image below. The numbering system at the **top of the image is zero-based** and is preferred by programmers, while the **bottom numbering system is one-based** and is generally preferred by biologists. 
 
 <p align="center">
 <img src="../img/Interbase.png" width="300">
 </p>
-
-
-The numbering system at the **bottom of the image is one-based** and is generally preferred by biologists, while the **top numbering system is zero-based** and is preferred by programmers. 
 
 If we were to specify the **coordinates for the sequence `ATG`** in the image, biologists would most likely indicate 1 to 3, whereas programmers would be more likely to suggest 0 to 3. The benefits to having a **zero-based system** is the **ease of calculating distance or length** of sequences. We can easily determine the length of the `ATG` sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one after the subtraction. Therefore, many file formats used in computation, including **the BED file format**, use zero-based coordinates. 
 
