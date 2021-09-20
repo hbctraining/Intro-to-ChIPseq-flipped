@@ -149,7 +149,7 @@ A major factor to consider when choosing your sequencing depth is the type of bi
 
 The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
 
-|Broad Marks	| Narrow Marks |	Exceptions |
+|Broad Peaks	| Narrow Peaks |	Exceptions/Mixed Peaks |
 |---------------|---------------|---------------|
 |H3F3A|H2AFZ|H3K9me3|
 |H3K27me3|H3ac||
