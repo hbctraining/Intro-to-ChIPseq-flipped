@@ -49,13 +49,11 @@ For example, if we were to specify the **coordinates for the sequence `ATG`** in
 
 #### narrowPeak
 
-A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
+A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. Each row in the narrowPeak file represents a called peak. It is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
 
 <p align="center">
 <img src="../img/narrowPeak.png">
 </p>
-
-Each row in the narrowPeak file represents a called peak.
 
 ### `bedtools`
 
