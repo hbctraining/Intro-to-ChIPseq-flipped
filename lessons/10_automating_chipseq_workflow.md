@@ -135,7 +135,7 @@ module load fastqc/0.11.3
 module load gcc/6.2.0
 module load bowtie2/2.2.9
 module load samtools/1.9
-export PATH=/n/app/bcbio/tools/bin:$PATH 	# for using 'sambamba'
+module load sambamba/0.7.1
 ```
 
 ### Preparing for future debugging
@@ -227,7 +227,7 @@ module load fastqc/0.11.3
 module load gcc/6.2.0  
 module load bowtie2/2.2.9
 module load samtools/1.9
-export PATH=/n/app/bcbio/tools/bin:$PATH 	# for using 'sambamba'
+module load sambamba/0.7.1
 
 echo "FastQC analysis ..."
 
