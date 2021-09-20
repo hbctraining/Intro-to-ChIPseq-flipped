@@ -82,15 +82,17 @@
 | 11:50 - 12:00 | Wrap-up |  |
 
 
+## Answer keys
 
-* Downloadable Answer Keys (Day 2 exercises): 
+* Day 1 exercises 
   * [Data Management and project organization](homework/Day1_readme_answerkey.md)
   * [QC and Alignment questions](homework/Day1_answer_key.md)
 
-* Downloadable Answer Keys (Day 3 exercises): 
+* Day 2 exercises 
   * 
 
-* [Automation Script]()
+* Day 3 In-class 
+  * [Automation Script]()
 
 ***
 
