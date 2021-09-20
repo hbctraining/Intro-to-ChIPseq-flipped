@@ -8,7 +8,9 @@ Approximate time:
 
 ## Learning Objectives
 
-* ...
+* Understand what a profile plot is and how to generate one
+* Learn how to interpret a profile plot 
+* Introduce different use cases for a profile to answer questions about your ChIP data
 
 ## Qualitative assessment of peak enrichment
 
@@ -175,10 +177,12 @@ To create this profile plot, we will need to compute yet another matrix. For thi
 cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_matrix_allGenes_TSS.gz visualization/
 ```
 
-_The code to compute the matrix is provided in the drop-down below if you are interested in seeing the changes that were made. Please DO NOT RUN!_
+_The code to compute the matrix is provided in the drop-down below if you are **interested in seeing the changes** that were made._ 
 
 <details>
   <summary>Code</summary>
+  
+ **Please DO NOT RUN this code.**
   
   ```bash
   # DO NOT RUN!
@@ -196,9 +200,9 @@ _The code to compute the matrix is provided in the drop-down below if you are in
 Use the matrix to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
 
 ```bash
-plotProfile command
+Add the profile plot command here
 ```
-> *NOTE*: We added an additional parameter to set the y-axis similar to the previous plots. (add more info here..) In this way we can make a more fair comparison between plot.
+> *NOTE*: We added an additional parameter to set the y-axis similar to the previous plots. (**ADD MORE INFO**..) In this way we can make a more fair comparison between plot.
 
 Yikes! This is not what we were expecting. **There appears to be very little enrichment in the +/- 4kb window around the TSS.** How do we interpret this? 
 
@@ -206,49 +210,45 @@ Yikes! This is not what we were expecting. **There appears to be very little enr
 <img src="../img/09_plot1_wt_TSS_axis_adjust.png" width="500">
 </p>
 
-It is disappointing to see something like this if you are investigating a transcription factor known to bind at promoter regions of genes. But that is not the case for us. PRDM16 binding is an unknown to us. 
-
-#### Can we still consider PRDM16 a transcription factor?
-Yes, we can. While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
+If you are investigating a transcription factor known to bind at promoter regions of genes, it would be disappointing to see something like this. But that is not the case for us. The PRDM16 binding profile is something we are trying to figure out, and this plot tells us that **very few of the PRMD16 binding sites are around the TSS** (i.e. promoter regions). 
 
 > **NOTE**: Later in the ChIP-seq workflow (not covered in this workshop), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located.
 
 
 ## Exploring PRDM16-regulated enhancer binding in cortical neurons
 
-Now that we have learned that very few sites bind to the promoter regions of genes, our next hypothesis is that **PRDM16 is binding to enhancer regions**. One way of assessing this is to obtain a BED file of regions that correspond to [enhancer regions in mouse genome](https://genome.ucsc.edu/cgi-bin/hgTrackUi?db=mm10&c=chrX&g=encode3RenEnhancerEpdNewPromoter). While this is a totally valid avenue to explore, we will be taking another route in this workshop.
+**So where is PRDM16 binding in the genome?** While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
 
-Early in the workshop we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to show you how to make use of it to interrogate your data. If you recall, we are working with whole brain lysates were obtained from mice at E15.5. If we are making any comparisons, we want to ensure we are using data generated using a similar set of cells. Gene regulation patterns are highly variable across development, and we want to make sure we are capturing patterns in the radial glia (when upper layer neurons are being generated.
+One way of assessing this using profile plot is to obtain a BED file of regions that correspond to [enhancer regions in mouse genome](https://genome.ucsc.edu/cgi-bin/hgTrackUi?db=mm10&c=chrX&g=encode3RenEnhancerEpdNewPromoter). While this is a totally valid avenue to explore, we will be taking another route in this workshop.
 
+### ENCODE data
+Early in the workshop we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to **show you how to make use of it to interrogate your data**. In our dataset, we are working with whole brain lysates were obtained from mice at E15.5. If we are making any comparisons, we want to ensure we are using data generated from a similar set of cells. Gene regulation patterns are highly variable across development, and we want to make sure we are capturing patterns in the radial glia when upper layer neurons are being generated.
 
-we sought to determine the histone methylation pattern within PRDM16 binding regions using the ENCODE project datasets collected from E14.5 mouse brains 
-(Stamatoyannopoulos et al., 2012). 
+In 2012, [Stamatoyannopoulos et al.](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-8-418) released a large dataset as part of the Mouse ENCODE project, which included numerous cell types, tissues, and developmental time points. From here, we were able to find data corresponding to various **histone marks using samples collected from E14.5 mouse brains**.
 
-- H3K4me3, an epigenetic modification enriched in promoter regions
-- H3K4me, a chromatin mark associated with poised and active enhancers 
-- H3K27me3, a polycomb modification linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010). 
-- 
-- We found moderate H3K4me3 and H3K4me levels in regions bound by PRDM16, whereas there was little overlap with H3K27me3 (Figure 6A).
-- H3K27ac is an epigenetic modification associated with the higher activation of transcription and therefore defined as an active enhancer mark.
+> _The mouse ENCODE data used in this workshop was taken from reference epigenome [ENCSR205YGI](https://www.encodeproject.org/reference-epigenomes/ENCSR205YGI/)._
 
+### Histone modifications
+A major component of chromatin that plays a key role in regulation is the modification of histones [AJ Bannister, 2011](https://www.nature.com/articles/cr201122). The best studied modifications are those that occur on the N-terminal ‘tail’ regions of the histones (which project from the nucleosome), but the list is ever-growing and the complexity of their action is only just beginning to be understood.
 
-After plotting the binding pattern for PRDM16, we then ask: how does PRDM16 regulates the gene expression? Let's explore one of the possibilities here: histone methylation. Histone methylation could up-regulate or down-regulate the gene expression, depending on the position of methylation. We could analyze the overlap of PRDM16-binding regions with different histone methylation marks (H3K4me, H3K4me3, H3K27me3), and speculate the mechanism of regulation accordingly. The data for the histone methylation level could be obtained from the Encyclopedia of DNA Elements ([ENCODE](https://www.encodeproject.org/)), which we have put in our training directory (`/n/groups/hbctraining/harwell-datasets/encode-chipseq/`). To fasten the computing process, we could submit a running job, instead of running on an interactive node. Create a sbatch script as below (with the name `plot2.sbatch`, and then run the script using `sbatch plot2.sbatch` command.
+For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet). We can utilize this knowledge to test our hypotheses about PRDM16 function:
+
+- H3K4me, is a chromatin mark associated with poised and active enhancers 
+- H3K27me3, is a polycomb modification (developmental regulators) linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010) 
+- H3K27ac is a modification associated with the higher activation of transcription and therefore defined as an active enhancer mark
+
+### Profile plot
+For each of the histone modifications listed above, we found the corresponding [ChIP experiments in ENCODE](https://www.encodeproject.org/reference-epigenomes/ENCSR205YGI/) and downloaded the bigWig files. Each experiment had two replicates. After plotting profiles, the replicate with stroger signal was identifed and retained for the visualizataion below. **For this plot, we have computed the matrix for you** using code similar to the first plot in this lesson (with a few additional bigWig files and keeping only the WT replicate 2).
+
+Copy over the matrix to your visualization directory:
 
 ```bash
-#!/bin/sh
+cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_encode_matrix.gz visualization/
+```
 
-#SBATCH -p priority
-#SBATCH -c 2
-#SBATCH -t 0-1:00
-#SBATCH --mem 16G
+Once you have the matrix copied over, you can run the code below to create the proile plot:
 
-computeMatrix reference-point --referencePoint center \
--b 4000 -a 4000 \
--R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
--S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k04me1UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k04me3UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k27me3UE14_mm10.bw \
---skipZeros \
--o ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
--p 6
+```bash
 
 plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_encode.png \
@@ -259,12 +259,13 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --refPointLabel "PRDM16 binding sites"
 ```
 
-We observed some moderate levels of H3K4me3 and H3K4me in PRDM16-binding regions. The result makes sense, because both H3K4me3 and H3K4me are associated with transcriptional activation. Not surprisingly, H3K27me3 shares little overlap in PRDM16-binding regions, as H3K27me3 is a epigenetic modification associated with transcriptional repression during neurogenesis, and we do not expect transcriptional repression.
+In this profile plot, we observe moderate levels of H3K4me and H3K27ac in PRDM16-binding regions. Given what we know about these histone marks, this suggests that  **PRDM16 is associated with active enhancers in the embryonic cortex**. The developmental connection of H3K7me3 would be nice to have with this dataset, however we do not see much enrichment of the mark in PRDM16 binding sites. This makes sense as the H327me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
 
 <p align="center">
-<img src="../img/09_plot2_wt_encode.png" width="500">
+<img src="../img/09_plot2_wt_encode_update.png" width="500">
 </p>
 
+## Closing Remarks
 
 
 
