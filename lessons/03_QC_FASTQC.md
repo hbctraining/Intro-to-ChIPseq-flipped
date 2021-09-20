@@ -80,6 +80,15 @@ The main features of FastQC are:
 * Evaluates the reads automatically and identifies potential issues in the data
 * Generates a HTML-based quality report with graphs and tables
 
+> NOTE: Before we run FastQC, **please check to make sure you are on a compute node**. If not, please run the following `srun` command to start an interactive session.
+> 
+> ```bash
+> $ srun --pty -p interactive -t 0-3:00 --mem 8G /bin/bash
+> ```
+>
+> ***An interactive session is very useful to test tools and workflows.***
+
+
 ### Running FastQC  
 
 When working in a cluster environment, you will find that generally many tools and software are pre-installed for your use. On the O2 cluster, these tools are available through the LMOD system.  In order to see if the tool you are looking for exists as a module you can use the `module avail` command.
@@ -113,14 +122,6 @@ Once a module for a tool is loaded, it becomes directly available to you like an
 ```bash
 $ echo $PATH
 ```
-
-> NOTE: Before we run FastQC, **you should be on a compute node** in an interactive session. Please run the following `srun` command if you are not on a compute node.
-> 
-> ```bash
-> $ srun --pty -p interactive -t 0-3:00 --mem 8G /bin/bash
-> ```
->
-> ***An interactive session is very useful to test tools and workflows.***
 
 Now we're all set to run FastQC on one of our samples!
 
