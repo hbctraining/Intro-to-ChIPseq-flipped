@@ -102,6 +102,13 @@ There are a number of **artifacts that tend to generate pileups of reads that co
 
 There are two kinds of controls that can be used for ChIP-seq: **IgG control** and **input control**. 
 
+
+<p align="center">
+<img src="../img/F1.large.jpg" width="400">
+</p>
+
+*Image source: [Xu J. et al., BioRxiv (2019)](https://www.biorxiv.org/content/10.1101/2019.12.17.880013v1.full).*
+
 **IgG control** is DNA resulting from a immunoprecipitation with an [isotype-matched](https://www.novusbio.com/products/isotype-controls) control immunoglobulin. An isotype control is an antibody that maintains similar properties to the primary antibody but lacks specific target binding. Save 5-10% of your cell lysate, and add the appropriate non-specific IgG instead of protein-specific antibody, but at the same concentration. This will give an indication of the assay background and identify non-specific binding of the beads used for the immunoprecipitation. However, if too little DNA is recovered after immunoprecipitation, the sequencing library will be of low complexity and binding sites identified using this control could be biased. 
 
 **Input control** is DNA purified from cells that are cross-linked, and fragmented, but without adding any antibody for enrichment. Save 5-10% of your cell lysate before addition of antibodies. Input samples can account for variations in the fragmentation step of the ChIP protocol as certain regions of the genome are more likely to shear than others based upon their structure and GC content. Input controls are **more widely used** to normalize signals from ChIP enrichment.
@@ -126,6 +133,21 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 > #### Do we see batch effects in ChIP-seq data?
 > Typically, batch effects are not as big of a concern with ChIP-seq data. However, it is best to run everything in parallel as much as possible. If you only have a single sample group, it should be more feasible to prepare all samples together (since there are fewer). For multiple sample groups, if you are not able to process all samples together, split replicates of the different sample groups across batches. This way you avoid any potential confounding.
 
+### Types of binding profiles
+
+A major factor to consider when choosing your sequencing depth is the type of binding profile you are expecting. There are three types of binding profiles, generally speaking: narrow, broad and mixed. These are depicted in the image below:
+
+<p align="center">
+<img src="../img/binding_profiles.jpg" width="500">
+</p>
+
+*Image source: [Park P., Nature Reviews Genetics (2009) **10**: 669–680](https://www.nature.com/articles/nrg2641).*
+
+* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (see image above).
+* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. E.g. H3K36me3 (see image above).
+* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment. E.g. H3K27me3 (see image above).
+
+The table below is adapted from the ENCODE data standards page, which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
 
 ### Sequencing considerations
 
