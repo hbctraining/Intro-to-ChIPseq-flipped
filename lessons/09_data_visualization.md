@@ -129,6 +129,8 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
 <details>
   <summary>Solution</summary>
   
+ <p><pre>
+  
   ```
   # Navigate to results directory
   computeMatrix reference-point --referencePoint center \
@@ -154,6 +156,8 @@ We observed that the WT sample shows significantly higher enrichment at PRDM16-b
   <img src="../img/09_plot4_wt_ko.png" width="500">
   </p>
 
+</pre></p>
+  
 </details>
 
 ***
@@ -181,9 +185,8 @@ _The code to compute the matrix is provided in the drop-down below if you are **
 
 <details>
   <summary>Code</summary>
-  
+ <p><pre>
  **Please DO NOT RUN this code.**
-  
   ```bash
   # DO NOT RUN!
   computeMatrix reference-point --referencePoint TSS \
@@ -193,8 +196,9 @@ _The code to compute the matrix is provided in the drop-down below if you are **
   --skipZeros \
   -o visualization/wt_tss_matrix.gz \
   -p 6
-  
   ```
+</pre></p>
+  
 </details>
 
 Use the matrix to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
