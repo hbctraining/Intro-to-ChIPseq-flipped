@@ -85,8 +85,8 @@
 ## Answer keys
 
 * Day 1 exercises 
-  * [Data Management and project organization](homework/Day1_readme_answerkey.md)
-  * [QC and Alignment questions](homework/Day1_answer_key.md)
+  * [Data Management and project organization](../homework/Day1_readme_answerkey.md)
+  * [QC and Alignment questions](../homework/Day1_answer_key.md)
 
 * Day 2 exercises 
   * 
