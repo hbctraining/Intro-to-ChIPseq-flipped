@@ -188,7 +188,7 @@ wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 > 
 > _"...either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common."_ 
 > 
->  Since then, the field has moved towards more statistically motivated apparoaches like the [Irreproducibility Discovery Rate (IDR)](https://sites.google.com/site/anshulkundaje/projects/idr). The IDR framework was developed by Qunhua Li and Peter Bickel's group. It compares a pair of ranked lists of regions/peaks and assigns values that reflect its reproducibility. You can read more about IDR and how it works in this [linked lesson]().
+>  Since then, the field has moved towards more statistically motivated approaches like the [Irreproducibility Discovery Rate (IDR)](https://sites.google.com/site/anshulkundaje/projects/idr). The IDR framework was developed by Qunhua Li and Peter Bickel's group. It compares a pair of ranked lists of regions/peaks and assigns values that reflect its reproducibility. You can read more about IDR and how it works in this [linked lesson]().
 > 
 > IDR analysis is extensively used by the ENCODE and modENCODE projects and is part of their ChIP-seq guidelines and standards. However, more recently there has been dicussion about the two approaches converging on similar results and so it remains to be seen what the gold standard will be.
 
