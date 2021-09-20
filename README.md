@@ -3,7 +3,7 @@
 
 | Audience | Computational Skills | Prerequisites | Duration |
 :----------|:----------|:----------|:----------|
-| Biologists | Beginner/Intermediate | None | 3-day workshop (~19.5 hours of trainer-led time)|
+| Biologists | Intermediate | None | Shell basics and/or Introduction to R |
 
 
 ### Learning Objectives
@@ -43,7 +43,7 @@ This workshop focuses on using the R statistical programming environment to eval
 
 
 ### Lessons
-**[Click here]() for links to lessons and the suggested schedule**
+**[Click here](schedule/README.md) for links to lessons and the suggested schedule**
 
 ### Dataset
 
