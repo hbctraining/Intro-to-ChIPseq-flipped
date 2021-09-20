@@ -314,7 +314,7 @@ Use `vim` to start a new shell script called `chipseq_run_allfiles.sh`:
 $ vim chipseq_run_allfiles.sh
 ```
 
-This script loops through the same files as in the previous (demo) script, but the command being submitted within the `for` loop is `sbatch` with SLURM directives specified on the same line:
+Due to the space limit in our home directory, we will loop through only two `KO` samples. The command being submitted within the `for` loop is `sbatch` with SLURM directives specified on the same line:
 
 ```bash
 #! /bin/bash
