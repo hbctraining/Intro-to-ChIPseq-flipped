@@ -1,6 +1,6 @@
 # Day 1 Answer Key
 
-## 03_QC_FASTQC
+## QC using FASTQC
 
 1. Once you have figured out what argument to use, run FastQC with 4 threads/cores.
 
@@ -14,7 +14,7 @@ $ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_s
 
 
 
-## 04_alignment_using_bowtie2
+## Alignment using bowtie2
 
 1. After your job has completed, check the resulting .out and .err files. What information do you obtain from each file?
 
@@ -25,8 +25,8 @@ $ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_s
 ```bash
 samtool view -h ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam | less
 ```
-Using the `less` command is helpful in allowing your to scroll through the file. You should see lines corresponding to each read and a short header section.
+**Answer**: Using the `less` command is helpful in allowing your to scroll through the file. You should see lines corresponding to each read and a short header section.
 
 3. What is the alignment rate for the wt_sample2_chip? Do you think the alignment is good?
 
-The alignment rate is 98.34%. The alignment is good.
+**Answer**: The alignment rate is 98.34%. The alignment is good.
