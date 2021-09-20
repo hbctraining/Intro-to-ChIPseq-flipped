@@ -86,6 +86,11 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 
 * Check a few regions by **qPCR to confirm that the pull-down worked**. Create primers for regions of the genome you expect your protein of interest to bind. The PCR is performed on the immunoprecipitated material, before sending it for sequencing. 
     * You can also check a region of DNA that you do not expect to be enriched and thus do not expect to be amplified by qPCR, to show that your ChIP is specific (negative control)
+
+<p align="center">
+<img src="../img/ChIP_qPCR_QC.png" width="500">
+</p>
+
 * If you don't have any known targets for your protein, run a **postive control ChIP**. Histone H3 or H3k4me3 usually work very well. Since there is loads of H3K4me3 present at most TSSs you could design primers against the promoter of a housekeeping gene. If you have a good signal present, you will at least know the protocol is working well.
 
 > **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol, although the data is not included here. The p300 protein [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
@@ -147,8 +152,10 @@ A major factor to consider when choosing your sequencing depth is the type of bi
 * **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. *E.g. H3K36me3 and H3K27me3 (green and blue in the image above).*
 * **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment.
 
-The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Kknwoing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
+The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Knowing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
 
+<div align="center">
+   
 |Broad Peaks	| Narrow Peaks |	Exceptions/Mixed Peaks |
 |---------------|---------------|---------------|
 |H3F3A|H2AFZ|H3K9me3|
@@ -162,6 +169,8 @@ The table below is adapted from the [ENCODE data standards page](https://www.enc
 |H4K20me1|||
 |H3K9me3|||
 
+   </div>
+   
 ### Sequencing considerations
 
 Below we list some general guidelines and things to think about when sending your samples to the sequencing facility:
@@ -188,10 +197,10 @@ Below we list some general guidelines and things to think about when sending you
 * Sequence the input controls to equal or higher depth than your ChIP samples
 
 ### Resources
-* [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
-* [Profiling of transcription factor binding events by ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5544034/)
-* [BenchSci Blog](https://blog.benchsci.com/chromatin-immunoprecipitation-chip-principles-and-how-to-obtain-quality-results)
 * ENCODE Data Standards and Processing Pipeline Information for [Histone](https://www.encodeproject.org/chip-seq/histone/) and [Transcription Factors](https://www.encodeproject.org/chip-seq/transcription_factor/)
+* [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
+* "Chromatin Immunoprecipitation (ChIP) Principles and How to Obtain Quality Results", [BenchSci Blog](https://blog.benchsci.com/chromatin-immunoprecipitation-chip-principles-and-how-to-obtain-quality-results)
+
 
 ## Understanding the ChIP-seq analysis workflow
 
