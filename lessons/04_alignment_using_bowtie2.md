@@ -37,19 +37,19 @@ There are many different tools that have been developed for alignment of next-ge
 
 Bowtie2 is a fast and accurate alignment tool that supports gapped, local and paired-end alignment modes and works best for reads that are **at least 50 bp** (shorter read lengths should use [Bowtie1](http://bowtie-bio.sourceforge.net/index.shtml)). 
 
-By default, Bowtie2 will perform a global *end-to-end read alignment*, which is best for quality-trimmed reads. However, it also has a _local alignment mode_, which will perform _**soft-clipping**_ (discussed below) for the removal of poor quality bases or adapters from untrimmed reads. _We will use this option since we did not trim our reads._
+By default, Bowtie2 will perform a global *end-to-end read alignment*, which aligns from the first to the last base of the read. This alignment is best for reads that have already been trimmed for quality and adapters (e.g. reads where nucleotide bases of poor quality or matching adapter sequences have been removed from the ends of the reads prior to alignment). However, Bowtie2 also has a _local alignment mode_, which, in contrast to end-to-end alignment, ignores portions at the ends of the reads that do match well to the reference genome. This is referred to as **soft-clipping** and allows for a more accurate alignment. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. In contrast to trimming, which removes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it.
+
+<p align="center">
+<img src="../img/softclipping.png" width="700">
+</p> 
+
+will ignore the bases at the end of untrimmed reads that do not match to the reference genome;this is also referred to as _**soft-clipping**_ (discussed below). _We will use this option since we did not trim our reads._
 
 > #### How do other aligners compare?
 > We use Bowtie2 to align our reads in this workshop, but there are a number of other options. For **[bwa](http://bio-bwa.sourceforge.net/)**, the mapping rates are higher, with an equally similar increase in the number of duplicate mappings. Consequently, there is a significantly higher number of mapped reads and a much larger number of peaks being called (30% increase compared to Bowtie2). When we compare the peak calls generated from different aligners, the **bwa** peak calls are a superset of those called from the Bowtie2 aligments. It is yet to be determined whether or not these additional peaks are true positives. 
 
 ### Soft-clipping 
 
-Soft-clipping allows for more accurate alignment by ignoring portions at the ends of the reads that do match well to the reference genome. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. In contrast to trimming, which removes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it.
-
-
-<p align="center">
-<img src="../img/softclipping.png" width="700">
-</p>
 
 
 ### Bowtie2: Building an index
@@ -87,8 +87,11 @@ $ mkdir ~/chipseq_workshop/results/bowtie2
 We then need to load the module. We could find out more about Bowtie2 on O2:
 
 ```bash
-# Check modules for Bowtie2 and any dependencies
+# Check modules for Bowtie2
 $ module spider bowtie2
+
+# Check for any dependencies
+$ module spider bowtie2/2.2.9
 ```
 
 Notice that before we load Bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
@@ -174,7 +177,7 @@ Let's start by loading the module `samtools`:
 
 ```bash
 $ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
-$ module load samtools/1.9
+$ module load samtools/1.13
 ```
 
 We outline below the parameters to use with the command `samtools view`, and what each does:
