@@ -78,7 +78,7 @@ Let's create a matrix for the WT replicates:
 computeMatrix reference-point --referencePoint center \
 -b 4000 -a 4000 \
 -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
--S visualization/bigWig/wt_sample2_chip.bw visualization/bigWig/wt_sample2_chip.bw \
+-S visualization/bigWig/wt_sample1_chip.bw visualization/bigWig/wt_sample2_chip.bw \
 --skipZeros \
 -o ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 -p 6
@@ -144,7 +144,7 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   --regionsLabel "" \
   --perGroup \
   --colors blue red \
-  --samplesLabel "WT_replicate1" "KO_replicate2" \
+  --samplesLabel "WT" "KO" \
   --refPointLabel "PRDM16 binding sites"
   ```
   
@@ -200,17 +200,24 @@ _The code to compute the matrix is provided in the drop-down below if you are **
 Use the matrix to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
 
 ```bash
-Add the profile plot command here
+plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
+-out ~/chipseq_workshop/results/visualization/figures/plot1_wt_TSS.png \
+--regionsLabel "" \
+--perGroup \
+--colors blue red \
+--samplesLabel "WT_replicate1" "WT_replicate2" \
+--refPointLabel "TSS" \
+--yMax 12
 ```
-> *NOTE*: We added an additional parameter to set the y-axis similar to the previous plots. (**ADD MORE INFO**..) In this way we can make a more fair comparison between plot.
+> *NOTE*: We added an additional parameter (`--yMax`) to set the y-axis similar to the previous plots. This way, we can make a more fair comparison between plots.
 
 Yikes! This is not what we were expecting. **There appears to be very little enrichment in the +/- 4kb window around the TSS.** How do we interpret this? 
 
 <p align="center">
-<img src="../img/09_plot1_wt_TSS_axis_adjust.png" width="500">
+<img src="../img/09_plot1_wt_TSS.png" width="500">
 </p>
 
-If you are investigating a transcription factor known to bind at promoter regions of genes, it would be disappointing to see something like this. But that is not the case for us. The PRDM16 binding profile is something we are trying to figure out, and this plot tells us that **very few of the PRMD16 binding sites are around the TSS** (i.e. promoter regions). 
+If you are investigating a transcription factor known to bind at promoter regions of genes, it would be disappointing to see figure like this. But that is not the case for us - we are investigating the PRDM16 binding profile, and this plot indicates that **very few of the PRMD16 binding sites are around the TSS** (i.e. promoter regions). 
 
 > **NOTE**: Later in the ChIP-seq workflow (not covered in this workshop), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located.
 
