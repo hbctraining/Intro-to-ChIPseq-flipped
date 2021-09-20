@@ -1,12 +1,12 @@
 ---
 title: "Peak calling with MACS2"
-author: "Meeta Mistry"
-date: "June 12th, 2017"
+author: "Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdinger"
+date: "September 20th, 2021"
 ---
 
-Contributors: Meeta Mistry, Radhika Khetani
+Contributors: Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdinger
 
-Approximate time: 80 minutes
+Approximate time: 60 minutes
 
 ## Learning Objectives
 
@@ -30,16 +30,14 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
-There are various tools that are available for peak calling. One of the more **commonly used peak callers is MACS2**, and we will demonstrate it in this lesson. *Note that in this Session the term 'tag' and sequence 'read' are used interchangeably.*
+There are various tools that are available for peak calling. Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or narrow peaks. There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods** to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson]().
+
+> #### What if I am not sure what type of binding profile to expect?
+> In this scenario, we advise peak calling for both narrow and broad profiles. This will require additional time for some exploration to determine what is best for your data.
 
 
 ## MACS2
 A commonly used tool for identifying binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites (narrow peaks), it is also suited for larger regions (broad peaks). 
-
-> ### Peak calling depends on your expected binding profile
-> Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or broad domains (i.e. histone modifications that cover entire gene bodies) or narrow peaks (i.e. a transcription factor binding). There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson]().
->
-> When investigating a new protein and you are not sure what type of binding profile to expect, we advise peak calling for both narrow and broad profiles. This will require additional time for some exploration to determine what is best for your data. A powerful method would be one that could evalutate the data and be able to apply an appropriate technique for the features found without previous knowledge of the type of enrichment.
 
 We will be using the newest version of this tool, **MACS2**. The **underlying algorithm for peak calling remains the same as before**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
