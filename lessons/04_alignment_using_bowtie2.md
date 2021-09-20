@@ -192,11 +192,11 @@ $ samtools view -h -S -b \
 
 ## Running alignment on a single sample
 
-Genome alignment can take a while to finish, so we won't run it in an interactive session. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/` directory, and submit this script as a job on the cluster.**
+Genome alignment can take a while to finish, so we won't run it in an interactive session. **Instead, we will create a SBATCH script, `alignment.sbatch` under the `~/chipseq_workshop/scripts` directory, and submit this script as a job on the cluster.**
 
 ```bash
 # Create a SBATCH script
-vim alignment.sbatch
+vim ~/chipseq_workshop/scripts/alignment.sbatch
 ```
 
 > NOTE: In the `vim`, press `i` to start the editing mode. Once done, type `:wq` to save and exit.
