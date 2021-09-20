@@ -1,10 +1,12 @@
 ---
 title: "Introduction to the dataset and project organization"
-author: "Mary Piper, Radhika Khetani, Meeta Mistry"
+author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger"
 date: "Sept 1st, 2021"
 ---
 
-Approximate time: 45 minutes
+Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
+
+Approximate time: 30 minutes
 
 ## Learning Objectives
 
