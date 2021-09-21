@@ -195,7 +195,7 @@ $ bedtools intersect \
 > macs2/wt_peaks_final.bed
 ```
 
-Finally, let's check how many confident peaks we are left with. Does this seem like a reasonable number of peaks to you?
+Finally, let's check how many confident peaks we are left with. Does this seem like a reasonable number of peaks to you? (You should get ~7,300 peaks)
 
 ```bash
 wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
