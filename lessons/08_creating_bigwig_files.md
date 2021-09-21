@@ -4,9 +4,7 @@ author: "Meeta Mistry, Jihe Liu, Radhika Khetani"
 date: "Aug 19th, 2021"
 ---
 
-Approximate time:
-
-**Link to issue describing the modifications to be made:** https://github.com/hbctraining/Intro-to-ChIPseq-flipped/issues/11
+Approximate time: 30 minutes
 
 ## Learning Objectives
 * Understand the different file formats available for peak visualization
@@ -14,14 +12,25 @@ Approximate time:
 
 ## Setting up for QC on peak calls
 
-Now that we have identified regions in the genome that are enriched through some interaction with PRDM16, we can **take those regions and visually assess the amount of signal observed**. This can be done by uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups. Alternatively, you can create profile plots and heatmaps to look at the signal aggregated over all binding sites. **In order to perform any of assessments described above, you will need a file in the appropriate format.** 
+Now that we have identified regions in the genome that are enriched through some interaction with PRDM16, we can **take those regions and visually assess the amount of signal observed**. This can be done in one of two ways:
+
+* Uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups.
+* Create profile plots and heatmaps to look at the signal aggregated over all binding sites. 
+
+**In order to perform any of assessments described above, you will need a file in the appropriate format.** 
 
 The goal of this lesson is to introduce you to **different file formats used for ChIP-seq data visualization and how to generate these files** using [`deepTools`](https://deeptools.readthedocs.io/en/develop/index.html).
 
 
 ## File formats for peak visualization
 
-There are several different types of file formats that can hold data associated with high-throughput sequencing data, these file formats have a distinct structure and hold specific types of data. We have already encountered the sequence data format - FASTQ, the alignment file formats - SAM and BAM, the peak call format - BED, among others. In this section we want to introduce you to a few additional formats that can be used to visualizing peaks.
+There are several different types of file formats that can hold data associated with high-throughput sequencing data, these file formats have a distinct structure and hold specific types of data. We have already encountered:
+
+* the sequence data format - FASTQ
+* the alignment file formats - SAM and BAM
+* the peak call format - BED, narrowPeak 
+
+In this section we want to introduce you to a few additional formats that can be used for visualizing peaks.
 
 The commonality among these file formats is that they represent the peak location in a manner similar to the BED format (shown below). 
 
@@ -81,7 +90,7 @@ We will use [SAMtools](http://samtools.sourceforge.net/) again, specifically the
 Let's load the `samtools` module:
 
 ```bash
-$ module load gcc/6.2.0 samtools/1.9
+$ module load gcc/6.2.0 samtools/1.13
 ```
 
 Create an index for the `wt_sample2_chip_final.bam` file that we created in earlier lesson:
@@ -124,7 +133,7 @@ $ bamCoverage -b ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam \
 
 _**Note: This command can take up to 10 minutes to complete.**_
 
-### `bamCompare`
+### bamCompare from deepTools
 
 As an alternate to calculating genome coverage with `bamCoverage`, we could use `bamCompare`. `bamCompare` will **create a bigWig file in which we compare the ChIP against the input**. The command is quite similar to `bamCoverage`, except that it requires two files as input (`b1` and `b2`). Below, we show you an example of how you would run `bamCompare`. The default `--operation` used to compare the two samples is the **log2 ratio**, however you also have the option to add, subtract and average. Any of the parameters described above for `bamCoverage` can also be used. 
 
