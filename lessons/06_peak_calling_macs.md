@@ -139,7 +139,7 @@ Since we only created a filtered BAM file for a single sample, **we will use the
 
 There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2) available in MACS2 serving as sub-commands. We will only cover `callpeak` in this lesson, but you can use `macs2 COMMAND -h` to find out more, if you are interested.
 
-`callpeak` is the main function in MACS2 and can be invoked by typing `macs2 callpeak`. If you type this command without parameters, you will see a full description of commandline options. Here is a shorter list of the commonly used ones: 
+`callpeak` is the main function in MACS2 and can be invoked by typing `macs2 callpeak`. If you type this command without parameters, you will see a full description of command-line options. Here is a short list of the commonly used ones: 
 
 **Input file options**
 
@@ -185,7 +185,7 @@ $ macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/res
     --outdir macs2 2> macs2/wt_sample2_macs2.log
 ```
 
-The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. **You can use `less` to look at the log file and see what information is being reported.**
+The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` which re-directs the stadard error into a file. **You can use `less` to look at the log file and see what information is being reported.**
 	
 Move the log files to the `log` directory we had created during our project setup:
 
@@ -203,7 +203,7 @@ $ cd macs2/
 $ ls -lh
 ```
 
-There should be 4 files output to the results directory for each sample (2 replicates), so a total of 8 files:
+There should be 4 output files in the results directory for each sample (2 replicates), so a total of 8 files:
 
 * `_peaks.narrowPeak`: BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue
 * `_peaks.xls`: a tabular file which contains information about called peaks. Additional information includes pileup and fold enrichment (the ratio between the ChIP-seq tag count and λlocal)
