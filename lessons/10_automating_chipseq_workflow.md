@@ -167,6 +167,9 @@ bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
 # Create BAM from SAM
 samtools view -h -S -b -o $align_bam $align_sam
 
+# Remove SAM file
+rm $align_sam
+
 # Sort BAM file by genomic coordinates
 samtools sort $align_bam -o $align_sorted 
 
@@ -243,6 +246,9 @@ echo "Convert SAM to BAM ..."
 
 # Create BAM from SAM
 samtools view -h -S -b -o $align_bam $align_sam
+
+# Remove SAM file
+rm $align_sam
 
 echo "Filtering BAM file ..."
 
