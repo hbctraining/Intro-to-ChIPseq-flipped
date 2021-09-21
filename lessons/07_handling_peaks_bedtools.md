@@ -28,9 +28,9 @@ In this lesson, we will introduce you to an important file format that you will 
 1. Filter out peaks that overlap with the blacklisted regions
 2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
 
-### BED file formats
+## BED file formats
 
-#### BED
+### BED
 
 The BED file format is tab-delimited (columns separated by tabs) and contains information about the coordinates for particular genome features.
 
@@ -58,7 +58,7 @@ BED files **require at least 3 fields** indicating the **genomic location of the
 </p>
 
 
-#### narrowPeak
+### narrowPeak
 
 A narrowPeak (.narrowPeak) file is used by the ENCODE project to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. The narrowPeak file is a BED 6+4 format, which means the first 6 columns of a standard BED file  with **4 additional fields**:
 
@@ -72,7 +72,7 @@ Each row in the narrowPeak file represents a called peak. Below is an the exampl
 <img src="../img/narrow_peak_example.png">
 </p>
 
-### `bedtools`
+## `bedtools`
 
 The **bedtools suite is like a swiss-army knife of tools for a wide-range of genomics analysis tasks**. The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) was devloped in [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah, and is widely used amongst the bioinformatics community. It is such an easy and versatile tool to perform these tasks described above. 
 
@@ -101,7 +101,7 @@ $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
 ```
 
 
-### `bedtools intersect`
+### bedtools intersect
 
 The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools evaluates A (file 1) and finds regions that overlap in B (file 2). We will use this command to do both the filtering of peaks (from blacklisted regions) and assessing the overlap of peaks (between replicates).
 
@@ -118,7 +118,7 @@ $ bedtools intersect -h
 
 Alternatively, you can use the [web-based documentation](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) which is much easier to read. The "options" summary shows the **large number of arguments available that allow us to do so much more than just a simple A versus B comparison**. It allows one to have fine control as to how the intersections are reported, and work with different types of files; amongst many other features.
 
-### Filtering peaks overlapping with blacklist regions
+## Filtering peaks overlapping with blacklist regions
 
 We discussed blacklisted regions in the [filtering lesson](05_filtering_BAM_files.md), as it is commonplace to filter before peak calling. When it is performed on BAM files, the `bedtools intersect` is also used, the difference being the input file type (BAM instead of BED). The filtering works just as well if applied post-peak calling, which is what we will be doing in this lesson.
 
@@ -127,6 +127,8 @@ The blacklisted regions typically appear uniquely mappable so simple mappability
 <p align="center">
 <img src="../img/blacklist.png" width="600">
 </p>
+
+_Image source: [Park P., Nature Reviews Genetics (2009) 10: 669–680.](https://www.nature.com/articles/nrg2641)
 
 We have a BED file of blacklist regions for mouse `mm10` prepared at `/n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed`. Copy this file over to your project into the `reference_data` folder.
 
@@ -166,17 +168,16 @@ $ bedtools intersect \
 
 > **NOTE:** The narrowPeak file also follows the bed file format. That's why we could use it as an input, even though it does not end with the extension `.bed`.
 
-Now let's use the `wc -l` command to check how many peaks were filtered removed due to an overlap with blacklisted regions:
+***
 
-```bash
-# Number of peaks before the filtering
-$ wc -l macs2/wt_sample2_peaks.narrowPeak
+**Exercise**
 
-# Number of peaks after the filtering
-$ wc -l macs2/wt_sample2_peaks_filtered.bed
-```
+Use the `wc -l` command to check how many peaks were filtered removed due to an overlap with blacklisted regions. Report the number of peaks removes and how many remain after filtering for each WT sample.
 
-### Finding overlapping peaks between replicates
+***
+
+
+## Finding overlapping peaks between replicates
 
 The next use of `bedtools intersect` is to assess the **concordance between replicates**. We will do this for both the WT and KO sample groups. We will evaluate all peaks in the first replicate and see how many overlap in the second replicate. By default if two regions overlap by a minimum of one basepair, it is counted as an overlap. Since the default is a bit lenient, we have added some additional flags (described below) to increase the stringency for our final set of confident peaks per sample group. 
 
@@ -194,13 +195,13 @@ $ bedtools intersect \
 > macs2/wt_peaks_final.bed
 ```
 
-Finally, let's check how many confident peaks we are left with:
+Finally, let's check how many confident peaks we are left with. Does this seem like a reasonable number of peaks to you?
 
 ```bash
 wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ```
 
-> ### Other appraoches for assessing peak reproducibility
+> ### Other approaches for assessing peak reproducibility
 > Historically, the ENCODE standard was using the overlaps that we described above but with a set of given criteria. This was developed based on experience with accumulated ENCODE ChIP-seq data, albeit with a much smaller sample size back then. In the paper [Landt et al, 2018](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/) describe the approach as:
 > 
 > _"...either 80% of the top 40% of the peaks identified from one replicate using an acceptable scoring method should overlap the list of peaks from the other replicate, OR peak lists scored using all available reads from each replicate should share more than 75% of regions in common."_ 
