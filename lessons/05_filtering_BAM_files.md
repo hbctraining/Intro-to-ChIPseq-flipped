@@ -6,7 +6,7 @@ date: "Aug 10th, 2021"
 
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
-Approximate time: 25 minutes
+Approximate time: 45 minutes
 
 ## Learning Objectives
 
