@@ -225,6 +225,7 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   <summary>Solution</summary>
   
  <p><pre>
+ 
 ``` bash
 #!/bin/bash
  
@@ -249,6 +250,7 @@ samtools view -h -S -b \
 
 rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
 ```
+
 </pre></p>
   
 </details>
