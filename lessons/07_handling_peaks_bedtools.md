@@ -172,7 +172,7 @@ $ bedtools intersect \
 
 **Exercise**
 
-Use the `wc -l` command to check how many peaks were filtered removed due to an overlap with blacklisted regions. Report the number of peaks removes and how many remain after filtering for each WT sample.
+Use the `wc -l` command to check how many peaks were filtered due to an overlap with blacklisted regions. Report the number of peaks before and after the filtering for each WT sample.
 
 ***
 
