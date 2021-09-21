@@ -72,7 +72,7 @@ Each row in the narrowPeak file represents a called peak. Below is an the exampl
 <img src="../img/narrow_peak_example.png">
 </p>
 
-## `bedtools`
+## bedtools
 
 The **bedtools suite is like a swiss-army knife of tools for a wide-range of genomics analysis tasks**. The general idea is that genome coordinate information can be used to perform relatively simple arithmetic, like combining, subsetting, intersecting etc., to obtain desired information. [bedtools](http://bedtools.readthedocs.org/en/latest/index.html) was devloped in [Aaron Quinlan's group](http://quinlanlab.org/) at University of Utah, and is widely used amongst the bioinformatics community. It is such an easy and versatile tool to perform these tasks described above. 
 
