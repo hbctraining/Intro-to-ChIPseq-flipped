@@ -166,9 +166,13 @@ We observed that the WT sample shows significantly higher enrichment at PRDM16-b
 
 ## Evaluating enrichment around the TSS
 
-Because many cis-regulatory elements (i.e. promoters, enhancers, and silencers) are close to transcription start site (TSS) of their targets, **a common visualization** technique is to evaluate the aggregated **read density around the TSS**. 
+Because many cis-regulatory elements (i.e. promoters, enhancers, and silencers) are close to transcription start site (TSS) of their targets, **a common visualization** technique is to evaluate the **read density around the TSS**. This can be done by using a genome viewer on a gene-by-gene basis as shown below:
 
-To create this profile plot, we will need to compute yet another matrix. For this plot, we will need to change the following parameters:
+<p align="center">
+<img src="../img/tss_pileup.png" width="300">
+</p>
+
+Alternatively, we can look at the **read density aggregated across all genes in the genome** for a more global evaluation using a **profile plot**. To create this profile plot, we will need to compute yet another matrix. For this plot, we will need to change the following parameters:
 
 * `-R`: Our regions file will change. Rather than using our PRDM16 binding sites, we will use a BED file which contains the start and end coordinate for every genes in the mm10 genome.
 * `reference-point`: The reference point will be TSS. Specifying this means that the window will be centered around the start coordinate of each region.
