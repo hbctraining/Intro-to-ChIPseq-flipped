@@ -19,7 +19,7 @@ Approximate time:
   <img src="../img/chipseq_fastqcworkflow_sept2021.png" width="600">
 </p>
 
-Now that we set up files and directory structure, we are ready for our ChIP-seq analysis. For any NGS analysis, the first step in the workflow is to evaluate the quality of the reads, prior to alignment them to the reference genome and downstream analyses. 
+Now that we set up files and directory structure, we are ready for our ChIP-seq analysis. For any NGS analysis, the first step in the workflow is to evaluate the quality of the reads, prior to aligning them to the reference genome and downstream analyses. 
 
 ### Unmapped read data: FASTQ file format
 
@@ -161,7 +161,7 @@ $ module load fastqc/0.11.3  # reload the module for the new session
 
 **Exercise**: 
 
-1. We mentioned that FastQC has mult-threading capability, but have not provided information on how to use it. Since you are new to FastQC, you may need to explore the help documentation to get more information. Use the `--help` argument to check what arguments are available for FastQC.
+1. We mentioned that FastQC has multi-threading capability, but have not provided information on how to use it. Since you are new to FastQC, you may need to explore the help documentation to get more information. Use the `--help` argument to check what arguments are available for FastQC.
 
 ```bash
 $ fastqc --help
