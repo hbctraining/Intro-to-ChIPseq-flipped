@@ -6,7 +6,7 @@ date: "Aug 17th, 2021"
 
 Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu
 
-Approximate time: 40 minutes
+Approximate time: 30 minutes
 
 ## Learning Objectives
 
