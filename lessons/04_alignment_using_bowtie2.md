@@ -219,39 +219,39 @@ In the body of the script, add the code required to:
 * Run bowtie2 to obtain a SAM file, and a log file that captures the alignment summary
 * Convert the SAM file to a BAM file using samtools. 
 
-Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch alignment.sbatch` command.
+Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch ~/chipseq_workshop/scripts/alignment.sbatch` command.
 
 <details>
   <summary>Solution</summary>
   
- <p><pre>
+  <p><pre>
  
-``` bash
-#!/bin/bash
- 
-#SBATCH -p short              # partition name
-#SBATCH -c 2                  # number of cores
-#SBATCH -t 0-2:00             # time limit
-#SBATCH --mem 8G              # requested memory
-#SBATCH --job-name alignment 	# job name
-#SBATCH -o %j.out			          # file to which standard output will be written
-#SBATCH -e %j.err 		          # file to which standard error will be written
-
-module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
- 
-bowtie2 -p 2 -q --local \
--x /n/groups/shared_databases/bowtie2_indexes/mm10 \
--U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
--S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/logs/wt_sample2_chip_bowtie2.log
- 
-samtools view -h -S -b \
--o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
-~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
-
-rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
-```
-
-</pre></p>
+  ``` bash
+  #!/bin/bash
+   
+  #SBATCH -p short              # partition name
+  #SBATCH -c 2                  # number of cores
+  #SBATCH -t 0-2:00             # time limit
+  #SBATCH --mem 8G              # requested memory
+  #SBATCH --job-name alignment 	# job name
+  #SBATCH -o %j.out			          # file to which standard output will be written
+  #SBATCH -e %j.err 		          # file to which standard error will be written
+  
+  module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
+   
+  bowtie2 -p 2 -q --local \
+  -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
+  -U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
+  -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam 2> ~/chipseq_workshop/logs/wt_sample2_chip_bowtie2.log
+   
+  samtools view -h -S -b \
+  -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
+  ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
+  
+  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
+  ```
+  
+  </pre></p>
   
 </details>
 
