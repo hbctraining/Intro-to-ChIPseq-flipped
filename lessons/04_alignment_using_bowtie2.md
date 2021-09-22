@@ -222,7 +222,7 @@ In the body of the script, add the code required to:
 Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch ~/chipseq_workshop/scripts/alignment.sbatch` command.
 
 <details>
-  <summary>Solution</summary>
+  <summary><b>Click here for solution</b></summary>
   
   <p><pre>
  
