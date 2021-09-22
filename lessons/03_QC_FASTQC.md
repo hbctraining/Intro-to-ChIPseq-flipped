@@ -148,7 +148,7 @@ Exit the interactive session (now you should be at a "login node"), then start a
 ```bash
 $ exit  # exit the current interactive session
 
-$ srun --pty -c 4 -p interactive -t 0-12:00 --mem 8G /bin/bash  # start a new one with 4 cpus (-c 6) and 8G RAM (--mem 8G)
+$ srun --pty -c 4 -p interactive -t 0-3:00 --mem 8G /bin/bash  # start a new one with 4 cpus (-c 6) and 8G RAM (--mem 8G)
 ```
 
 Take a quick look at your $PATH variable. Is FastQC still listed in there? Since you have created a fresh new interactive there will be no modules loaded and your $PATH will only contain the default paths. Load the module again:
