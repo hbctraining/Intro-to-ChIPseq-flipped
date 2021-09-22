@@ -286,7 +286,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --refPointLabel "PRDM16 binding sites"
 ```
 
-In this profile plot, we observe moderate levels of H3K4me and H3K27ac in PRDM16-binding regions. Given what we know about these histone marks, this suggests that  **PRDM16 is associated with active enhancers in the embryonic cortex**. The developmental connection of H3K7me3 would be nice to have with this dataset, however we do not see much enrichment of the mark in PRDM16 binding sites. This makes sense as the H327me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
+In this profile plot, we observe moderate levels of H3K4me and H3K27ac in PRDM16-binding regions. Given what we know about these histone marks, this suggests that  **PRDM16 is associated with active enhancers in the embryonic cortex**. The developmental connection of H3K27me3 would be nice to have with this dataset, however we do not see much enrichment of the mark in PRDM16 binding sites. This makes sense as the H3K27me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
 
 <p align="center">
 <img src="../img/09_plot2_wt_encode_update.png" width="500">
