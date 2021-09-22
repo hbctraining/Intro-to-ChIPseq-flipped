@@ -10,7 +10,7 @@ Approximate time: 40 minutes
 
 ## Learning Objectives
 
-* Understand the BED file format and related file formats
+* Describe the elements of the BED file format and related file formats
 * Utilize the bedtools suite of tools to filter peak calls 
 * Utilize the bedtools suite to compare peaks betweeen replicates
 
@@ -23,7 +23,7 @@ Now that we have completed peak calling, we are ready to perform QC on our calle
 <img src="../img/chipseq_bedtoolsworkflow_sept2021.png" width="600">
 </p>
 
-In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format**. We will discuss the output files that we obtained from MACS2 peak calling, specifically describing the contents of the narrowPeak files and how it relates to BED. You will then get acquainted with **`bedtools`, a new suite of tools that is very helpful when working with BED files and other related file formats**, and use it to complete the following tasks for the WT and KO peak calls from this PRDM16 dataset:
+In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format** (**B**rowser **E**xtensible **D**ata). We will discuss the output files that we obtained from MACS2 peak calling, specifically describing the contents of the narrowPeak files and how it relates to BED. You will then get acquainted with **`bedtools`, a new suite of tools that is very helpful when working with BED files and other related file formats**, and use it to complete the following tasks for the WT and KO peak calls from this PRDM16 dataset:
 
 1. Filter out peaks that overlap with the blacklisted regions
 2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
@@ -80,7 +80,7 @@ The **bedtools suite is like a swiss-army knife of tools for a wide-range of gen
 <img src="../img/bedtools.png" width="700">
 </p>
 
-As the name implies, this suite of tools works with **Bed** files, but it also works with other file formats that have genome coordinate information. 
+As the name implies, this suite of tools works with **BED** files, but it also works with other file formats that have genome coordinate information. 
 
 <p align="center">
 <img src="../img/bedtools-basic.png" width="600">
@@ -91,7 +91,7 @@ As the name implies, this suite of tools works with **Bed** files, but it also w
 `bedtools` is available as a module on O2. To set yourself up for the rest of the lesson, make sure you are **logged into O2 and on a compute node**.
 
 ```bash
-$ srun --pty -p interactive -t 0-12:00 --mem 2G /bin/bash
+$ srun --pty -p interactive -t 0-12:00 --mem 2G --reservation=HBC2 /bin/bash
 ```
 
 Next, load the modules for `bedtools` and `samtools`:
@@ -128,7 +128,7 @@ The blacklisted regions typically appear uniquely mappable so simple mappability
 <img src="../img/blacklist.png" width="600">
 </p>
 
-_Image source: [Park P., Nature Reviews Genetics (2009) 10: 669–680.](https://www.nature.com/articles/nrg2641)
+_Image source: [Park P., Nature Reviews Genetics (2009) 10: 669–680.](https://www.nature.com/articles/nrg2641)_
 
 We have a BED file of blacklist regions for mouse `mm10` prepared at `/n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed`. Copy this file over to your project into the `reference_data` folder.
 
@@ -162,7 +162,7 @@ Similarly, we can filter out blacklisted regions for `wt_sample2`:
 $ bedtools intersect \
 -v \
 -a macs2/wt_sample2_peaks.narrowPeak \
--b ../reference/mm10-blacklist.v2.bed \
+-b ../reference_data/mm10-blacklist.v2.bed \
 > macs2/wt_sample2_peaks_filtered.bed
 ```
 
