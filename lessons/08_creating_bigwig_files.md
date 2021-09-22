@@ -76,7 +76,7 @@ For this workshop, we will focus on creating bigWig files, as we will be using t
 The command for creating a bigWig file is fairly computationally heavy and so we will make use of the muti-threading functionality in `deepTools`. This means that we will also need to request more cores for our interactive session. *If you are already logged on to a compute node, you will need to exit and start a new session*. Note that we will ask for **6 cores, and also increase our memory to 8G**.
 
 ```bash
-$ srun --pty -p interactive -t 0-12:00 --mem 8G -c 6 --reservation=HBC2 /bin/bash
+$ srun --pty -p interactive -t 0-12:00 --mem 8G -c 6 /bin/bash
 ```
 Once on a compute node, begin by creating a directory for the output.
 
