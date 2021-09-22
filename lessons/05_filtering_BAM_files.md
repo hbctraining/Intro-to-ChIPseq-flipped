@@ -43,7 +43,7 @@ This **lesson will consist of two steps**:
 Before we begin, you will want to make sure you are **logged into O2.** To start an interactive session with 2 cores and 10G of memory (sorting can be memory-intensive) us the command below:
 
 ```bash
-$ srun --pty -p interactive -t 0-2:30 --mem 10G -n 1 --reservation=HBC2 /bin/bash
+$ srun --pty -p interactive -t 0-2:30 --mem 10G -c 2 --reservation=HBC2 /bin/bash
 ```
 > **Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
 
@@ -56,25 +56,35 @@ module load gcc/6.2.0 samtools/1.13 sambamba/0.7.1
 
 ### 1. Sort BAM files by genomic coordinates
 
-Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we will use [Samtools](http://www.htslib.org/), a tool we previously used when coverting our SAM file to a BAM file. 
+Before we can do the filtering, we need to sort our BAM alignment files by genomic coordinates (instead of by name). To perform the sorting, we could use [Samtools](http://www.htslib.org/), a tool we previously used when coverting our SAM file to a BAM file. 
 
-The command we use this time is `samtools sort` with the following parameter:
+The command we use this time is `samtools sort` with the parameter `-o`, indicating the path to the output file. The example code looks like below (please do not run):
 
-* `-o`: /path/to/output/file
+``` bash
 
-Move into the `bowtie2` directory and then run the command. Once complete, you should see a new file generated with the output file name your provided.
-
-```bash
+# DO NOT RUN
 $ cd ~/chipseq_workshop/results/bowtie2/
 $ samtools sort wt_sample2_chip.bam -o wt_sample2_chip_sorted.bam
 ```
 
-> **NOTE**: You will need the BAM file generated from the [alignment lesson](04_alignment_using_bowtie2.md). If you do not have this file, please copy over the BAM file to your directory:
+> **NOTE**: To run the above code, you will need the BAM file generated from the [alignment lesson](04_alignment_using_bowtie2.md). If you do not have this file, you could copy over the BAM file to your directory:
 >
 > ```bash
 > $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip.bam ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam
 > ``` 
 
+The `samtools sort` code above takes about 7 min to finish. Instead of running it in the class, we have generated the output BAM file. Please copy over the BAM file to your directory:
+
+```bash
+$ cd ~/chipseq_workshop/results/bowtie2/
+$ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip_sorted.bam ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_sorted.bam
+```
+
+We could take a glimpse of the sorted BAM file using `samtools view`:
+
+```bash
+$ samtools view wt_sample2_chip_sorted.bam | less
+```
 
 ### 2. Filter the reads to keep only uniquely mapping reads
 
