@@ -5,12 +5,12 @@
 1. Once you have figured out what argument to use, run FastQC with 4 threads/cores.
 
 ```bash
-$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/data/wt_sample2_chip.fastq.gz
+$ fastqc -o ~/chipseq_workshop/results/fastqc/ -t 4 ~/chipseq_workshop/raw_data/wt*chip.fastq.gz
 ```
 
 2. Do you notice any difference in running time? Does multi-threading speed up the run?
 
-**Answer**: Yes, multi-threading speeds up the run.If we were running on multiple samples, the progress reported as part of the FASTQC tool also gives us an indication that multi-threading is being used.
+**Answer**: Yes, multi-threading speeds up the run. Also, the progress bar on the screen shows that two samples are processed simultaneously, which is another indication of multi-threading.
 
 
 
