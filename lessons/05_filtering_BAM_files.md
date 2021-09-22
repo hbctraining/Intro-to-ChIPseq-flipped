@@ -24,7 +24,7 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 
 * Multi-mapping reads are reads that are mapping to multiple loci on the reference genome.
 * Duplicate reads are reads that map at the exact same location, with the same coordination and the same strand. These duplicates can arise from experimental artifacts, but can also contribute to genuine ChIP-signal.
-    * **The bad kind of duplicates:** If initial starting material is low this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. 
+    * **The bad kind of duplicates:** If initial starting material is low, this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. 
     * **The good kind of duplicates:** You can expect some biological duplicates with ChIP-seq since you are only sequencing a small part of the genome. This number can increase if your depth of coverage is excessive or if your protein only binds to few sites. If there are a good proportion of biological dupicates, removal can lead to an underestimation of the ChIP signal. 
 
 > #### Some additional notes on duplicates
