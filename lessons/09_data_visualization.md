@@ -282,7 +282,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --regionsLabel "" \
 --perGroup \
 --colors blue green red orange \
---samplesLabel "PRDM16" "H3K4me" "H3K4me3" "H3K27me3" \
+--samplesLabel "WT_replicate2" "H3K4me" "H3K27me3" "H3K27ac" \
 --refPointLabel "PRDM16 binding sites"
 ```
 
