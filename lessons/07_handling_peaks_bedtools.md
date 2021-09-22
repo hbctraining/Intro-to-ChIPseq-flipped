@@ -91,7 +91,7 @@ As the name implies, this suite of tools works with **BED** files, but it also w
 `bedtools` is available as a module on O2. To set yourself up for the rest of the lesson, make sure you are **logged into O2 and on a compute node**.
 
 ```bash
-$ srun --pty -p interactive -t 0-12:00 --mem 2G --reservation=HBC2 /bin/bash
+$ srun --pty -p interactive -t 0-12:00 --mem 2G /bin/bash
 ```
 
 Next, load the modules for `bedtools` and `samtools`:
