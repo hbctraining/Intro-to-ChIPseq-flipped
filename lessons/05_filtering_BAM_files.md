@@ -33,7 +33,7 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > * You are expecting binding in repetitive regions (also, use paired-end sequencing) 
 > * You have included UMIs into your experimental setup.
 
-The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. We do not have this option with Bowtie2 and so the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. 
+The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. but the latest Bowtie2 does not have this option. As a result, the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. 
 
 This **lesson will consist of two steps**:
 
