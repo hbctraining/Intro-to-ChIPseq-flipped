@@ -1,10 +1,10 @@
 ---
 title: "Handling peak files with bedtools"
-author: "Meeta Mistry, Jihe Liu"
+author: "Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger"
 date: "Aug 17th, 2021"
 ---
 
-Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu
+Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger
 
 Approximate time: 30 minutes
 
