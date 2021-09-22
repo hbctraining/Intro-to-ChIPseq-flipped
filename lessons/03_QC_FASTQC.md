@@ -131,7 +131,7 @@ Before we do that we will create a `fastqc` directory under `results`, to store 
 $ mkdir -p ~/chipseq_workshop/results/fastqc
 ```
 
-**To run FastQC we need to specify two arguments**: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input. We will be using one of the WT replicates as input:
+**To run FastQC we need to specify two arguments**: one is the directory where the results are stored, which is indicated after the `-o` flag; another one is the file name of our FASTQ input. We will be using the two immunoprecipitated *chip* WT replicates as input:
 
 ```bash
 $ fastqc -o ~/chipseq_workshop/results/fastqc/ ~/chipseq_workshop/raw_data/wt*chip.fastq.gz
