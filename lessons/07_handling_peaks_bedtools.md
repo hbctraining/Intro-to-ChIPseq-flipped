@@ -49,7 +49,10 @@ The BED file format is tab-delimited (columns separated by tabs) and contains in
 
 Given the example above, **what coordinates would you use to define the sequence `ATG`?** 
 
-If you were using the the 1-based (bottom) method you would indicate 4 to 6. Using the 0-based method you would define the range as 3 to 6. The benefits to having a **zero-based system** is the **ease of calculating distance or length** of sequences. We can easily determine the length of the `ATG` sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one after the subtraction. Therefore, many file formats used in computation, including **the BED file format**, use zero-based coordinates. 
+* If you were using the the 1-based (bottom) method you would indicate **4 to 6**. 
+* Using the 0-based method you would define the range as **3 to 6**. 
+
+The benefits to having a **zero-based system** is the **ease of calculating distance or length** of sequences. We can easily determine the length of the `ATG` sequence using the zero-based coordinates by subtracting the start from the end, whereas for one-based coordinates we would need to add one after the subtraction. Therefore, many file formats used in computation, including **the BED file format**, use zero-based coordinates. 
 
 BED files **require at least 3 fields** indicating the **genomic location of the feature**, including the chromosome and the start and end coordinates. However, there are 9 additional fields that are optional, as shown in the image below.
 
@@ -122,15 +125,17 @@ Alternatively, you can use the [web-based documentation](https://bedtools.readth
 
 We discussed blacklisted regions in the [filtering lesson](05_filtering_BAM_files.md), as it is commonplace to filter before peak calling. When it is performed on BAM files, the `bedtools intersect` is also used, the difference being the input file type (BAM instead of BED). The filtering works just as well if applied post-peak calling, which is what we will be doing in this lesson.
 
-The blacklisted regions typically appear uniquely mappable so simple mappability filters do not remove them. These regions are often found at specific types of repeats such as centromeres, telomeres and satellite repeats.
+The blacklisted regions typically appear uniquely mappable so simple mappability filters do not remove them. These regions are often found at specific types of repeats such as centromeres, telomeres and satellite repeats. 
 
 <p align="center">
 <img src="../img/blacklist.png" width="600">
 </p>
 
-_Image source: [Park P., Nature Reviews Genetics (2009) 10: 669–680.](https://www.nature.com/articles/nrg2641)_
+> _The table above shows various named classes of repeats in the human genome, along with their pattern of occurrence. The graph in the panel below shows the percentage of each chromosome (based on hg19), that is covered by repetitive DNA as reported by RepeatMasker. The colors in graph correspond to the colors of repeat class in the table._
 
-We have a BED file of blacklist regions for mouse `mm10` prepared at `/n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed`. Copy this file over to your project into the `reference_data` folder.
+_Image source: [Treangen, T.J. and Salzberg, S.L., Nature Reviews Genetics (2011)](https://pubmed.ncbi.nlm.nih.gov/22124482/)_
+
+We have a BED file of blacklist regions for mouse `mm10` prepared for you. **Copy this file** over to your project into the `reference_data` folder.
 
 ```bash
 $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/reference/mm10-blacklist.v2.bed  ~/chipseq_workshop/reference_data
