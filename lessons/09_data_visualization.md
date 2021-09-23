@@ -249,6 +249,8 @@ If you are investigating a transcription factor known to bind at promoter region
 > **NOTE**: Later in the ChIP-seq workflow (in ChIP-seq Part II), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located in the genome.
 
 
+### Histone modifications and enhancers
+
 Okay, so we have ruled out promoter region binding for PRDM16. Now, what? 
 
 While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
@@ -259,7 +261,6 @@ While some some transcription factors bind to promoter regions, other transcript
 
 _Image source: [Xia & Wei, Cells, 2019](https://www.mdpi.com/2073-4409/8/10/1281)_
 
-### Histone modifications and enhancers
 Binding of transcription factors to the enhancer regions also enables modification of chromatin. The active enhancers are accessible regions of the genome, however, the vicinity of enhancer regions containing nucleosomes has unique histone monomethylation and acetylation signatures. Active enhancer chromatins are marked by H3 lysine 4 monomethylation (H3K4me1) and H3 lysine 27 acetylation (H3K27ac).
 
 > **NOTE**: For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet).
