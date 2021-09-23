@@ -129,7 +129,7 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
 4. Comment on the plot.
 
 <details>
-  <summary>Solution</summary>
+  <summary><b>Click here for solution</b></summary>
   
  <p><pre>
   
