@@ -1,17 +1,17 @@
 ---
 title: "Alignment and filtering"
-author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu"
+author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger"
 date: "Aug 10th, 2021"
 ---
 
-Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu
+Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
-Approximate time:
+Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Understand the purpose of filtering alignment reads
-* Learn to perform filtering with sambamba and samtools
+* Describe the purpose of filtering alignment reads
+* Perform filtering with sambamba and samtools
 
 ## Filtering reads
 
@@ -20,7 +20,7 @@ Approximate time:
 </p>
 
 
-A key issue when working with a ChIP-seq data is to **move forward with only the uniquely mapping reads**.  Allowing for multiply mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). To increase our confidence in peak calling and improve data reproducibility, we need to **filter out both multi-mapping reads and duplicate reads**.
+A key issue when working with a ChIP-seq data is to **move forward with only the uniquely mapping reads**.  Allowing for multi-mapped reads increases the number of usable reads and the sensitivity of peak detection; however, the number of false positives may also increase [[1]](https://www.ncbi.nlm.nih.gov/pubmed/21779159/). To increase our confidence in peak calling and improve data reproducibility, we need to **filter out both multi-mapping reads and duplicate reads**.
 
 * Multi-mapping reads are reads that are mapping to multiple loci on the reference genome.
 * Duplicate reads are reads that map at the exact same location, with the same coordinates and the same strand. These duplicates can arise from experimental artifacts, but can also contribute to genuine ChIP-signal.
@@ -88,7 +88,7 @@ $ samtools view wt_sample2_chip_sorted.bam | less
 
 ### 2. Filter the reads to keep only uniquely mapping reads
 
-Next, we can filter the sorted BAM files to keep only uniquely mapping reads. We use the `sambamba view` command with the following parameters:
+Next, we can filter the sorted BAM files to keep only uniquely mapping reads. We will use the `sambamba view` command with the following parameters:
 
 * `-t`: number of threads(cores)
 * `-h`: print SAM header before reads
