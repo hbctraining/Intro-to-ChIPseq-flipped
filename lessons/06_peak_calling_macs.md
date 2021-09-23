@@ -61,7 +61,11 @@ The tag density around a true binding site should show a **bimodal enrichment pa
 To identify the shift size:
 
 1. MACS scans the whole sample **searching for all highly significant enriched regions**. *This is done only using the ChIP sample!* 
-   * These regions are identified by MACS sliding two `bandwidth` windows across the genome to find regions with **tags more than `mfold` enriched relative to a random tag genome distribution**. 
+   * These regions are identified by MACS sliding across the genome using a 600bp window to find regions with **tags more than 50-fold enriched relative to a random tag genome distribution**. 
+   
+   > *Note 1:* Both the window size and the fold enrichment values described above are the default values. Although there are [parameters](06_peak_calling_macs.md#macs2-parameters) that allow you to modify these (i.e `bw` and `mfold`), tweaking it is not recommended.
+   > 
+   > *Note 2:* The default fold enrichment for MACS2 is greater than the value described in the workflow for MACSv1 above.
 2. MACS randomly **samples 1,000 of these high-quality peaks** identified in #1. 
 3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
 4. MACS **shifts all reads in the sample by d/2** toward the 3' ends to the most likely protein-DNA interaction sites
@@ -146,7 +150,7 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 * `-t`: The ChIP data file (this is the only REQUIRED parameter for MACS)
 * `-c`: The control or mock data file
 * `-f`: format of input file; Default is "AUTO", which will allow MACS to decide the format automatically.
-* `-g`: mappable genome size, which is defined as the genome size that can be sequenced; some precompiled values provided.
+* `-g`: mappable genome size, which is defined as the genome size that can be sequenced (1.0e+9 or 1000000000, are both accepted formats). Some precompiled values are provided (i.e. 'hs' for human (2.7e9), 'mm' for mouse (1.87e9), 'ce' for C. elegans (9e7) and 'dm' for fruitfly (1.2e8))
 
 > **NOTE:** While MACS can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will find many false positive peaks identified. 
 
@@ -158,22 +162,22 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 **Shifting model arguments**
 
-* `-s`: size of sequencing tags. By default, MACS will use the first 10 sequences from your input treatment file to determine it
-* `--bw`: The bandwidth, which is used to scan the genome ONLY for model building. Can be set to the expected sonication fragment size.
-* `--mfold`: upper and lower limit for model building
+* `--nomodel`: Whether or not to build the shifting model. Set to True for ATAC-seq peak-calling.
+* `--bw`: The bandwidth, which is used to scan the genome ONLY for model building. **Tweaking this is not recommended.**
+* `--mfold`: upper and lower limit for model building (defaults to 5 and 50). **Tweaking this is not recommended.**
 
 **Peak calling arguments**
 
-* `-q`: q-value (minimum FDR) cutoff
-* `-p`: p-value cutoff (instead of q-value cutoff)
+* `-q`: q-value (minimum false discovery rate) cutoff for peak detection. By default this is set to 0.05 and the p-value is not considered.
+* `-p`: p-value cutoff. This is mutually exclusive with `-q`. Use in place of q-value for a more lenient threshold (see note below). If p-value cutoff is set, qvalue will not be calculated and reported as -1 in the final .xls file
 * `--nolambda`: do not consider the local bias/lambda at peak candidate regions
 * `--broad`: broad peak calling
 
 > **NOTE:** Relaxing the q-value does not behave as expected in this case, since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks. But with MACS2, relaxing thresholds also results in wider peaks.
 
-Now that we have a feel for the different ways we can tweak our command, let's set up the command for each of our wildtype replicates:
+Now that we have a feel for the different ways we can modify our command, let's set up the command for each of our wildtype replicates:
 
-```
+```bash
 macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
     -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_input_final.bam \
     -f BAM -g mm \
