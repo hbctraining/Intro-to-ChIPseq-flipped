@@ -31,7 +31,7 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > Most peak calling algorithms also implement methods to deal with duplicate reads. While they are commonly removed prior to peak calling, another option is to leave them now and deal with them later. **Skip the duplicate filtering at this step if**:
 > * You are planning on performing a differential binding analysis.
 > * You are expecting binding in repetitive regions (also, use paired-end sequencing) 
-> * You have included UMIs into your experimental setup.
+> * You have included [UMIs](https://www.illumina.com/techniques/sequencing/ngs-library-prep/multiplexing/unique-molecular-identifiers.html) into your experimental setup.
 
 The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. but the latest Bowtie2 does not have this option. As a result, the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. 
 
