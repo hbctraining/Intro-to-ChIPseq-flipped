@@ -4,17 +4,21 @@ author: "Meeta Mistry, Jihe Liu"
 date: "Aug 11th, 2021"
 ---
 
-Approximate time:
+Approximate time: 45 minutes
 
 ## Learning Objectives
 
 * Understand what a profile plot is and how to generate one
 * Learn how to interpret a profile plot 
-* Introduce different use cases for a profile to answer questions about your ChIP data
+* Introduce different use cases for a profile plot to answer questions about your ChIP data
 
 ## Qualitative assessment of peak enrichment
 
-The quality of ChIP-seq experiments can be especially difficult to evaluate when little is known about the factor and its binding motif, as is the case with PRDM16. The methods for peak call quality assessment can be seperated into those that are quantitative (which we will not be covering in this workshop) and those that are qualitative. Qualitative methods typically include a **traditional site-inspection-based evaluation** using a genome viewer, or the **exploration of  aggregated read density in selected regions** using profile plots and heatmaps. When applied and interpreted together, these approaches provide a valuable overall assessment of experimental success and data quality. In this lesson, we will cover the latter of the qualitative approaches mentioned above.
+The quality of ChIP-seq experiments can be especially difficult to evaluate when little is known about the factor and its binding motif, as is the case with PRDM16. The methods for peak call quality assessment can be seperated into those that are quantitative (which we will not be covering in this workshop) and those that are qualitative. Qualitative methods typically include:
+* a **traditional site-inspection-based evaluation** using a genome viewer, or 
+* the **exploration of  aggregated read density in selected regions** using profile plots and heatmaps. 
+ 
+When applied and interpreted together, these approaches provide a valuable overall assessment of experimental success and data quality. In this lesson, we will cover the latter of the qualitative approaches mentioned above.
 
 > **NOTE:** The ENCODE Consortium uses various metrics to assess [enrichment](https://www.encodeproject.org/data-standards/terms/#enrichment) and [complexity](https://www.encodeproject.org/data-standards/terms/#library) aspects of ChIP-seq quality. This quantitative approach is part of the end-to-end ChIP-seq workflow presented earlier in the workshop, however they will not be covered.
 
@@ -35,9 +39,9 @@ _Image source: [deepTools documentation](https://deeptools.readthedocs.io/en/dev
 
 ### Setting up 
 
-> _NOTE:_ If you have just completed the last lesson on creating bigWig files, you may already have yourself setup!
-
 To start, you will need to be on a **compute node** and ensure you have an interactive session with **6 cores and 10G of memory**. The `computeMatrix` command can take some time, so we want to take advantage of the multi-threading. 
+
+> _NOTE:_ If you have the O2 session open from the last lesson on creating bigWig files, you already have yourself setup with the appropriate amount of resources.
 
 ```bash
 srun --pty -p interactive -t 0-5:00 -c 6 --mem 8G /bin/bash
@@ -57,10 +61,11 @@ $ cd ~/chipseq_workshop/results/
 $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/bigWig/*chip.bw visualization/bigWig/
 ```
 
-## Assessing read density between replicates
+## Evaluating signal in PRDM16 binding sites
 
-We have already shown that for our WT samples there are a good number of overlapping regions between replicates. Using `bedtools` we were able to extract a bed file of those consensus peaks. The next question is, **what kind of signal is observed for each replicate across these shared regions?**
+We have already shown that for our WT samples there are a good number of overlapping regions between replicates. Using `bedtools` we were able to extract a bed file of those consensus peaks. These shared regions represent our most confident set of PRDM16 binding sites in the developing cortex. The next question is, **what kind of signal is observed for each WT replicate across these shared regions?**
 
+### 1. Create the matrix
 The first step in generating the profile plot is to create the matrix. The `computeMatrix` command accepts multiple bigWig files and multiple region files (BED format) to create a count matrix. The command can also filter and sort regions according to their scores. For each window, `computeMatrix` will calculate scores based on the read density values in the bigWig files.
 
 Below we describe the **parameters** we will be using:
@@ -87,6 +92,7 @@ computeMatrix reference-point --referencePoint center \
 ```
 > _Runtime estimate: 8-10 minutes_
 
+### 2. Drawing the profile plot
 Once you have computed the matrix, you can create the **profile plot**. First, make a directory designated for the figures we will be creating, and then we will run `plotProfile`. _The `plotProfile` command will take a shorter amount of time to run._ 
 
 > **NOTE:** `plotProfile` has many options to optimize your figure, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the [documentation](https://deeptools.readthedocs.io/en/develop/content/tools/plotProfile.html?highlight=plotProfile) to find out more detail.
@@ -109,7 +115,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 
 > **NOTE:** The output of `plotProfile` will be a PNG image file, which you **will not be able to open on the cluster**. To view the file you will want to use [FileZilla](03_QC_FASTQC.md#what-is-filezilla) to move it over to your local computer. 
 
-The figure should like the one displayed below. We observe that the **replicate 2 has a much higher signal** present in these regions. This is not uncommon in ChIP-seq data. What is encouraging to see is that there is a **decent amount of signal in both replicates**, so we have some confidence in the regions we identified.
+The figure should like the one displayed below. We observe that the **replicate 2 has a much higher signal** present in these regions. This is not uncommon in ChIP-seq data. There will likely be one replicate that exhibits stronger signal. What is encouraging to see is that there is a **decent amount of signal in both replicates**, so we have some confidence in the regions we identified.
 
 
 <p align="center">
@@ -164,7 +170,7 @@ We observed that the WT sample shows significantly higher enrichment at PRDM16-b
 
 ***
 
-## Evaluating enrichment around the TSS
+## Understanding how PRDM16 regulates transcriptional activity
 
 Because many cis-regulatory elements (i.e. promoters, enhancers, and silencers) are close to transcription start site (TSS) of their targets, **a common visualization** technique is to evaluate the **read density around the TSS**. This can be done by using a genome viewer on a gene-by-gene basis as shown below:
 
