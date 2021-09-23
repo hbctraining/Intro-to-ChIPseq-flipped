@@ -1,8 +1,10 @@
 ---
 title: "Visualization of peaks"
-author: "Meeta Mistry, Jihe Liu"
+author: "Meeta Mistry, Jihe Liu, Mary Piper, Radhika Khetani, Will Gammerdinger"
 date: "Aug 11th, 2021"
 ---
+
+Contributors: Meeta Mistry, Jihe Liu, Mary Piper, Radhika Khetani, Will Gammerdinger
 
 Approximate time: 45 minutes
 
@@ -20,7 +22,12 @@ The quality of ChIP-seq experiments can be especially difficult to evaluate when
  
 When applied and interpreted together, these approaches provide a valuable overall assessment of experimental success and data quality. In this lesson, we will cover the latter of the qualitative approaches mentioned above.
 
-> **NOTE:** The ENCODE Consortium uses various metrics to assess [enrichment](https://www.encodeproject.org/data-standards/terms/#enrichment) and [complexity](https://www.encodeproject.org/data-standards/terms/#library) aspects of ChIP-seq quality. This quantitative approach is part of the end-to-end ChIP-seq workflow presented earlier in the workshop, however they will not be covered.
+<p align="center">
+<img src="../img/chipseq_deeptoolsworkflow_sept2021.png" width="700">
+</p>
+
+
+> **NOTE:** The ENCODE Consortium uses various metrics to assess [enrichment](https://www.encodeproject.org/data-standards/terms/#enrichment) and [complexity](https://www.encodeproject.org/data-standards/terms/#library) aspects of ChIP-seq quality. This quantitative approach is part of the end-to-end ChIP-seq workflow presented earlier in the workshop. This will be covered in ChIP-seq Part II workshop materials.
 
 ## Profile plots
 The profile plot allows us to **evaluate read density over sets of genomic regions**. Typically, these regions are genes (start and end coordinates), but any other regions defined in the BED file will work. 
@@ -71,7 +78,7 @@ The first step in generating the profile plot is to create the matrix. The `comp
 Below we describe the **parameters** we will be using:
 
 * `reference-point`: The reference point for plotting. Here, we use the center of the consensus peaks (default is TSS).
-* `-b`, `a`: Specify a window around the reference point (before and after). We have used +/- 4000 bp. 
+* `-b`, `a`: Specify a window around the reference point (before and after). For narrow peaks, we can use a smaller window as we expect a more punctate binding profile. Broader peaks might require you to explore and play around with the window size. We have used +/- 4000 bp. 
 * `-R`: The region file will be the BED file we generated for WT replicate overlap.
 * `-S`: The list of bigWig files (WT replicates), that we have generated for you.
 * `--skipZeros`: Do not include regions with only scores of zero
@@ -127,7 +134,7 @@ The figure should like the one displayed below. We observe that the **replicate 
 
 **Exercise: Assessing loss of signal in the KO samples**
 
-The KO samples in the dataset represent two separate pools of E15.5 Prdm16 conditional knockout cortices. It would be good to **evaluate PRDM binding sites** in samples where the PRDM16 is rendered non-functional, and **see how read density compares to the WT**.
+The KO samples in the dataset represent two separate pools of E15.5 Prdm16 conditional knockout cortices. It would be good to **evaluate PRDM binding sites** (identified from the WT peak calls) and see what the read density looks like in a KO sample, where the PRDM16 is rendered non-functional. _Remember that the regions file (`-R`) should specify the known PRDM16 binding sites, and so we can use the same BED file as before._
 
 1. Modify the `computeMatrix` command we previously used so the input bigWigs are now `wt_sample2_chip.bw` and `ko_sample2_chip.bw`. You will also want to change the name of the ouput file to `wt_ko_matrix.gz`.
 2. Compute the matrix.
@@ -178,16 +185,20 @@ Because many cis-regulatory elements (i.e. promoters, enhancers, and silencers) 
 <img src="../img/tss_pileup.png" width="300">
 </p>
 
-Alternatively, we can look at the **read density aggregated across all genes in the genome** for a more global evaluation using a **profile plot**. To create this profile plot, we will need to compute yet another matrix. For this plot, we will need to change the following parameters:
+Alternatively, we can get a more **global perspective** by looking at the read density aggregated across all genes in the genome, using a **profile plot**. We are going to plot the read density for **each of the WT replicates**. Our BED file of regions is no longer the PRDM16 binding sites. For this figure, **the regions** we are aggregating over is the promoter region for every gene in the mouse genome. The "promoter region" is **defined by the user (in our command) as 4000 bases upstream from the start of the gene, to 4000 bases downstream of the start of the gene**. 
 
-* `-R`: Our regions file will change. Rather than using our PRDM16 binding sites, we will use a BED file which contains the start and end coordinate for every genes in the mm10 genome.
-* `reference-point`: The reference point will be TSS. Specifying this means that the window will be centered around the start coordinate of each region.
+_With deepTools you have the flexibility of defining the regions you want to interrogate._ 
+
+To create this profile plot, we will need to compute yet another matrix. For this plot, we will need to change the following parameters:
+
+* `-R`: **Our regions file will change**. Rather than using our PRDM16 binding sites, we will use a BED file which contains the start and end coordinate for every genes in the mm10 genome.
+* `reference-point`: The **reference point will be TSS**. Specifying this means that the window (+/- 4000 bp) will be centered around the start coordinate of each region.
 * `-S`: The bigWig files input will be similar to the first plot we created, pointing to the two WT ChIP samples.
 
 > **NOTE**: The mm10 genes BED file was obtained from the [UCSC table browser](https://genome.ucsc.edu/cgi-bin/hgTables).
 
 
-**Since this matrix takes especially long to compute, we have created it for you**. Copy over the matrix into your `visualization` directory:
+This is a large number of regions!!. **The matrix takes very long to compute**, and so **we have created it for you**. Copy over the matrix into your `visualization` directory:
 
 ```bash
 cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_matrix_allGenes_TSS.gz visualization/
@@ -213,7 +224,7 @@ _The code to compute the matrix is provided in the drop-down below if you are **
   
 </details>
 
-Use the matrix to create your own profile plot by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
+Use the matrix to **create your own profile plot** by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
 
 ```bash
 plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
@@ -233,18 +244,31 @@ Yikes! This is not what we were expecting. **There appears to be very little enr
 <img src="../img/09_plot1_wt_TSS.png" width="500">
 </p>
 
-If you are investigating a transcription factor known to bind at promoter regions of genes, it would be disappointing to see figure like this. But that is not the case for us - we are investigating the PRDM16 binding profile, and this plot indicates that **very few of the PRMD16 binding sites are around the TSS** (i.e. promoter regions). 
+If you are investigating a transcription factor known to bind at promoter regions of genes, it would be disappointing to see figure like this. But that is not the case for us - we are plotting this data so gain insight on PRDM16 binding. This plot indicates that **very few of the PRMD16 binding sites are around the TSS** (i.e. promoter regions). 
 
-> **NOTE**: Later in the ChIP-seq workflow (not covered in this workshop), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located.
+> **NOTE**: Later in the ChIP-seq workflow (in ChIP-seq Part II), we use software to annotate our peaks using nearest gene approaches. This can give us more detailed information on where the PRDM16 binding sites are located in the genome.
 
 
-## Exploring PRDM16-regulated enhancer binding in cortical neurons
+Okay, so we have ruled out promoter region binding for PRDM16. Now, what? 
 
-**So where is PRDM16 binding in the genome?** While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
+While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
 
-One way of assessing this using profile plot is to obtain a BED file of regions that correspond to [enhancer regions in mouse genome](https://genome.ucsc.edu/cgi-bin/hgTrackUi?db=mm10&c=chrX&g=encode3RenEnhancerEpdNewPromoter). While this is a totally valid avenue to explore, we will be taking another route in this workshop.
+<p align="center">
+<img src="../img/active_anhancer.png" width="700">
+</p>
 
-### ENCODE data
+_Image source: [Xia & Wei, Cells, 2019](https://www.mdpi.com/2073-4409/8/10/1281)_
+
+### Histone modifications and enhancers
+Binding of transcription factors to the enhancer regions also enables modification of chromatin. The active enhancers are accessible regions of the genome, however, the vicinity of enhancer regions containing nucleosomes has unique histone monomethylation and acetylation signatures. Active enhancer chromatins are marked by H3 lysine 4 monomethylation (H3K4me1) and H3 lysine 27 acetylation (H3K27ac).
+
+> **NOTE**: For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet).
+
+
+- H3K27me3, is a polycomb modification (developmental regulators) linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010) 
+
+
+
 Early in the workshop, we described the [ENCODE](https://www.encodeproject.org/) resource to you, and now we want to **show you how to make use of it to interrogate your data**. In 2012, [Stamatoyannopoulos et al.](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-8-418) released a large dataset as part of the Mouse ENCODE project, which included numerous cell types, tissues, and developmental time points. 
 
 <p align="center">
@@ -255,20 +279,6 @@ From this dataset, we were able to find data corresponding to various **histone 
 
 > _The mouse ENCODE data used in this workshop was taken from reference epigenome [ENCSR205YGI](https://www.encodeproject.org/reference-epigenomes/ENCSR205YGI/)._
 
-### Histone modifications
-A major component of chromatin that plays a key role in regulation is the modification of histones ([AJ Bannister, 2011](https://www.nature.com/articles/cr201122)). The best studied modifications are those that occur on the N-terminal ‘tail’ regions of the histones (which project from the nucleosome), but the list is ever-growing and the complexity of their action is only just beginning to be understood.
-
-<p align="center">
-<img src="../img/histone_tails.png" width="500">
-</p>
-
-_Image source: [Epigentek Overview of Histone Modifications](https://www.epigentek.com/catalog/advanced-epigenetic-overview-of-histone-modifications-n-5.html)_
-
-For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet). We can utilize this knowledge to test our hypotheses about PRDM16 function:
-
-- H3K4me, is a chromatin mark associated with poised and active enhancers 
-- H3K27me3, is a polycomb modification (developmental regulators) linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010) 
-- H3K27ac is a modification associated with the higher activation of transcription and therefore defined as an active enhancer mark
 
 ### Profile plot
 For each of the histone modifications listed above, we found the corresponding [ChIP experiments in ENCODE](https://www.encodeproject.org/reference-epigenomes/ENCSR205YGI/) and downloaded the bigWig files. Each experiment had two replicates. After plotting profiles, the replicate with stroger signal was identifed and retained for the visualizataion below. **For this plot, we have computed the matrix for you** using code similar to the first plot in this lesson (with a few additional bigWig files and keeping only the WT replicate 2).
