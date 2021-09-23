@@ -1,16 +1,17 @@
 ---
 title: "Visualization of peaks"
-author: "Meeta Mistry, Jihe Liu"
+author: "Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger"
 date: "Aug 11th, 2021"
 ---
 
-Approximate time:
+Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger
+
+Approximate time: 75 minutes
 
 ## Learning Objectives
 
-* Understand what a profile plot is and how to generate one
-* Learn how to interpret a profile plot 
-* Introduce different use cases for a profile to answer questions about your ChIP data
+* Generate and interpret a profile plot
+* Use cases for a profile to answer questions about your ChIP data
 
 ## Qualitative assessment of peak enrichment
 
@@ -59,7 +60,7 @@ $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualizat
 
 ## Assessing read density between replicates
 
-We have already shown that for our WT samples there are a good number of overlapping regions between replicates. Using `bedtools` we were able to extract a bed file of those consensus peaks. The next question is, **what kind of signal is observed for each replicate across these shared regions?**
+We have already shown that for our WT samples there are a good number of overlapping regions between replicates. Using `bedtools` we were able to extract a BED file of those consensus peaks. The next question is, **what kind of signal is observed for each replicate across these shared regions?**
 
 The first step in generating the profile plot is to create the matrix. The `computeMatrix` command accepts multiple bigWig files and multiple region files (BED format) to create a count matrix. The command can also filter and sort regions according to their scores. For each window, `computeMatrix` will calculate scores based on the read density values in the bigWig files.
 
@@ -133,24 +134,23 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   
  <p><pre>
   
-  ```
-  # Navigate to results directory
-  computeMatrix reference-point --referencePoint center \
-  -b 4000 -a 4000 \
-  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
-  -S visualization/bigWig/wt_sample2_chip.bw visualization/bigWig/ko_sample2_chip.bw \
-  --skipZeros \
-  -o visualization/wt_ko_matrix.gz \
+  <code># Navigate to results directory
+  computeMatrix reference-point --referencePoint center \\
+  -b 4000 -a 4000 \\
+  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \\
+  -S visualization/bigWig/wt_sample2_chip.bw visualization/bigWig/ko_sample2_chip.bw \\
+  --skipZeros \\
+  -o visualization/wt_ko_matrix.gz \\
   -p 6
 
-  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
-  -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_ko.png \
-  --regionsLabel "" \
-  --perGroup \
-  --colors blue red \
-  --samplesLabel "WT" "KO" \
-  --refPointLabel "PRDM16 binding sites"
-  ```
+  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \\
+  -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_ko.png \\
+  --regionsLabel "" \\
+  --perGroup \\
+  --colors blue red \\
+  --samplesLabel "WT" "KO" \\
+  --refPointLabel "PRDM16 binding sites"</code>
+
   
 We observed that the WT sample shows significantly higher enrichment at PRDM16-binding regions, compared to the KO sample. The result matches our expectation.
   
@@ -159,7 +159,6 @@ We observed that the WT sample shows significantly higher enrichment at PRDM16-b
   </p>
 
 </pre></p>
-  
 </details>
 
 ***
@@ -191,9 +190,9 @@ _The code to compute the matrix is provided in the drop-down below if you are **
 
 <details>
   <summary>Code</summary>
+  <b>Please DO NOT RUN this code.</b>
  <p><pre>
- **Please DO NOT RUN this code.**
-  ```bash
+ <code>
   # DO NOT RUN!
   computeMatrix reference-point --referencePoint TSS \
   -b 4000 -a 4000 \
@@ -201,8 +200,8 @@ _The code to compute the matrix is provided in the drop-down below if you are **
   -S visualization/bigWig/wt_sample1_chip.bw visualization/bigWig/wt_sample2_chip.bw \
   --skipZeros \
   -o visualization/wt_tss_matrix.gz \
-  -p 6
-  ```
+  -p 6</code>
+
 </pre></p>
   
 </details>
@@ -261,7 +260,7 @@ _Image source: [Epigentek Overview of Histone Modifications](https://www.epigent
 For the most common histone modifications, we have a good idea of where they are generally found in the genome and how they function (i.e. activating or repressing). A helpful cheatsheet can [be found here](https://www.abcam.com/epigenetics/histone-modifications#histone-modifications-cheat-sheet). We can utilize this knowledge to test our hypotheses about PRDM16 function:
 
 - H3K4me, is a chromatin mark associated with poised and active enhancers 
-- H3K27me3, is a polycomb modification (developmental regulators) linked to transcriptional repression during neurogenesis (Hirabayashi and Gotoh, 2010) 
+- H3K27me3, is a polycomb modification (developmental regulators) linked to transcriptional repression during neurogenesis ([Hirabayashi and Gotoh, 2010](https://www.nature.com/articles/nrn2810)) 
 - H3K27ac is a modification associated with the higher activation of transcription and therefore defined as an active enhancer mark
 
 ### Profile plot
