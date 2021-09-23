@@ -97,7 +97,7 @@ $ srun --pty -p interactive -t 0-12:00 --mem 2G /bin/bash
 Next, load the modules for `bedtools` and `samtools`:
 	
 ```bash
-$ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.3.1
+$ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.13
 ```
 
 
