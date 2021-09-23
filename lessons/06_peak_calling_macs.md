@@ -91,21 +91,21 @@ To calculate λBG (a parameter discussed in "Peak detection" below) from tag cou
 
 ### Peak detection
 
-After MACS shifts every tag by *d/2*, it then slides across the genome using a window size of *2d* to find candidate peaks. The tag distribution along the genome can be modeled by a Poisson distribution. The Poisson is a one parameter model, where the parameter **λ is the expected number of reads in that window**.
+After MACS shifts every tag by *d/2*, it then slides across the genome using a window size of *2d* to find candidate peaks. The tag distribution along the genome can be modeled by a Poisson distribution. The Poisson is a one parameter model, where the parameter **λ is the expected number of reads in that window**. It is computed using only the input control sample.
 
 <p align="center">
 <img src="../img/peak_detection.png" width="300">
 </p>
 
-Instead of using a uniform λ estimated from the whole genome (computed using only the input control), MACS uses a λlocal defined for each candidate peak. The λlocal parameter is deduced by **taking the maximum λ value across the λ computed across various window sizes** (as shown below): 
+MACS computes a λ<sub>local</sub> defined for each candidate peak. The λ<sub>local</sub> parameter is deduced by **computing a λ value for different window sizes** (as shown below). From these values, the maximum value is retained to represent λ<sub>local</sub>.
 
 <p align="center">
 <img src="../img/lambda.png" width="300">
 </p>
 
-**λlocal = max(λ300bp, λ1KB, λ5KB, λ10KB, λBG).** 
+**λ<sub>local</sub> = MAX(λ<sub>300bp</sub>, λ<sub>1kb</sub>, λ<sub>5kb</sub>, λ<sub>10kb</sub>, λ<sub>bg</sub>).** 
 
-> λBG represents the background λ estimated using the whole genome (i.e. the largest window size)
+> λ<sub>bg</sub> represents the background λ estimated using the whole genome (i.e. the largest window size)
 
 In this way, lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
 
@@ -249,7 +249,7 @@ In the next lesson, we will delve deeper into the output files and gain an under
 We have used this lesson to describe to you the inner workings of the MACS2 peak caller. This is a very popular tool in the field, however there are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
 
 * [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
-* [EPIC](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implentation of an older tool called SICER)
+* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implentation of an older tool called SICER)
 * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
 
 
