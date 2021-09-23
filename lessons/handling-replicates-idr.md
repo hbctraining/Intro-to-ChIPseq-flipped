@@ -104,7 +104,9 @@ Once you have IDR values for true replicates, you want to see how this compares 
 
 An _optional step_ is to create pseudo-replicates for each replicate by randomly splitting the reads and running them through the same workflow. Again, **if IDR analysis on the self-replicates for Replicate 1 results in a number of peaks that are similar (within a factor of 2) to self-replicates for Replicate 2 these are truly good replicates.**
 
+<p align="center">
 <img src="../img/idr-rep1-rep2.png" width="500">
+	</p>
 
 ### Threshold guidelines
 
