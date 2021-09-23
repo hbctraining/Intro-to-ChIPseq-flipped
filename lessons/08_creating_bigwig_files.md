@@ -1,14 +1,16 @@
 ---
 title: "Creating files for assessing peak enrichment"
-author: "Meeta Mistry, Jihe Liu, Radhika Khetani"
+author: "Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdinger"
 date: "Aug 19th, 2021"
 ---
+
+Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger
 
 Approximate time: 30 minutes
 
 ## Learning Objectives
-* Understand the different file formats available for peak visualization
-* Learn how to generate bigWig files using `deepTools`
+* Deffereniate between the different file formats available for peak visualization
+* Generate bigWig files using `deepTools`
 
 ## Setting up for QC on peak calls
 
