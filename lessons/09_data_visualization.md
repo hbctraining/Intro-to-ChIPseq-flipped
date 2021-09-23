@@ -190,7 +190,7 @@ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualizatio
 _The code to compute the matrix is provided in the drop-down below if you are **interested in seeing the changes** that were made._ 
 
 <details>
-  <summary>Code</summary>
+  <summary><b>Click here to see the code</b></summary>
  <p><pre>
  **Please DO NOT RUN this code.**
   ```bash
