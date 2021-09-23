@@ -61,7 +61,6 @@ Before we can do the filtering, we need to sort our BAM alignment files by genom
 The command we use this time is `samtools sort` with the parameter `-o`, indicating the path to the output file. The example code looks like below (please do not run):
 
 ``` bash
-
 # DO NOT RUN
 $ cd ~/chipseq_workshop/results/bowtie2/
 $ samtools sort wt_sample2_chip.bam -o wt_sample2_chip_sorted.bam
