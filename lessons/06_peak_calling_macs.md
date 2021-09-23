@@ -80,11 +80,7 @@ For experiments in which sequence depth differs between input and treatment samp
 
 ### Effective genome length
 
-To calculate λBG (a parameter discussed in "Peak detection" below) from tag count, MACS requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a  particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
-
-<p align="center">
-<img src="../img/mappable.png" width="300">
-</p>
+To calculate λ<sub>bg</sub> (a parameter discussed [below](06_peak_calling_macs.md#peak-detection)), MACS requires the **effective genome size** or the size of the genome that is mappable. Mappability is related to the uniqueness of the k-mers at a particular position the genome. Low-complexity and repetitive regions have low uniqueness, which means low mappability. Therefore we need to provide the effective genome length to **correct for the loss of true signals in low-mappable regions**.
 
 > #### How do I obtain the effective genome length?
 > The MACS software has some pre-computed values for commonly used organisms (human, mouse, worm and fly). If you wanted you could compute a more accurate values based on your organism and build. The [deepTools docs](https://deeptools.readthedocs.io/en/develop/content/feature/effectiveGenomeSize.html) has additional pre-computed values for more recent builds but also has some good materials on how to go about computing it.
@@ -105,7 +101,7 @@ MACS computes a λ<sub>local</sub> defined for each candidate peak. The λ<sub>l
 
 **λ<sub>local</sub> = MAX(λ<sub>300bp</sub>, λ<sub>1kb</sub>, λ<sub>5kb</sub>, λ<sub>10kb</sub>, λ<sub>bg</sub>).** 
 
-> λ<sub>bg</sub> represents the background λ estimated using the whole genome (i.e. the largest window size)
+> λ<sub>bg</sub> represents the background λ estimated using the whole mappable genome (i.e. the largest window size)
 
 In this way, lambda captures the influence of local biases, and is **robust against occasional low tag counts at small local regions**. Possible sources for these biases include local chromatin structure, DNA amplification and sequencing bias, and genome copy number variation.
 
