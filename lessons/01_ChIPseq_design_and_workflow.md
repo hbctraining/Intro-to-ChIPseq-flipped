@@ -153,8 +153,6 @@ A major factor to consider when choosing your sequencing depth is the type of bi
 * **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment.
 
 The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Knowing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
-
-<div align="center">
    
 |Broad Peaks	| Narrow Peaks |	Exceptions/Mixed Peaks |
 |---------------|---------------|---------------|
@@ -169,8 +167,6 @@ The table below is adapted from the [ENCODE data standards page](https://www.enc
 |H4K20me1|||
 |H3K9me3|||
 
-</div>
-   
 ### Sequencing considerations
 
 Below we list some general guidelines and things to think about when sending your samples to the sequencing facility:
