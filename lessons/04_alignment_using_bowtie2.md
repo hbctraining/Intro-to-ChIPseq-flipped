@@ -236,7 +236,7 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   #SBATCH -o %j.out			          # file to which standard output will be written
   #SBATCH -e %j.err 		          # file to which standard error will be written
   
-  module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.9
+  module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.13
    
   bowtie2 -p 2 -q --local \
   -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
