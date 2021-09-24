@@ -16,7 +16,7 @@ Approximate time: 45 minutes
 
 ## Qualitative assessment of peak enrichment
 
-The quality of ChIP-seq experiments can be especially difficult to evaluate when little is known about the factor and its binding motif, as is the case with PRDM16. The methods for peak call quality assessment can be seperated into those that are quantitative (which we will not be covering in this workshop) and those that are qualitative. Qualitative methods typically include:
+The quality of ChIP-seq experiments can be especially difficult to evaluate when little is known about the factor and its binding motif, as is the case with PRDM16. The methods for peak call quality assessment can be separated into those that are quantitative (which we will not be covering in this workshop) and those that are qualitative. Qualitative methods typically include:
 * a **traditional site-inspection-based evaluation** using a genome viewer, or 
 * the **exploration of  aggregated read density in selected regions** using profile plots and heatmaps. 
  
