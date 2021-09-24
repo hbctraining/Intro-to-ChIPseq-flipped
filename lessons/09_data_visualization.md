@@ -20,7 +20,7 @@ The quality of ChIP-seq experiments can be especially difficult to evaluate when
 * a **traditional site-inspection-based evaluation** using a genome viewer, or 
 * the **exploration of  aggregated read density in selected regions** using profile plots and heatmaps. 
  
-When applied and interpreted together, these approaches provide a valuable overall assessment of experimental success and data quality. In this lesson, we will cover the latter of the qualitative approaches mentioned above.
+When applied and interpreted together, these approaches provide a valuable overall assessment of experimental success and data quality, in addition to some biological insight. In this lesson, we will cover the latter of the qualitative approaches mentioned above.
 
 <p align="center">
 <img src="../img/chipseq_deeptoolsworkflow_sept2021.png" width="700">
