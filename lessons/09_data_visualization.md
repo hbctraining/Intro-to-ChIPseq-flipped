@@ -309,7 +309,7 @@ There appears to be no H3K27 trimethylation associated with PRDM16 binding sites
 
 Given what we know about the other two histone modifications, this plot suggests that **PRDM16 is associated with active enhancers** in the embryonic cortex. We observe moderate levels of H3K4 monomethylation and slightly higher levels H3K27 acetylation in PRDM16-binding regions. The **moderate levels suggest that PRDM16 might also be associated with regulatory sequences that repress transcription** of genes. This hypothesis would require further investigation with relevant data.
 
-In summary, this qualitative assessment allowed us to explore our data and slowly help us piece together the story of PRDM16 and its function in cortical stem cells. 
+In summary, this qualitative assessment allowed us to explore our the quality of the signal in our data and help us begin to piece together the story of PRDM16 and its function in cortical stem cells. 
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
