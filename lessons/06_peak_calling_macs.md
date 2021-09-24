@@ -245,7 +245,7 @@ In the next lesson, we will delve deeper into the output files and gain an under
 We have used this lesson to describe to you the inner workings of the MACS2 peak caller. This is a very popular tool in the field, however there are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
 
 * [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
-* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implentation of an older tool called SICER)
+* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
 * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
 
 
