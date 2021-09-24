@@ -46,7 +46,7 @@ _Image source: [deepTools documentation](https://deeptools.readthedocs.io/en/dev
 
 ### Setting up 
 
-To start, you will need to be on a **compute node** and ensure you have an interactive session with **6 cores and 10G of memory**. The `computeMatrix` command can take some time, so we want to take advantage of the multi-threading. 
+To start, you will need to be on a **compute node** and ensure you have an interactive session with **6 cores and 8G of memory**. The `computeMatrix` command can take some time, so we want to take advantage of the multi-threading. 
 
 > _NOTE:_ If you have the O2 session open from the last lesson on creating bigWig files, you already have yourself setup with the appropriate amount of resources.
 
