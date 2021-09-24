@@ -299,18 +299,17 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --samplesLabel "WT_replicate2" "H3K4me" "H3K27me3" "H3K27ac" \
 --refPointLabel "PRDM16 binding sites"
 ```
-
-In this profile plot, we observe moderate levels of H3K4me and H3K27ac in PRDM16-binding regions. Given what we know about these histone marks, this suggests that  **PRDM16 is associated with active enhancers in the embryonic cortex**. The developmental connection of H3K27me3 would be nice to have with this dataset, however we do not see much enrichment of the mark in PRDM16 binding sites. This makes sense as the H3K27me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
-
-the last plot is supposed to show the H3K27ac and H3K4me occurring at the PRDM16 binding sites - these look like very small peaks - how to we differentiate signal versus no signal (the H3K4me peak is similar size to the TSS peak based on the plots). Are these marks expected to give less signal so that anything varying from a flat line is good?
+**What do we observe from this plot?**
 
 <p align="center">
 <img src="../img/09_plot2_wt_encode_update.png" width="500">
 </p>
 
+There appears to be no H3K27 trimethylation associated with PRDM16 binding sites. This makes sense as the H3K27me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
 
+Given what we know about the other two histone modifications, this plot suggests that **PRDM16 is associated with active enhancers** in the embryonic cortex. We observe moderate levels of H3K4 monomethylation and slightly higher levels H3K27 acetylation in PRDM16-binding regions. The **moderate levels suggest that PRDM16 might also be associated with regulatory sequences that repress transcription** of genes. This hypothesis would require further investigation with relevant data.
 
-
+In summary, this qualitative assessment allowed us to explore our data and slowly help us piece together the story of PRDM16 and its function in cortical stem cells. 
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
