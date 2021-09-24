@@ -78,7 +78,8 @@ The first step in generating the profile plot is to create the matrix. The `comp
 Below we describe the **parameters** we will be using:
 
 * `reference-point`: The reference point for plotting. Here, we use the center of the consensus peaks (default is TSS).
-* `-b`, `a`: Specify a window around the reference point (before and after). For narrow peaks, we can use a smaller window as we expect a more punctate binding profile. Broader peaks might require you to explore and play around with the window size. We have used +/- 4000 bp. 
+* `-b`, `a`: Specify a window around the reference point (before and after). We have used +/- 4000 bp. 
+   > **How do I choose the window size?** For narrow peaks, we can use a smaller window as we expect a more punctate binding profile. Broader peaks require larger windows to capture the whole profile shape. For either profile, you may need to play around with the window size and see what works best with your data. A good starting point is +/- 2kb.
 * `-R`: The region file will be the BED file we generated for WT replicate overlap.
 * `-S`: The list of bigWig files (WT replicates), that we have generated for you.
 * `--skipZeros`: Do not include regions with only scores of zero
@@ -251,7 +252,7 @@ If you are investigating a transcription factor known to bind at promoter region
 
 ### Histone modifications and enhancers
 
-Okay, so we have ruled out promoter region binding for PRDM16. Now, what? 
+Okay, so we have ruled out promoter regions as the main source of binding for PRDM16. Now, what? 
 
 While some some transcription factors bind to promoter regions, other transcription factors bind to regulatory sequences, such as **enhancer sequences**, and can either stimulate or repress transcription of the related gene. These regulatory sequences **can be thousands of base pairs upstream or downstream from the gene being transcribed**. 
 
@@ -305,9 +306,14 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 <img src="../img/09_plot2_wt_encode_update.png" width="500">
 </p>
 
-There appears to be no H3K27 trimethylation associated with PRDM16 binding sites. This makes sense as the H3K27me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
+* There appears to be **no H3K27 trimethylation** associated with PRDM16 binding regions. This makes sense as the H3K27me3 modification is mostly found in	promoters in gene-rich regions, and we already ruled out promoter regions with our TSS plot. 
+* We observe **moderate levels of H3K4 monomethylation and slightly higher levels H3K27 acetylation** in PRDM16-binding regions.
 
-Given what we know about the other two histone modifications, this plot suggests that **PRDM16 is associated with active enhancers** in the embryonic cortex. We observe moderate levels of H3K4 monomethylation and slightly higher levels H3K27 acetylation in PRDM16-binding regions. The **moderate levels suggest that PRDM16 might also be associated with regulatory sequences that repress transcription** of genes. This hypothesis would require further investigation with relevant data.
+**What can we conclude?**
+
+It is difficult to conclude anything with certainty from these figures alone. The qualitative aspect of evaluating these plots is somewhat subjective, and so it is more for **hypothesis-generating**. For example, the H3K4me plot is not much higher in signal than what is observed in the TSS. One might not consider this as signal, but together with the H3K27ac profile we believe this is suggestive of  **PRDM16 association with active enhancers**.
+
+Another hypothesis is that PRDM16 does not have a single mechanism of binding. It **may have a dual function of activating and repressing transcription** of genes. We could explore this further by integrating the RNA-seq data from the original study.
 
 In summary, this qualitative assessment allowed us to explore our the quality of the signal in our data and help us begin to piece together the story of PRDM16 and its function in cortical stem cells. 
 
