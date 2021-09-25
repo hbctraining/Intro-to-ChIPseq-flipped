@@ -313,7 +313,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 
 It is difficult to conclude anything with certainty from these figures alone. The qualitative aspect of evaluating these plots is somewhat subjective, and so it is more for **hypothesis-generating**. For example, the H3K4me plot is not much higher in signal than what is observed in the TSS. One might not consider this as signal, but together with the H3K27ac profile we believe this is suggestive of  **PRDM16 association with active enhancers**.
 
-Another hypothesis is that PRDM16 does not have a single mechanism of binding. It **may have a dual function of activating and repressing transcription** of genes. We could explore this further by integrating the RNA-seq data from the original study.
+Another hypothesis is that PRDM16 does not have a single mechanism of binding. It **may have a dual function of activating and repressing transcription** of genes. If we separated the binding sites into those associated with active transcription versus repression, we might observe ore pronounced signal in the profile plots (i.e the signal is currently diluted). We could explore this further by integrating the RNA-seq data from the original study.
 
 In summary, this qualitative assessment allowed us to explore our the quality of the signal in our data and help us begin to piece together the story of PRDM16 and its function in cortical stem cells. 
 
