@@ -1,7 +1,7 @@
 ---
-title: "Automating the RNA-seq workflow"
-author: "Meeta Mistry, Radhika Khetani, Mary Piper, Jihe Liu"
-date: "Monday, November 23, 2020"
+title: "Automating the ChIP-seq workflow"
+author: "Meeta Mistry, Radhika Khetani, Mary Piper, Jihe Liu, Mary Piper, Will Gammerdinger"
+date: "Monday, September 27, 2021"
 ---
 
 ## Learning Objectives:
@@ -9,7 +9,7 @@ date: "Monday, November 23, 2020"
 * Automate a workflow by grouping a series of sequential commands into a script
 * Modify and submit the workflow script to the cluster
 
-## Automating the analysis path from Sequence reads to Count matrix
+## Automating the ChIP-seq analysis path from sequence reads to BAM files
 
 Once you have optimized all the tools and parameters using a single sample (likely using an interactive session), you can write a script to run the whole workflow on all the samples in parallel.
 
@@ -65,13 +65,11 @@ You can check your scratch3 quota using the scratch3_quota.sh command.
 
 Great, now we all have created a work directory for ourselves in the `/n/scratch3/` storage space! 
 
-Let's go ahead and create a folder within our `/n/scratch3/` storage space for the results of our analysis.
-
 ```bash
-mkdir /n/scratch3/users/r/$USER/rnaseq_hbc-workshop
+ls -l /n/scratch3/users/r/$USER/
 ```
 
-When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch3/users/r/$USER/rnaseq_hbc-workshop` folder.
+When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch3/users/r/$USER/` folder.
 
 ### Start an interactive session
 
@@ -80,7 +78,7 @@ We will be working with an interactive session with 6 cores.
 > If you have a session with fewer cores then `exit` out of your current interactive session and start a new one with `-c 6`.
 
 ```bash
-$ srun --pty -p interactive -t 0-3:00 -c 6 --mem 8G --reservation=HBC3 /bin/bash
+$ srun --pty -p interactive -t 0-2:00 -c 2 --mem 4G --reservation=HBC3 /bin/bash
 ```
 
 ### More Flexibility with variables
@@ -119,12 +117,12 @@ We will start writing the script on our laptops using a simple text editor like 
 
 # change directories to /n/scratch3/ so that all the analysis is stored there.
 
-cd /n/scratch3/users/r/$USER/rnaseq_hbc-workshop/
+cd /n/scratch3/users/r/$USER/
 ```
 
-**We want users to input the path to the fastq file as input to the shell script.** To make this happen, we will use the `$1` positional parameter variable within the script. 
+**We want users to input the path to the fastq file as input to the shell script**, i.e. `sh chipseq_analysis_on_input_file.sh <name-of-fastq-file>`. To make this work, we have to replace all the places in the script where we want to refer to the fastq file, with the variable `$1`. 
 
-Since `$1` will store the path to the fastq file, including the file name, we will be referring to it every time we need to specify the fastq file in any commands. We could just use the variable `$1`, but that is not an intuitive variable name for a fastq file, is it? So we want to create a new variable called `fq` and copy the contents of `$1` into it. 
+We could just use the variable `$1`, but that is not an intuitive variable name for a fastq file, is it? So we want to create a new variable called `fq` and copy the contents of `$1` into it. 
 
 
 ```bash
@@ -143,88 +141,76 @@ In the rest of the script, we can now call the fastq file using `$fq` instead of
 >
 > using the `fq` variable => `fastqc $fq`
 
-Next, we want to extract the name of the sample from `$fq` which contains the full name of the file and possibly the path to the file as well. The reason to extract the sample name is so that all the output files from this workflow are appropriately named with sample identifier.
 
-We can obtain the sample name by using the `basename` command on the `$fq` (or `$1`)  variable, and save it in a new variable called `samplename`.
+To ensure that all the output files from the workflow are properly named with sample IDs, we should extract the "base name" (or sample ID) from the name of the input file. There is a command called `basename` that will do that! 
+
+We can save the output of the `basename` command and save it as a new variable called `$base` that we can use downstream.
 
 ```bash
 # grab base of filename for naming outputs
-
-samplename=`basename $fq .subset.fq`
-echo "Sample name is $samplename"           
+base=`basename $fq .fastq.gz`          
 ```
 
-> **Remember `basename`?**
+> **What is `basename`?**
 >
-> 1. the `basename` command: this command takes a path or a name and trims away all the information before the last `/` and if you specify the string to clear away at the end, it will do that as well. In this case, if the variable `$fq` contains the path *"~/rnaseq/raw_data/Mov10_oe_1.subset.fq"*, `basename $fq .subset.fq` will output "Mov10_oe_1".
-> 2. to assign the value of the `basename` command to the `samplename` variable, we encapsulate the `basename...` command in backticks. This syntax is necessary for assigning the output of a command to a variable.
+> The `basename` command: this command takes a path or a name, and trims away all the information **before** the last `\`. If you specify the string to clear away **at the end**, it will do that as well. 
+> 
+> In this case, if the variable `$fq` contains the path *"~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz"*, `basename $fq .fastq.gz` will output "wt_sample2_chip".
+>
+> ***
+>
+> **What do the backticks used with `basename` (``) do?**
+>   
+> To assign the value of the `basename` command to the `base` variable, we encapsulate the `basename $fq .fastq.gz` command in backticks. This syntax is necessary for assigning the output of a given command to a given variable.
 
-Next we want to specify how many cores the script should use to run the analysis. This provides us with an easy way to modify the script to run with more or fewer cores without have to replace the number within all commands where cores are specified.
+Next, we'll setup our directory structure for outputs using the `-p` option. This will make sure that `mkdir` will create the directory only if it does not already exist, and it will not throw an error if it does exist.
 
-```bash
-# specify the number of cores to use
-
-cores=6
 ```
-Next we'll initialize 3 more variables named `genome`, `transcriptome` and `gtf`, these will contain the paths to where the reference files are stored. This makes it easier to modify the script for when you want to use a different genome, i.e. you'll just have to change the contents of these variable at the beginning of the script.
-
-```bash
-# directory with the genome and transcriptome index files + name of the gene annotation file
-
-genome=/n/groups/hbctraining/intro_rnaseq_hpc/reference_data_ensembl38/ensembl38_STAR_index
-transcriptome=/n/groups/hbctraining/rna-seq_2019_02/reference_data/salmon_index
-gtf=/n/groups/hbctraining/intro_rnaseq_hpc/reference_data_ensembl38/Homo_sapiens.GRCh38.92.1.gtf
-```
-
-We'll create output directories, but with the `-p` option. This will make sure that `mkdir` will create the directory only if it does not exist, and it won't throw an error if it does exist.
-
-```bash
 # make all of the output directories
 # The -p option means mkdir will create the whole path if it 
 # does not exist and refrain from complaining if it does exist
-
-mkdir -p results/fastqc/
-mkdir -p results/STAR/
-mkdir -p results/qualimap/
-mkdir -p results/salmon/
+mkdir -p chipseq/results/fastqc
+mkdir -p chipseq/results/bowtie2
 ```
 
-Now that we have already created our output directories, we can now specify variables with the path to those directories both for convenience but also to make it easier to see what is going on in a long command.
+Now that we have already created our output directories, we can create variables using those directories. 
 
-```bash
+```
+# directory with bowtie genome index
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
+
 # set up output filenames and locations
+fastqc_out=chipseq/results/fastqc
+bowtie_results=chipseq/results/bowtie2
 
-fastqc_out=results/fastqc/
-align_out=results/STAR/${samplename}_
-align_out_bam=results/STAR/${samplename}_Aligned.sortedByCoord.out.bam
-qualimap_out=results/qualimap/${samplename}.qualimap
-salmon_out=results/salmon/${samplename}.salmon
-salmon_mappings=results/salmon/${samplename}_salmon.out
+## set up file names
+align_sam=chipseq/results/bowtie2/${base}.sam
+align_bam=results/bowtie2/${base}.bam
+align_sorted=results/bowtie2/${base}_sorted.bam
+align_final=results/bowtie2/${base}_final.bam
 ```
+
+Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
 
 ### Keeping track of tool versions
 
 All of our variables are now staged. Next, let's make sure all the modules are loaded. This is also a good way to keep track of the versions of tools that you are using in the script:
 
 ```bash
-# set up the software environment (use version numbers)
-
+# set up the software environment
 module load fastqc/0.11.3
-module load gcc/6.2.0  
-module load star/2.7.0a
-module load samtools/1.3.1
-module load java/jdk-1.8u112
-module load qualimap/2.2.1
-module load salmon/1.4.0
-unset DISPLAY
+module load gcc/6.2.0
+module load bowtie2/2.2.9
+module load samtools/1.9
+module load sambamba/0.7.1
 ```
 
 ### Preparing for future debugging
 
-In the script, it is a good idea to use `echo` for debugging. `echo` basically displays the string of characters specified within the quotations. When you have strategically place `echo` commands specifying what stage of the analysis is next, in case of failure you can determine the last `echo` statement displayed to troubleshoot the script.
+It is a good idea to use the `echo` command for debugging. `echo` prints the string of characters specified within the quotations onto the Terminal. When you strategically place `echo` commands indicating the step of the analysis, you can determine where the script failed using the last `echo` statement displayed when you are troubleshooting. For example, we could add the below `echo` command with `$base` before we perform the FastQC analysis to indicate the step and the sample ID.
 
-```bash
-echo "Processing file $fq"
+```
+echo "FastQC analysis of $base"
 ```
 
 > You can also use `set -x`:
@@ -234,67 +220,134 @@ echo "Processing file $fq"
 
 ### Running the tools
 
-```bash
-echo "Starting QC for $samplename"
+Let's write up the commands to run the tools we have already tested, with a couple of modifications:
+* use variable names instead of actual file names
+* multithread when possible (`bowtie2`, `sambamba`)
 
-# Run FastQC and move output to the appropriate folder
+```
+# Run FastQC
 fastqc -o $fastqc_out $fq
 
+# Run bowtie2
+bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
 
-# Run STAR
-STAR --runThreadN $cores --genomeDir $genome --readFilesIn $fq --outFileNamePrefix $align_out --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard
+# Create BAM from SAM
+samtools view -h -S -b -o $align_bam $align_sam
 
-# Run Qualimap
-qualimap rnaseq \
--outdir $qualimap_out \
--a proportional \
--bam $align_out_bam \
--p strand-specific-reverse \
--gtf $gtf \
---java-mem-size=8G
+# Remove SAM file
+rm $align_sam
 
-# Run salmon
+# Sort BAM file by genomic coordinates
+samtools sort $align_bam -o $align_sorted 
 
-echo "Starting Salmon run for $samplename"
+# Filter out multi-mappers and duplicates
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
 
-salmon quant -i $transcriptome \
--p $cores \
--l A \
--r $fq \
--o $salmon_out \
---seqBias \
---useVBOpt
+# Create indices for all the bam files for visualization and QC
+samtools index $align_final
 ```
 
 ### Last addition to the script
 
-It is best practice to have the script **usage** specified at the top any script. This should have information such that when your future self, or a co-worker, uses the script they know what it will do and what input(s) are needed. For our script, we should have the following lines of comments right at the top after `#!/bin/bash/`:
+It is best practice to have the script **usage** specified at the top of any script. This usage message should have information such that when your future self (or a co-worker) uses the script, they know what it will do and what input(s) are needed. For our script, we should have the following lines of comments right at the top after `#!/bin/bash/`:
 
-```bash
-# This script takes a fastq file of RNA-seq data, runs FastQC, STAR, Qualimap and Salmon.
-# USAGE: sh rnaseq_analysis_on_input_file.sh <name of fastq file>
+```
+# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Fastq files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
+# USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 ```
 
-It is okay to specify this after everything else is set up, since you will have most clarity about the script only once it is fully done.
+It is okay to specify this after all the commands are in the script, when you will have most clarity about the script's purpose.
+
+Your script should now look like this:
+
+```
+#!/bin/bash/
+
+# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Fastq files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
+# USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
+
+# change directories to /n/scratch3/ so that all the analysis is stored there.
+cd /n/scratch3/users/r/$USER/
+
+# initialize a variable with an intuitive name to store the name of the input fastq file
+fq=$1
+
+# grab base of filename for naming outputs
+base=`basename $fq .fastq.gz`  
+
+# make all of the output directories
+# The -p option means mkdir will create the whole path if it 
+# does not exist and refrain from complaining if it does exist
+mkdir -p chipseq/results/fastqc
+mkdir -p chipseq/results/bowtie2
+
+# directory with bowtie genome index
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
+
+# set up output filenames and locations
+fastqc_out=chipseq/results/fastqc
+bowtie_results=chipseq/results/bowtie2
+
+## set up file names
+align_sam=chipseq/results/bowtie2/${base}.sam
+align_bam=results/bowtie2/${base}.bam
+align_sorted=results/bowtie2/${base}_sorted.bam
+align_final=results/bowtie2/${base}_final.bam
+
+# set up the software environment
+module load fastqc/0.11.3
+module load gcc/6.2.0  
+module load bowtie2/2.2.9
+module load samtools/1.9
+module load sambamba/0.7.1
+
+echo "FastQC analysis of $base"
+
+# Run FastQC and place the output to the appropriate folder
+fastqc -o $fastqc_out $fq
+
+echo "Bowtie2 alignment of $base"
+
+# Run bowtie2
+bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
+
+echo "Convert SAM to BAM for $base"
+
+# Create BAM from SAM
+samtools view -h -S -b -o $align_bam $align_sam
+
+# Remove SAM file
+rm $align_sam
+
+echo "Filtering $base BAM file"
+
+# Sort BAM file by genomic coordinates
+samtools sort $align_bam -o $align_sorted 
+
+# Filter out duplicates
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
+
+# Create indices for all the bam files for visualization and QC
+samtools index $align_final
+
+echo "The analysis for $base is done!"
+```
 
 ### Saving and running script
 
-To transfer the contents of the script from your laptop to O2, you can copy and paste the contents into a new file called `rnaseq_analysis_on_input_file.sh` using `vim`. 
+To transfer the contents of the script from your laptop to O2, you can copy and paste the contents into a new file called `chipseq_analysis_on_input_file.sh` using `vim`. 
 
 ```bash
-$ cd ~/rnaseq/scripts/
+$ cd ~/chipseq_workshop/scripts/
 
-$ vim rnaseq_analysis_on_input_file.sh 
+$ vim chipseq_analysis_on_input_file.sh 
 ```
-> *Alternatively, you can save the script on your computer and transfer it to `~/rnaseq/scripts/` using FileZilla.*
+> *Alternatively, you can save the script on your computer and transfer it to `~/chipseq_workshop/scripts/` using FileZilla.*
 
-
-We should all have an interactive session with 6 cores, so we can run the script as follows from the `~/rnaseq/` directory:
+We should all have an interactive session with 2 cores, so we can run the script as follows from the `~/chipseq_workshop/scripts/` directory:
 
 ```bash
-$ cd ~/rnaseq/     
-
-$ sh scripts/rnaseq_analysis_on_input_file.sh ~/rnaseq/raw_data/Mov10_oe_1.subset.fq
+$ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
 ```
 
 ## Running the script to submit jobs in parallel to the SLURM scheduler
@@ -306,24 +359,26 @@ To run the above script **"in serial"** for all of the files on a worker node vi
 1. **SLURM directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
 2. a **`for`** loop that iterates through and runs the above script for all the fastq files.
 
-Below is what this second script (`rnaseq_analysis_on_allfiles.slurm`) would look like **\[DO NOT RUN THIS\]**:
+Below is what this second script (`chipseq_analysis_on_allfiles.slurm`) would look like **\[DO NOT RUN THIS\]**:
 
 ```bash
+# **\[DO NOT RUN THIS\]**
+
 #!/bin/bash
 
-#SBATCH -p medium 		# partition name
-#SBATCH -t 0-6:00 		# hours:minutes runlimit after which job will be killed
-#SBATCH -c 6 		# number of cores requested -- this needs to be greater than or equal to the number of cores you plan to use to run your job
-#SBATCH --mem 8G
-#SBATCH --job-name STAR_mov10 		# Job name
+#SBATCH -p short 		# partition name
+#SBATCH -t 0-2:00 		# hours:minutes runlimit after which job will be killed
+#SBATCH -n 6 		# number of cores requested -- this needs to be greater than or equal to the number of cores you plan to use to run your job
+#SBATCH --job-name chipseq 		# Job name
 #SBATCH -o %j.out			# File to which standard out will be written
-#SBATCH -e %j.err 		# File to which standard err will be written
+#SBATCH -e %j.err 		# File to which standard error will be written
 
-# this `for` loop, will take the fastq files as input and run the script for all of them one after the other. 
-for fq in ~/rnaseq/raw_data/*.fq
+# this `for` loop, will take chip-seq fastq files as input and output filtered BAM files ready for peak calling.
+
+for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
 do
   echo "running analysis on $fq"
-  sh ~/rnaseq/scripts/rnaseq_analysis_on_input_file.sh $fq
+  sh chipseq_analysis_on_input_file.sh $fq
 done
 ```
 
@@ -334,38 +389,39 @@ done
 ***
 **Exercise**
 
-How would you run `rnaseq_analysis_on_allfiles.slurm`, i.e. the above script?
+How would you run `chipseq_analysis_on_allfiles.slurm`, i.e. the above script?
 
 ***
 
-## Parallelizing the analysis for efficiency
+## Submitting jobs **in parallel** to the SLURM scheduler
 
-Parallelization will save you a lot of time with real (large) datasets. To parallelize our analysis, we will still need to write a second script that will call the script we just wrote that takes a fastq file as input (rnaseq_analysis_on_input_file.sh). We will still use a `for` loop, but we will be creating a regular shell script and we will be specifying the SLURM directives differently. 
+Parallelization will save you a lot of time with real (large) datasets. To parallelize our analysis, we will still need to write a second script that will call the original script we just wrote. We will still use a `for` loop, but we will be creating a regular shell script and we will be specifying the SLURM directives a little differently as input to the `for` loop. 
 
-Use `vim` to start a new shell script called `rnaseq_analysis_on_allfiles-for_slurm.sh`: 
+Use `vim` to start a new shell script called `chipseq_run_allfiles.sh`: 
 
 ```bash
-$ vim rnaseq_analysis_on_allfiles_for-slurm.sh
+$ vim chipseq_run_allfiles.sh
 ```
 
-This script loops through the same files as in the previous (demo) script, but the command being submitted within the `for` loop is `sbatch` with SLURM directives specified on the same line:
+Due to the space limit in our home directory, we will loop through only two `KO` samples. The command being submitted within the `for` loop is `sbatch` with SLURM directives specified on the same line (similar to what we have been doing for `srun`):
 
 ```bash
 #! /bin/bash
 
-for fq in ~/rnaseq/raw_data/*.fq
+for fq in ~/chipseq_workshop/raw_data/ko_sample1_chip.fastq.gz ~/chipseq_workshop/raw_data/ko_*_chip.fastq.gz
 do
 
-sbatch -p short -t 0-2:00 -c 6 --job-name rnaseq-workflow --mem 8G --wrap="sh ~/rnaseq/scripts/rnaseq_analysis_on_input_file.sh $fq"
-sleep 1	# wait 1 second between each job submission
+sbatch -p short -t 0-2:00 -n 6 --job-name chipseq-analysis -o %j.out -e %j.err \
+--wrap="sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh $fq"
+
+sleep 1	    # wait 1 second between each job submission
   
 done
 ```
-> Please note that after the `sbatch` directives the command `sh ~/rnaseq/scripts/rnaseq_analysis_on_input_file.sh $fq` is in quotes.
+> Please note that after the `sbatch` directives the command `sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh $fq` is in quotes.
 
 ```bash
-$ cd ~/rnaseq/scripts/
-$ sh rnaseq_analysis_on_allfiles_for-slurm.sh
+$ sh chipseq_run_allfiles.sh
 ```
 
 What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted.
@@ -375,7 +431,7 @@ You can use `O2sacct` to check progress. And we can check if there are any addit
 ```bash
 $ O2sacct
 
-$ ls -l /n/scratch3/users/r/$USER/rnaseq_hbc-workshop/
+$ ls -l /n/scratch3/users/r/$USER/chipseq/
 ```
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.
