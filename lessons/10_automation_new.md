@@ -89,10 +89,10 @@ For example, we can refer to the components of the following command as numbered
 
 ```bash
 # * DO NOT RUN *
-sh  run_rnaseq.sh  input.fq  input.gtf  12
+sh  run_analysis.sh  input.fq  input.gtf  12
 ```
 
-`$0` => run_rnaseq.sh
+`$0` => run_analysis.sh
 
 `$1` => input.fq
 
