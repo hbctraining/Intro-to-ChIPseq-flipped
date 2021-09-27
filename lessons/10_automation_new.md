@@ -347,9 +347,27 @@ $ vim chipseq_analysis_on_input_file.sh
 We should all have an interactive session with 2 cores, so we can run the script as follows from the `~/chipseq_workshop/scripts/` directory:
 
 ```bash
-$ ls -l /n/scratch3/users/r/$USER/
-
 $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
+```
+
+This script will take a while to run, given the alignment, filtering and sortin steps all take a long time to run. So we can use `CTRL` + `C` and kill the job. Since the first part of the script should have run, we can go check if the folders were appropriately created.
+
+```bash
+$ cd /n/scratch3/users/r/$USER/
+
+$ tree
+```
+
+You should see something like this:
+
+```
+.
+└── chipseq
+    └── results
+        ├── bowtie2
+        └── fastqc
+
+4 directories, 0 files
 ```
 
 ## Running the script to submit jobs in parallel to the SLURM scheduler
@@ -399,9 +417,11 @@ How would you run `chipseq_analysis_on_allfiles.slurm`, i.e. the above script?
 
 Parallelization will save you a lot of time with real (large) datasets. To parallelize our analysis, we will still need to write a second script that will call the original script we just wrote. We will still use a `for` loop, but we will be creating a regular shell script and we will be specifying the SLURM directives a little differently as input to the `for` loop. 
 
-Use `vim` to start a new shell script called `chipseq_run_allfiles.sh`: 
+Use `vim` to start a new shell script called `chipseq_run_allfiles.sh` in the `scripts` directory: 
 
 ```bash
+$ cd ~/chipseq_workshop/scripts/
+
 $ vim chipseq_run_allfiles.sh
 ```
 
