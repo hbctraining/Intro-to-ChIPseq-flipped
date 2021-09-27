@@ -78,7 +78,7 @@ We will be working with an interactive session with 6 cores.
 > If you have a session with fewer cores then `exit` out of your current interactive session and start a new one with `-c 6`.
 
 ```bash
-$ srun --pty -p interactive -t 0-2:00 -c 2 --mem 4G --reservation=HBC3 /bin/bash
+$ srun --pty -p interactive -t 0-2:00 -c 6 --mem 4G --reservation=HBC3 /bin/bash
 ```
 
 ### More Flexibility with variables
