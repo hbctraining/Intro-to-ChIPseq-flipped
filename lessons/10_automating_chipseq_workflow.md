@@ -1,12 +1,10 @@
 ---
 title: "Automating QC and Alignment"
-author: "Meeta Mistry, Radhika Khetani, Jihe Liu"
+author: "Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger"
 date: "Sept 15th, 2021"
 ---
 
-Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdinger
-
-Approximate time: 80 minutes
+Approximate time: 70 minutes
 
 ## Learning Objectives
 
