@@ -117,24 +117,7 @@ mkdir -p ~/chipseq_workshop/results/fastqc
 mkdir -p ~/chipseq_workshop/results/bowtie2
 ```
 
-Now that we have already created our output directories, we can create variables using those directories. 
 
-```
-# directory with bowtie genome index
-genome=/n/groups/shared_databases/bowtie2_indexes/mm10
-
-# set up output filenames and locations
-fastqc_out=~/chipseq_workshop/results/fastqc
-bowtie_results=~/chipseq_workshop/results/bowtie2
-
-## set up file names
-align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
-align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
-align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
-align_final=~/chipseq/results/bowtie2/${base}_final.bam
-```
-
-Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `~/chipseq_workshop/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
 
 > **What do the `{}` used with `$base` in the file name variables do?**
 >   
@@ -239,7 +222,7 @@ bowtie_results=~/chipseq_workshop/results/bowtie2
 align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
 align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
 align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
-align_final=~/chipseq/results/bowtie2/${base}_final.bam
+align_final=~/chipseq_workshop/results/bowtie2/${base}_final.bam
 
 # set up the software environment
 module load fastqc/0.11.3
