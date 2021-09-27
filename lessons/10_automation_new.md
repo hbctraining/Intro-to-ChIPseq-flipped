@@ -446,9 +446,9 @@ done
 $ sh chipseq_run_allfiles.sh
 ```
 
-What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted.
+What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted. 
 
-You can use `O2sacct` to check progress. And we can check if there are any additional files in our analysis folder.
+You can use `O2sacct` to check progress. You can also check the `.err` and `.out` files for each submitted job. Lastly, you can check if there are any additional files in our analysis folder (it took a while for the analysis to finish).
 
 ```bash
 $ O2sacct
