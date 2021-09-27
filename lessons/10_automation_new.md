@@ -453,7 +453,7 @@ You can use `O2sacct` to check progress. And we can check if there are any addit
 ```bash
 $ O2sacct
 
-$ ls -l /n/scratch3/users/r/$USER/chipseq/
+$ tree /n/scratch3/users/r/$USER/chipseq/
 ```
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.
