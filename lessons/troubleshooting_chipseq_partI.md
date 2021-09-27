@@ -7,9 +7,16 @@ date: "September 15th, 2021"
 Approximate time: 45 minutes
 
 ## Learning Objectives
+* Understand the quality checks required at each step of the workflow
+* Learn how to troubleshoot issues in the workflow
 
 
+## From Sequence reads to Peak calls
+In this workshop we covered the steps in the first half of the ChIP-seq workflow where we go from raw sequence reads through to peak calls. We have discussed each of the steps in detail, outlining the tools involved and the file formats encountered. In this lesson, we revisit the quality checks associated with each step and summarize the main points to take away.
 
+<p align="center">
+<img src="../img/chipseq_deeptoolsworkflow_sept2021.png" width="600">
+</p>
 
 
 
