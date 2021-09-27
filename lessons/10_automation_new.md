@@ -347,6 +347,8 @@ $ vim chipseq_analysis_on_input_file.sh
 We should all have an interactive session with 2 cores, so we can run the script as follows from the `~/chipseq_workshop/scripts/` directory:
 
 ```bash
+$ ls -l /n/scratch3/users/r/$USER/
+
 $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
 ```
 
