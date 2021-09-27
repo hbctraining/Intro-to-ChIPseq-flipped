@@ -79,7 +79,7 @@
 | 10:00 - 10:45 | [Troubleshooting your ChIP-seq analysis]() | |
 | 10:45- 10:50 | Break|  |
 | 10:50 - 11:50 | [Automating the ChIP-seq workflow](../lessons/10_automating_chipseq_workflow.md) | |
-| 11:50 - 12:00 | Wrap-up |  |
+| 11:50 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) |  |
 
 
 ## Answer keys
@@ -89,17 +89,13 @@
   * [QC and Alignment questions](../homework/Day1_answer_key.md)
 
 * Day 2 exercises 
-  * 
+  * [Handling peak calls](../homework/Day2_answer_key.md)
 
 * Day 3 In-class 
   * [Automation Script]()
 
 ***
 
-## Resources
-
-
-***
 
 ## Building on this workshop
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
