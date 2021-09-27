@@ -136,6 +136,12 @@ align_final=~/chipseq/results/bowtie2/${base}_final.bam
 
 Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `~/chipseq_workshop/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
 
+> **What do the `{}` used with `$base` in the file name variables do?**
+>   
+> To make sure that the output files are properly names with the sampleID contained in the `$base` variable, we use the variable in the new file name e.g. `~/chipseq/results/bowtie2/${base}_final.bam`. But, why does `$base` need to be inside the `{}`? 
+>
+> The curly brackets ensure that shell recognizes that only `base` is the variable name, and does not accidentally use the full string after the `$` as the variable name, e.g. `base_final.bam`. 
+
 ### Keeping track of tool versions
 
 All of our variables are now staged. Next, let's make sure all the modules are loaded. This is also a good way to keep track of the versions of tools that you are using in the script:
