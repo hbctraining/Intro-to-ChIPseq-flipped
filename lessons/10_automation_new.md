@@ -448,7 +448,7 @@ $ sh chipseq_run_allfiles.sh
 
 What you should see on the output of your screen would be the jobIDs that are returned from the scheduler for each of the jobs that your script submitted. 
 
-You can use `O2sacct` to check progress. You can also check the `.err` and `.out` files for each submitted job. Lastly, you can check if there are any additional files in our analysis folder (it took a while for the analysis to finish).
+You can use `O2sacct` to check progress. 
 
 ```bash
 $ O2sacct
@@ -457,6 +457,13 @@ $ tree /n/scratch3/users/r/$USER/chipseq/
 ```
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.
+
+## Post analysis clean up
+
+Once your run has completed you can check the `.err` and `.out` files for each submitted job. 
+
+Finally, you can move over any results files that you will need for peak calling and visualization (the sorted `bam` and corresponding `bai` files) to your personal home directory or to your lab group's directory. *Remember that `/n/scratch3/` is not backed up and any "untouched" files will be deleted after 30 days.*
+
 
 > **NOTE:** All job schedulers are similar, but not the same. Once you understand how one works, you can transition to another one without too much trouble. They all have their pros and cons which are considered by the system administrators when picking one for a given HPC environment. Some examples of other job schedulers are LSF, SGE, PBS/Torque.
 
