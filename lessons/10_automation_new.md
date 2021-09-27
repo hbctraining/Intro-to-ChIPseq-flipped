@@ -344,7 +344,7 @@ $ vim chipseq_analysis_on_input_file.sh
 ```
 > *Alternatively, you can save the script on your computer and transfer it to `~/chipseq_workshop/scripts/` using FileZilla.*
 
-We should all have an interactive session with 2 cores, so we can run the script as follows from the `~/chipseq_workshop/scripts/` directory:
+We should all have an interactive session with 6 cores, so we can run the script as follows from the `~/chipseq_workshop/scripts/` directory:
 
 ```bash
 $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
