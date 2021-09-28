@@ -55,7 +55,7 @@ The quality checks at this stage in the workflow include:
 
 > **If my mapping rate is low, do I discard my sample?** Do not discard your sample, rather you will want to:
 > 1. Flag the sample as low quality. Keep an eye out for QC metrics later in the workflow for that same sample.
-> 2. Troubleshoot the sample. Take the unmapped reads and BLAST the sequences. It's possible you might identify a high level of contamination from another organism.
+> 2. Troubleshoot the sample. Take the unmapped reads and BLAST the sequences; if the reads are not mapping to the genome, where are they mapping? It's possible you might identify a high level of contamination from another organism.
  
 * Determining the **percent uniquely mapping reads**, ideally this would be > 60% of the total read depth of your sample. The higher the percentage the more usable data you have to work with.
    *  High duplication can be a result of over-amplification. 
@@ -72,8 +72,59 @@ _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC
 > **NOTE:** For paired-end reads you will also want to checking percent that are properly paired. By default, Bowtie 2 searches for both concordant and discordant alignments, though searching for discordant alignments can be disabled with the `--no-discordant option`.
 
 
-## Peak quality
+## Peak quality checks
+The quality checks at this stage in the workflow include:
 
+* Total number of peaks called
+* Peak concordance between replicates
+* Qualitative assessment of peak enrichment 
+
+### Total number of peaks 
+This number will vary depending on your protein of interest and the number of expected binding sites. It can range from thousands of regions to hundred thousands. **If you are only finding a handful of regions identified as significantly enriched, there is a high likelihood that your experiment failed.**
+
+<p align="center">
+<img src="../img/ChIPSeq_peaks.jpeg" width="400">
+</p>
+
+_Image source: [Hendrix, DA, "Applied Bioinformatics" - Online textbook from Oregon State Univeristy](https://open.oregonstate.education/appliedbioinformatics/chapter/chapter-9/)_
+
+
+**Possible reasons you are not seeing many peaks**:
+
+* **Sequence depth**. Depending on the binding profile, if you did not sequence deep enough it will be hard for the peak caller to distinguish signal from noise.
+   *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidlines.
+   *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
+*  **Poor antibody**. Running QC on your IP before sending samples for sequencing as [described in an earlier lesson](01_ChIPseq_design_and_workflow.md)
+   * Western blot to check that the protein is present.
+   * qPCR to confirm that the pull-down worked. Create primers for regions of the genome you expect your protein of interest to bind.   
+*  **Oversonication**. Sonicating for too long or too harshly can lead to denatured protein, or protein that is dissociated from DNA or whose antibody epitope has been destroyed. This step requires considerable optimization.
+* **Cross-linking needs to be optimized**. 
+   * Excessive cross-linking may mask the epitope that is recognizable by your antibody, leading to a reduction in protein that can be pulled down.
+   * For proteins that do not directly interact with DNA or are large, the typical protocol may not work. A dual cross-link protocol is a good solution for this scenario.
+
+### Replicate concordance
+Unlike RNA-seq, increasing replicates in your ChIP-seq will not increase the number of binding sites identified. Rather, it gives you **confidence that the sites you identified are true signal.**
+
+<p align="center">
+<img src="../img/replicates_encode.png" width="600">
+</p>
+
+_Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/)_
+
+
+* Check for overlapping regions between replicates. 
+   * Start with a simple 1bp overlap (default in bedtools), and increase stringency if necessary.
+   * There is inevitably always one sample with fewer peaks called
+   * Low reproducibility will mean discarding one replicate. If you only had two sa,ples to start, you might need to repeat the experiment.
+* Compare signal in overlapping regions, using read density.
+
+
+### Qualitative assessment of enriched regions
+At this point, if you have a reasonable number of peaks and you observe a good amount of concordance between replicates - the next step is evaluating the enriched regions. You can do this with a simple site-based inspection (i.e use a genome viewer to look for enrichment profiles fo specific target genes), or use profile plots for a genome-wide assessment.
+
+* Evaluate enrichment within specific genomic regions/features, and within known artifact regions
+* Compare and contrast the profiles with what you anticipate for the binding profile
+* Compare and contrast the profiles with publicly available datasets
 
 
 
