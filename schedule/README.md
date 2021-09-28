@@ -92,12 +92,14 @@
   * [Handling peak calls](../homework/Day2_answer_key.md)
 
 * Day 3 In-class 
-  * [Automation Script]()
+  * [Automation shell script](../homework/chipseq_analysis_on_input_file.sh)
+  * [Parallelization script](../homework/chipseq_run_allfiles.sh)
 
 ***
 
 
 ## Building on this workshop
+* [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
 
 
