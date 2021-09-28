@@ -99,7 +99,7 @@ _Image source: [Hendrix, DA, "Applied Bioinformatics" - Online textbook from Ore
    * Excessive cross-linking may mask the epitope that is recognizable by your antibody, leading to a reduction in protein that can be pulled down.
    * For proteins that do not directly interact with DNA or are large, the typical protocol may not work. A dual cross-link protocol is a good solution for this scenario.
 * **Sequence depth**. Depending on the binding profile, if you did not sequence deep enough it will be hard for the peak caller to distinguish signal from noise.
-   *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidlines.
+   *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidelines.
    *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
 
 
