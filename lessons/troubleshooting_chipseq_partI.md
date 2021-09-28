@@ -49,29 +49,33 @@ Quality checks include looking for modules of the FastQC report which may report
 ## Alignment quality
 
 The quality checks at this stage in the workflow include:
-* Checking the total percent of reads aligning to the genome 
-* Determine the percent of duplicate reads 
-* Determining the percent uniquely mapping reads
-* Identify percent of reads mapping in blacklist regions
-* Checking percent of paired-end reads that are properly paired
 
-Wt-sample 1: low mapping rate:
+* Checking the **total percent of reads aligning to the genome**. A mapping rate of 70% or higher is great, and lower than 50% is concerning especially if total read depth is low.
+   * Low mapping rates can be a result of low quality reads, contaminating sequences, inappropriate alignment parameters chosen, or a poor quality reference genome. 
 
-```
-42461605 reads; of these:
-  42461605 (100.00%) were unpaired; of these:
-    21595346 (50.86%) aligned 0 times
-    9875310 (23.26%) aligned exactly 1 time
-    10990949 (25.88%) aligned >1 times
-49.14% overall alignment rate
-```
-What went wrong? FASTQC report looks fine
+> **If my mapping rate is low, do I discard my sample?** Do not discard your sample, rather you will want to:
+> 1. Flag the sample as low quality. Keep an eye out for QC metrics later in the workflow for that same sample.
+> 2. Troubleshoot the sample. Take the unmapped reads and BLAST the sequences. It's possible you might identify a high level of contamination from another organism.
+ 
+* Determining the **percent uniquely mapping reads**, ideally this would be > 60% of the total read depth of your sample. The higher the percentage the more usable data you have to work with.
+   *  High duplication can be a result of over-amplification. 
+   *  High number of multi-mapping reads can be due to mappability.
 
-* Try to take the unmapped reads and blast them? Look whether it's a high level of contamination from another organism
-* mappability problem? Does bowtie2 have a limit to the number of multimappers i.e > some number considered 'not aligned'
-* 
+<p align="center">
+<img src="../img/mapping_reads.png" width="600">
+</p>
 
-## Peak quality /ChIP quality
+_Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/)_
+
+* Identify **percent of reads mapping in blacklist regions**. This shouldn't be higher than 10% of your high quality mapped (and filtered) read count.
+
+> **NOTE:** For paired-end reads you will also want to checking percent that are properly paired. By default, Bowtie 2 searches for both concordant and discordant alignments, though searching for discordant alignments can be disabled with the `--no-discordant option`.
+
+
+## Peak quality
+
+
+
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
