@@ -8,12 +8,12 @@ date: "June 29th, 2017"
 
 As discussed previously, cells use a wide range of mechanisms to regulate gene expression. The increase or decrease in production of specific gene products is dependent on sophisticated programs/machinery, which can change in different cellular conditions. 
 
-Evaluating the amount of up- and down-regulation of gene, was something that we explored during the RNA-seq sessions. In this ChIP-seq session, we discussed the machinery regulating expression, specifically in the context of transcription factors and chromatin regulators. It is very common to run both of these types of experiments and integrate data from each to derive a better understanding at the molecular level. However, there are not alot of sophisticated methods developed to compae the two types of data in a robust manner.
+Evaluating the amount of up- and down-regulation of gene, was something that is explored with RNA-seq (and was performed in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033)). In this ChIP-seq session, we discussed the machinery regulating expression, specifically in the context of transcription factors and chromatin regulators. It is very common to run both of these types of experiments and integrate data from each to derive a better understanding at the molecular level. However, there are not alot of sophisticated methods developed to compae the two types of data in a robust manner.
 
 
 ### Direct comparisons
 
-Typically in the literature, one will find studies in which the RNA-seq and ChIP-seq were performed independently and then differntially expressed genes were compared with target genes from the ChIP-seq using a simple overlap measure. These overlapping statistics are complemented with a figure focussing on a panel of select genes. For these genes binding evidence is displayed (using bigWig tracks and/or density profile plots) and a plot of expression changes taken from the RNA-seq data next to it. 
+Typically in the literature, one will find studies in which the RNA-seq and ChIP-seq were performed independently and then differentially expressed genes were compared with target genes from the ChIP-seq using a simple overlap measure. These overlapping statistics are complemented with a figure focussing on a panel of select genes. For these genes binding evidence is displayed (using bigWig tracks and/or density profile plots) and a plot of expression changes taken from the RNA-seq data next to it. 
 
 
 <img src="../img/rna-chip.png">
@@ -42,7 +42,7 @@ It has three commands depending on what input data you have and what output you 
 
 **Image source: Nat Protoc. 2013 Dec; 8(12): 2502–2515.**
 
-> *NOTE: BETA is available as a module on Orchestra.*
+> *NOTE: BETA is available as a module on O2.*
 
 
 #### How does it work?
