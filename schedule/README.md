@@ -100,7 +100,7 @@
 
 ## Building on this workshop
 * [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
-* [Advanced bash commands (aliases, copying files, and symlinks), including how to copy data on to O2](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/more_bash_cluster.html)
+* [Advanced bash commands (aliases, copying files, and symlinks)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/more_bash_cluster.html)
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
 
 
