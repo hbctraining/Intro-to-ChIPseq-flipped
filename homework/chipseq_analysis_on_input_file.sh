@@ -3,30 +3,33 @@
 # This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Fastq files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
 # USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 
+# change directories to /n/scratch3/ so that all the analysis is stored there.
+cd /n/scratch3/users/r/$USER/
+
 # initialize a variable with an intuitive name to store the name of the input fastq file
 fq=$1
 
 # grab base of filename for naming outputs
 base=`basename $fq .fastq.gz`  
 
-# directory with bowtie genome index
-genome=/n/groups/shared_databases/bowtie2_indexes/mm10
-
 # make all of the output directories
 # The -p option means mkdir will create the whole path if it 
 # does not exist and refrain from complaining if it does exist
-mkdir -p ~/chipseq_workshop/results/fastqc
-mkdir -p ~/chipseq_workshop/results/bowtie2
+mkdir -p chipseq/results/fastqc
+mkdir -p chipseq/results/bowtie2
+
+# directory with bowtie genome index
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
 
 # set up output filenames and locations
-fastqc_out=~/chipseq_workshop/results/fastqc
-bowtie_results=~/chipseq_workshop/results/bowtie2
+fastqc_out=chipseq/results/fastqc
+bowtie_results=chipseq/results/bowtie2
 
 ## set up file names
-align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
-align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
-align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
-align_final=~/chipseq_workshop/results/bowtie2/${base}_final.bam
+align_sam=chipseq/results/bowtie2/${base}.sam
+align_bam=chipseq/results/bowtie2/${base}.bam
+align_sorted=chipseq/results/bowtie2/${base}_sorted.bam
+align_final=chipseq/results/bowtie2/${base}_final.bam
 
 # set up the software environment
 module load fastqc/0.11.3
