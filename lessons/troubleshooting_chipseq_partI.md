@@ -118,7 +118,7 @@ _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC
 * Check for overlapping regions between replicates. 
    * Start with a simple 1bp overlap (default in bedtools), and increase stringency if necessary.
    * There is inevitably always one sample with fewer peaks called
-   * Low reproducibility will mean discarding one replicate. If you only had two sa,ples to start, you might need to repeat the experiment.
+   * Low reproducibility will mean discarding one replicate. If you only had two samples to start, you might need to repeat the experiment.
 * Compare signal in overlapping regions, using read density.
 
 
