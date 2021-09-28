@@ -91,16 +91,17 @@ _Image source: [Hendrix, DA, "Applied Bioinformatics" - Online textbook from Ore
 
 **Possible reasons you are not seeing many peaks**:
 
-* **Sequence depth**. Depending on the binding profile, if you did not sequence deep enough it will be hard for the peak caller to distinguish signal from noise.
-   *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidlines.
-   *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
-*  **Poor antibody**. Running QC on your IP before sending samples for sequencing as [described in an earlier lesson](01_ChIPseq_design_and_workflow.md)
-   * Western blot to check that the protein is present.
-   * qPCR to confirm that the pull-down worked. Create primers for regions of the genome you expect your protein of interest to bind.   
+*  **Poor antibody**. Running QC on your IP before sending samples for sequencing as [described in an earlier lesson](01_ChIPseq_design_and_workflow.md), is critical.
+   * Use a well characterized antibody, tested for specificity.
+   * Given the challenges in obtaining antibodies for suitable ChIP, an alternative is to tag the factor with an exogenous epitope and immunoprecipitate with a well-characterized monoclonal reagent specific for the tag.  
 *  **Oversonication**. Sonicating for too long or too harshly can lead to denatured protein, or protein that is dissociated from DNA or whose antibody epitope has been destroyed. This step requires considerable optimization.
 * **Cross-linking needs to be optimized**. 
    * Excessive cross-linking may mask the epitope that is recognizable by your antibody, leading to a reduction in protein that can be pulled down.
    * For proteins that do not directly interact with DNA or are large, the typical protocol may not work. A dual cross-link protocol is a good solution for this scenario.
+* **Sequence depth**. Depending on the binding profile, if you did not sequence deep enough it will be hard for the peak caller to distinguish signal from noise.
+   *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidlines.
+   *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
+
 
 ### Replicate concordance
 Unlike RNA-seq, increasing replicates in your ChIP-seq will not increase the number of binding sites identified. Rather, it gives you **confidence that the sites you identified are true signal.**
