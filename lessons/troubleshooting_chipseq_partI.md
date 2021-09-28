@@ -109,6 +109,8 @@ Unlike RNA-seq, increasing replicates in your ChIP-seq will not increase the num
 <img src="../img/replicates_encode.png" width="600">
 </p>
 
+> _Representative browser snapshot of the four EGR1 ChIP-seq experiments, showing the much stronger peaks obtained with the second set of replicates_
+
 _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/)_
 
 
