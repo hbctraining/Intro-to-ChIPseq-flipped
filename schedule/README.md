@@ -78,7 +78,7 @@
 | 09:30 - 10:00 | Self-learning lessons review | All |
 | 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | |
 | 10:30- 10:35 | Break|  |
-| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automating_chipseq_workflow.md) | |
+| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | |
 | 11:45 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) |  |
 
 
