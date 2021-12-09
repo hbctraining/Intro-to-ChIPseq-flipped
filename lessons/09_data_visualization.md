@@ -10,9 +10,9 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Understand what a profile plot is and how to generate one
-* Learn how to interpret a profile plot 
-* Introduce different use cases for a profile plot to answer questions about your ChIP data
+* Describe a profile plot and how it is generated
+* Create a profile plot using `deepTools`
+* Recognize different use cases for a profile plot to answer questions about your ChIP data
 
 ## Qualitative assessment of peak enrichment
 
