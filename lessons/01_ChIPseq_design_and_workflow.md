@@ -9,8 +9,8 @@ Approximate time: 45 minutes
 ## Learning Objectives
 
 * Identify public research consortia for gene regulation and the resources they provide
-* Review experimental design considerations for a ChIP experiment
-* Understand the steps involved in a ChIP-seq analysis workflow
+* Explain experimental design considerations for a ChIP experiment
+* Describe the steps involved in a ChIP-seq analysis workflow
 
 
 ## Unraveling the epigenetic landscape
