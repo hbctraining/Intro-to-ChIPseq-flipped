@@ -11,7 +11,7 @@ Approximate time: 45 minutes
 ## Learning Objectives
 
 * Describe the purpose of filtering alignment reads
-* Perform filtering with sambamba and samtools
+* Employ filtering on alignment files using sambamba and samtools
 
 ## Filtering reads
 
