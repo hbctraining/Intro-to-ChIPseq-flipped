@@ -9,8 +9,8 @@ Contributors: Meeta Mistry, Radhika Khetani, Jihe Liu, Mary Piper, Will Gammerdi
 Approximate time: 30 minutes
 
 ## Learning Objectives
-* Deffereniate between the different file formats available for peak visualization
-* Generate bigWig files using `deepTools`
+* Differentiate between the different file formats available for peak visualization
+* Create bigWig files using `deepTools`
 
 ## Setting up for QC on peak calls
 
