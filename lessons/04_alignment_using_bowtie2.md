@@ -11,9 +11,11 @@ Approximate time: 45 min
 ## Learning Objectives
 
 * Describe the basics of alignment theory
-* Align reads to the genome using Bowtie2
-* Explain components of the SAM and BAM file formats, and be able to convert SAM files to BAM files
-* Run an alignment script and evaluate the alignment result
+* Complete an alignment of reads to the genome using Bowtie2
+* Explain components of the SAM and BAM file formats
+* Construct code to convert SAM files to BAM files
+* Create a job submission script to run alignment on a sample
+* Evaluate the results from an alignment of reads to the genome using Bowtie2
 
 ## Alignment to Genome
 
