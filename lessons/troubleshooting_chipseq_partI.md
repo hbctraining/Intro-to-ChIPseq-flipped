@@ -7,8 +7,8 @@ date: "September 15th, 2021"
 Approximate time: 45 minutes
 
 ## Learning Objectives
-* Understand the quality checks required at each step of the workflow
-* Learn how to troubleshoot issues in the workflow
+* Recall the quality checks required at each step of the ChIP-seq workflow
+* Identify ways to troubleshoot issues in the workflow
 
 
 ## From Sequence reads to Peak calls
