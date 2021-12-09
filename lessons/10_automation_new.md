@@ -6,8 +6,9 @@ date: "Monday, September 27, 2021"
 
 ## Learning Objectives:
 
-* Automate a workflow by grouping a series of sequential commands into a script
-* Modify and submit the workflow script to the cluster
+* Construct a workflow to automate the ChIP-seq workflow
+* Create a shell script which groups a series of sequential commands into a script
+* Demonstrate different approcahes for jobs submission of the workflow script to the cluster (in serial, in parallel)
 
 ## Automating the ChIP-seq analysis path from sequence reads to BAM files
 
