@@ -11,8 +11,8 @@ Approximate time: 30 minutes
 ## Learning Objectives
 
 * Describe the elements of the BED file format and related file formats
-* Utilize the bedtools suite of tools to filter peak calls 
-* Utilize the bedtools suite to compare peaks betweeen replicates
+* Employ the bedtools suite of tools to filter peak calls 
+* Compare peaks betweeen replicates using bedtools
 
 
 ## Handling peak calls 
