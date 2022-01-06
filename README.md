@@ -20,12 +20,12 @@ This repository has teaching materials for an Introduction to ChIP-sequencing da
 ### Part I: Raw reads to peak calls (4 sessions)
 > Pre-requisite: Introduction to Shell
 
-This workshop focuses on teaching computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. In addition to running the workflow from FASTQ files to peak calls, the workshop covers best practice guidlelines for ChIP-seq experimental design and data organization/management and data visualization for quality control.
+This workshop focuses on teaching computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. In addition to running the workflow from FASTQ files to peak calls, the workshop covers best practice guidelines for ChIP-seq experimental design and data organization/management and data visualization for quality control.
 
 * Introduction to ChIP-seq
 * QC using FASTQC
 * Alignment theory and considerations for ChIP-seq
-* Alignnment and filtering of reads
+* Alignment and filtering of reads
 * Peak calling
 * Peak visualization (using deepTools)
   
