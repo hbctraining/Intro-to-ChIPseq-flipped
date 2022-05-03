@@ -50,7 +50,7 @@ ChIP-seq is a notoriously challenging approach, in which target fragments are en
 
 
 <p align="center">
-<img src="img/CUT&RUN_compare.png">
+<img src="img/CUT&RUN_compare.png" width=450>
 </p>
 
 _Image source: [Epicypher Blog](https://www.epicypher.com/resources/blog/cut-and-run-vs-cut-and-tag-which-one-is-right-for-you/)_
@@ -85,7 +85,7 @@ An end-to-end computational pipeline specifically tailored to this technology. L
 * Data visualization
 
 <p align="center">
-<img src="CR_img/CRtools_figure1.png" width=500>
+<img src="img/CRtools_figure1.png" width=500>
 </p>
 
 
