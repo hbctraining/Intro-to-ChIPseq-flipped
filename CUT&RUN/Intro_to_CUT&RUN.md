@@ -69,5 +69,31 @@ The recommendation from the Henikoff papers is do not use an input control (i.e.
 
 To **assess protocol efficacy**, it is recommended to run, in parallel, a **control CUT&RUN with an antibody against a histone mark**. How does it help? After quantifying purified DNA, run it on the Bioanalyzer system. Transcription factor CUT&RUN DNA are typically around 50–150 bp and may not show up on the bioanalyzer electropherogram if run prior to amplification. This is due to the low concentration of DNA present. However, with the control histone mark CUT&RUN, should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces.
 
+## Analysis of CUT&RUN
 
+### Pipelines for C&R analysis
+
+#### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
+An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis.
+
+**Workflow/features:**
+* Takes paired-end sequencing readFASTQ files as the input and performs a set of analytical steps
+* Trimming of adapter sequences (Trimmomatic). A two-step read trimming process to improve the quality.
+* Alignment to the reference genome (Bowtie2). Turning on dovetail alignment, designed to accept alignments for paired-end reads when there is a large degree of overlap between two mates of each pair.
+* Peak calling (MACS2, and now SEACR in 2.0)
+* Estimation of cut matrix at single-nucleotide resolution (mostly used for footprinting)
+* De novo motif searching (MEME) and motif footprinting analysis
+* Direct binding site identification
+* Data visualization
+
+<p align="center">
+<img src="CR_img/CRtools_figure1.png" width=500>
+</p>
+
+
+#### [SEACR](https://seacr.fredhutch.org/)
+Peak calling by Sparse Enrichment Analysis for CUT&RUN sequencing data.
+
+#### [CnRAP (Cut & Run Analysis Pipeline)](https://github.com/mbassalbioinformatics/CnRAP)
+An analytical pipeline developed to analyze CUT&RUN data. Inspired by both Henikoff (SEACR) and Orkin (Cut&RunTools) lab pipelines.
 
