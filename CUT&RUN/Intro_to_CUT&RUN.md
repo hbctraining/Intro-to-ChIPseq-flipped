@@ -72,17 +72,19 @@ To **assess protocol efficacy**, it is recommended to run, in parallel, a **cont
 ## Analysis of CUT&RUN
 
 ### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
-An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis.
+An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis. CUT&RUNTools is implemented using Python, R, and BASH scripts.
 
 **Workflow/features:**
 * Takes paired-end sequencing readFASTQ files as the input and performs a set of analytical steps
-* Trimming of adapter sequences (Trimmomatic). A two-step read trimming process to improve the quality.
+* Trimming of adapter sequences (Trimmomatic). A two-step read trimming process to improve the quality (K-seq).
 * Alignment to the reference genome (Bowtie2). Turning on dovetail alignment, designed to accept alignments for paired-end reads when there is a large degree of overlap between two mates of each pair.
+* Size selection: After alignment, fragments are divided into ≤ 120-bp and > 120-bp fractions. The ≤ 120-bp fraction which is likely to contain TF binding sites.
 * Peak calling (MACS2, and now SEACR in 2.0)
 * Estimation of cut matrix at single-nucleotide resolution (mostly used for footprinting)
-* De novo motif searching (MEME) and motif footprinting analysis
+* De novo motif searching (MEME) and motif footprinting analysis, using sequences within 100 bp from the summit of each peak
 * Direct binding site identification
 * Data visualization
+
 
 <p align="center">
 <img src="img/CRtools_figure1.png" width=500>
