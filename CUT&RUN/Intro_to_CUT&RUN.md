@@ -71,9 +71,7 @@ To **assess protocol efficacy**, it is recommended to run, in parallel, a **cont
 
 ## Analysis of CUT&RUN
 
-### Pipelines for C&R analysis
-
-#### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
+### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
 An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis.
 
 **Workflow/features:**
@@ -91,9 +89,9 @@ An end-to-end computational pipeline specifically tailored to this technology. L
 </p>
 
 
-#### [SEACR](https://seacr.fredhutch.org/)
+### [SEACR](https://seacr.fredhutch.org/)
 Peak calling by Sparse Enrichment Analysis for CUT&RUN sequencing data.
 
-#### [CnRAP (Cut & Run Analysis Pipeline)](https://github.com/mbassalbioinformatics/CnRAP)
+### [CnRAP (Cut & Run Analysis Pipeline)](https://github.com/mbassalbioinformatics/CnRAP)
 An analytical pipeline developed to analyze CUT&RUN data. Inspired by both Henikoff (SEACR) and Orkin (Cut&RunTools) lab pipelines.
 
