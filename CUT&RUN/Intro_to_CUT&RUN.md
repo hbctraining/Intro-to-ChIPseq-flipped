@@ -27,7 +27,7 @@ date: "April 19th,  2022"
 
 
 <p align="center">
-<img src="CR_img/CR_protocol_schematic.png" width="400">
+<img src="img/CR_protocol_schematic.png" width="400">
 </p>
 
 _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-method-for-studying-protein-dna-interactions)_
@@ -50,7 +50,7 @@ ChIP-seq is a notoriously challenging approach, in which target fragments are en
 
 
 <p align="center">
-<img src="CR_img/CUT&RUN_compare.png">
+<img src="img/CUT&RUN_compare.png">
 </p>
 
 _Image source: [Epicypher Blog](https://www.epicypher.com/resources/blog/cut-and-run-vs-cut-and-tag-which-one-is-right-for-you/)_
