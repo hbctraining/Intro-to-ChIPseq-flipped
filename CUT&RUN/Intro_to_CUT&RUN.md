@@ -27,7 +27,7 @@ date: "April 19th,  2022"
 
 
 <p align="center">
-<img src="img/CR_protocol_schematic.png" width="400">
+<img src="img/CR_protocol_schematic.png" width="700">
 </p>
 
 _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-method-for-studying-protein-dna-interactions)_
