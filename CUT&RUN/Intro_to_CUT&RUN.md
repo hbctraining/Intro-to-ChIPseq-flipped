@@ -78,11 +78,11 @@ A number of metrics are used to evaluate the quality of a CUT&RUN dataset, inclu
 * **Fragment size distribution.** The fragment size is measured by the start and end positions of a pair of reads in paired-end sequencing. Since the experimental protocol enriches short fragments, it is a routine to ensure that the fragment size is within the expected range (e.g., ≤ 120 bp). 
 * **Adapter content percentage**. The percentage of reads retained after the read trimming step. For a good-quality dataset, the number
 of reads removed by trimming should be less than 10–15%, mostly corresponding to short fragments.
-* **Library size/sequence depth**
+* **Library size/sequence depth**. Ensure appropriate read depth (3-8 million reads per sample) was achieved.
 * **Read duplication rate**.  The read duplication rate is defined as the fraction of paired reads that have identical starts for
-the first mate and ends for the second mate. Data should typically have a low read duplication rate (10–15%), although the rate may be higher for factors with an affinity for low-complexity regions.
-* **Alignment percentage**. This should be > 80%.
-* **Number of peaks and FRiP**
+the first mate and ends for the second mate. Data should typically have a low read duplication rate (10–15%), although the rate may be higher for factors with an affinity for low-complexity regions. Can be filtered out if needed.
+* **Alignment percentage**. Majority of reads (> 80%) should align uniquely to the species genome.
+* **Number of peaks and FrIP**
 
 ### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
 An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis. CUT&RUNTools is implemented using Python, R, and BASH scripts.
