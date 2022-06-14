@@ -21,3 +21,17 @@
   - **It is the default output of Bowtie2 aligner**
   - It is a binary file, which is not human readable
   - You could convert a file in SAM format to BAM format using "samtools view" command
+
+## Handling peak files
+
+1. Which of the following statement is False:
+  - Compared to BED file, narrowPeak file provides additional statistical information
+  - BED file always has these three columns: chromosome, start position, end position
+  - **Blacklist regions should only be removed after the peak calling**
+  - It is best practise to remove peaks that overlap with blacklist regions
+
+1. Which of the following command is used to find overlap peaks between replicates:
+  - bedtools merge
+  - bedtools genomecov
+  - **bedtools intersect**
+  - bedtools subtract
