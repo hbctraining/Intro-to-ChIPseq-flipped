@@ -30,7 +30,7 @@ I. Please **study the contents** and **work through all the code** within the fo
          <br>Before you begin thinking about performing a ChIP-seq experiment, it is important to plan for it. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
              - Review different types of controls for ChIP-seq<br>
              - Highlight the sequencing considerations for different binding profiles<br>
-             - Introduce you to the ChIP-seq analysis workflow R<br><br>
+             - Introduce you to the ChIP-seq analysis workflow<br><br>
         </details>
    
    2. [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
@@ -91,7 +91,7 @@ I. Please **study the contents** and **work through all the code** within the fo
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Now that we have called peaks for each of our samples, it's time to look at the output. The output of MACS2 includes various files, with the narrowPeak file being the most important for interpretation. <br><br>In this lesson you will cover:<br>
              - The basics of the BED file format (and how it extends to narrowPeak files)<br>
-             - The BEDtools suite of tools<br>
+             - The bedtools suite of tools<br>
              - Filtering and intersecting BED files <br><br>
         </details>
    
