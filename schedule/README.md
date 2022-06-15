@@ -85,11 +85,34 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ### Before the next class:
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Handling peak files using `bedtools`](../lessons/07_handling_peaks_bedtools.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Now that we have called peaks for each of our samples, it's time to look at the output. The output of MACS2 includes various files, with the narrowPeak file being the most important for interpretation. <br><br>In this lesson you will cover:<br>
+             - The basics of the BED file format (and how it extends to narrowPeak files)<br>
+             - The BEDtools suite of tools<br>
+             - Filtering and intersecting BED files <br><br>
+        </details>
+   
+   2. [Creating bigWig files](../lessons/08_creating_bigwig_files.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>ChIP-seq data is best evaluated by visualizing peaks. However, in order to do so we require the appropriate file formats.
+         <br><br>In this lesson you will:<br>
+            - Learn about different file formats for peak visualization<br>
+            - Create bigWig files<br><br>
+         </details>
 
- * [Handling peak files using `bedtools`](../lessons/07_handling_peaks_bedtools.md)
- * [Creating bigWig files](../lessons/08_creating_bigwig_files.md)
- * [Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
+   3.[Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>An exciting component of ChIP-seq analysis is to be able to visualize your results, and gain some biologically meaningful insight. This may in turn generate hypothesis for you to further explore with your data!  <br><br>In this lesson you will learn:<br>
+            - How to use deepTools to create heatmaps and profile plots<br>
+            - To ask questions about your data and find answers through visualization<br><br>
+        </details>
+
+
 
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
