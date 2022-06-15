@@ -20,13 +20,43 @@
 | 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Radhika |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Jihe |
 
+
 ### Before the next class:
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
-  * [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
-  * [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
-  * [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
-  * [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Before you begin thinking about performing a ChIP-seq experiment, it is important to plan for it. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
+             - Describe different types of controls and how they can help<br>
+             - Highlight sequencing considerations different binding profiles<br>
+             - Introduce you to the ChIP-seq analysis workflow R<br><br>
+        </details>
+   
+   2. [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>We are ready (and excited!) to get started with our ChIP-seq analysis. But, wait! There are just a few things to do before we get our hands on the data. <br><br>In this lesson you will:<br>
+            - Learn about the dataset we are using in this workshop<br>
+            - Organize your space, so you are setup for success<br><br>
+         </details>
+
+   3. [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>The first step of most NGS analyses is to evaluate the quality of your sequencing reads. <br><br>In this lesson you will explore:<br>
+            - The FASTQC software, and how to run it on your raw sequencing data<br>
+            - The HTML report that is returned from FASTQC and how to interepret the different plotsn<br><br>
+        </details>
+        
+   4. [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>.  ...... <br><br>In this lesson you will learn:<br>
+            - Reading different types (formats) of data<br>
+            - Inspecting the contents and structure of the dataset once you have read it in<br><br>
+        </details>
+
 
     > **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
     > 1. Log in using `ssh rc_trainingXX@o2.hms.harvard.edu` and enter your password (replace the "XX" in the username with the number you were assigned in class). 
