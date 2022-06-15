@@ -27,9 +27,9 @@ I. Please **study the contents** and **work through all the code** within the fo
    1. [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before you begin thinking about performing a ChIP-seq experiment, **it is important to plan for it**. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
-             - Describe different types of controls and how they can help<br>
-             - Highlight sequencing considerations different binding profiles<br>
+         <br>Before you begin thinking about performing a ChIP-seq experiment, it is important to plan for it. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
+             - Review different types of controls for ChIP-seq<br>
+             - Highlight the sequencing considerations for different binding profiles<br>
              - Introduce you to the ChIP-seq analysis workflow R<br><br>
         </details>
    
@@ -44,7 +44,7 @@ I. Please **study the contents** and **work through all the code** within the fo
    3. [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>The first step of most NGS analyses is to **evaluate the quality of your sequencing reads**. <br><br>In this lesson you will explore:<br>
+         <br>The first step of most NGS analyses is to evaluate the quality of your sequencing reads. <br><br>In this lesson you will explore:<br>
             - The FASTQC software, and how to run it on your raw sequencing data<br>
             - The HTML report that is returned from FASTQC and how to interepret the different plots<br><br>
         </details>
@@ -104,7 +104,7 @@ I. Please **study the contents** and **work through all the code** within the fo
             - Create bigWig files<br><br>
          </details>
 
-   3.[Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
+   3. [Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>An exciting component of ChIP-seq analysis is to be able to visualize your results, and gain some biologically meaningful insight. This may in turn generate hypothesis for you to further explore with your data!  <br><br>In this lesson you will learn:<br>
