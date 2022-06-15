@@ -15,24 +15,55 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
-| 09:45 - 11:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/i7m8a95sasoerwv/Introduction%20to%20ChIP-seq%202021.pdf?dl=1) | [Dr. Shannan Ho Sui](https://bioinformatics.sph.harvard.edu/people/shannan-ho-sui) |
+| 09:45 - 11:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/i7m8a95sasoerwv/Introduction%20to%20ChIP-seq%202021.pdf?dl=1) | Meeta |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Radhika |
+| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Jihe |
+
 
 ### Before the next class:
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
-  * [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
-  * [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
-  * [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
-  * [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Before you begin thinking about performing a ChIP-seq experiment, it is important to plan for it. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
+             - Review different types of controls for ChIP-seq<br>
+             - Highlight the sequencing considerations for different binding profiles<br>
+             - Introduce you to the ChIP-seq analysis workflow R<br><br>
+        </details>
+   
+   2. [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>We are ready (and excited!) to get started with our ChIP-seq analysis. But, wait! There are just a few things to do before we get our hands on the data. <br><br>In this lesson you will:<br>
+            - Learn about the dataset we are using in this workshop<br>
+            - Organize your space, so you are setup for success<br><br>
+         </details>
 
-    > **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
-    > 1. Log in using `ssh rc_trainingXX@o2.hms.harvard.edu` and enter your password (replace the "XX" in the username with the number you were assigned in class). 
-    > 2. Once you are on the login node, use `srun --pty -p interactive -t 0-2:30 --mem 1G /bin/bash` to get on a compute node or as specified in the lesson.
-    > 3. Proceed only once your command prompt has the word `compute` in it.
-    > 4. If you log out between lessons (using the `exit` command twice), please follow points 1. and 2. above to log back in and get on a compute node when you restart with the self learning.
+   3. [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>The first step of most NGS analyses is to evaluate the quality of your sequencing reads. <br><br>In this lesson you will explore:<br>
+            - The FASTQC software, and how to run it on your raw sequencing data<br>
+            - The HTML report that is returned from FASTQC and how to interepret the different plots<br><br>
+        </details>
+        
+   4. [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>The next step is taking our high quality reads and figuring out where in the genome the originated from. In theory this seems like a simple task, but in practice it is quite challenging. <br><br>In this lesson you will cover:<br>
+            - The Bowtie2 software, a popular tool for aligning DNA sequence reads<br>
+            - Alignment file formats<br>
+            - How to run your alignment as a job on the cluster<br><br>
+        </details>
+
+
+> **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
+> 1. Log in using `ssh rc_trainingXX@o2.hms.harvard.edu` and enter your password (replace the "XX" in the username with the number you were assigned in class). 
+> 2. Once you are on the login node, use `srun --pty -p interactive -t 0-2:30 --mem 1G /bin/bash` to get on a compute node or as specified in the lesson. > 3. Proceed only once your command prompt has the word `compute` in it.
+> 4. If you log out between lessons (using the `exit` command twice), please follow points 1. and 2. above to log back in and get on a compute node when you restart with the self learning.
+>
 
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
@@ -54,11 +85,34 @@
 
 ### Before the next class:
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Handling peak files using `bedtools`](../lessons/07_handling_peaks_bedtools.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Now that we have called peaks for each of our samples, it's time to look at the output. The output of MACS2 includes various files, with the narrowPeak file being the most important for interpretation. <br><br>In this lesson you will cover:<br>
+             - The basics of the BED file format (and how it extends to narrowPeak files)<br>
+             - The BEDtools suite of tools<br>
+             - Filtering and intersecting BED files <br><br>
+        </details>
+   
+   2. [Creating bigWig files](../lessons/08_creating_bigwig_files.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>ChIP-seq data is best evaluated by visualizing peaks. However, in order to do so we require the appropriate file formats.
+         <br><br>In this lesson you will:<br>
+            - Learn about different file formats for peak visualization<br>
+            - Create bigWig files<br><br>
+         </details>
 
- * [Handling peak files using `bedtools`](../lessons/07_handling_peaks_bedtools.md)
- * [Creating bigWig files](../lessons/08_creating_bigwig_files.md)
- * [Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
+   3. [Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>An exciting component of ChIP-seq analysis is to be able to visualize your results, and gain some biologically meaningful insight. This may in turn generate hypothesis for you to further explore with your data!  <br><br>In this lesson you will learn:<br>
+            - How to use deepTools to create heatmaps and profile plots<br>
+            - To ask questions about your data and find answers through visualization<br><br>
+        </details>
+
+
 
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
@@ -78,7 +132,7 @@
 | 09:30 - 10:00 | Self-learning lessons review | All |
 | 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
 | 10:30- 10:35 | Break|  |
-| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Radhika |
+| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
 | 11:45 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
 
 
