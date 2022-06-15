@@ -17,7 +17,7 @@
 | 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
 | 09:45 - 11:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/i7m8a95sasoerwv/Introduction%20to%20ChIP-seq%202021.pdf?dl=1) | [Dr. Shannan Ho Sui](https://bioinformatics.sph.harvard.edu/people/shannan-ho-sui) |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Radhika |
+| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Jihe |
 
 
@@ -108,7 +108,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | 09:30 - 10:00 | Self-learning lessons review | All |
 | 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
 | 10:30- 10:35 | Break|  |
-| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Radhika |
+| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
 | 11:45 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
 
 
