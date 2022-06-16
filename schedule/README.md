@@ -151,6 +151,16 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ***
 
+## Resources
+* ENCODE Data Standards and Processing Pipeline Information for [Histone](https://www.encodeproject.org/chip-seq/histone/) and [Transcription Factors](https://www.encodeproject.org/chip-seq/transcription_factor/)
+* [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). An older paper, but a good outline of general best practices.
+* Experimental design considerations:
+    * [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
+    * "Chromatin Immunoprecipitation (ChIP) Principles and How to Obtain Quality Results", [BenchSci Blog](https://blog.benchsci.com/chromatin-immunoprecipitation-chip-principles-and-how-to-obtain-quality-results)
+    * [O’Geen et al (2011), Methods Mol Biol](https://pubmed.ncbi.nlm.nih.gov/21913086/) - A focus on performing ChIP assays to characterize histone modifications
+* [Jung et al (2014). NAR.](https://academic.oup.com/nar/article/42/9/e74/1248114) - Impact of sequencing depth in ChIP-seq experiments 
+
+
 
 ## Building on this workshop
 * [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
@@ -159,4 +169,5 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 
 ***
+
 *These materials have been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
