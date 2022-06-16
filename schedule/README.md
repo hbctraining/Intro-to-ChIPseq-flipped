@@ -68,7 +68,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/czRTtxT1fAHN1Ya6mIw7) the **day before the next class**.
+   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/9kCUWtXRx1P2AZNsR8qQ) the **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -117,7 +117,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/HOtwHGI6pH9Ha8txuvo3) the **day before the next class**.
+   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/KYkDi8pcJue9wlrPnNOu) the **day before the next class**.
    
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
