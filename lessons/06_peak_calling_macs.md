@@ -53,10 +53,29 @@ MACS provides different options for dealing with **duplicate tags** at the exact
 
 > _We do not need to worry about this option, since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**_
 
+### The bimodal nature of ChIP-seq data 
+
+Below, we have illustrated the protein of interest and the fragments of DNA (green) which have been obtained from the immunoprecipitation.
+
+<p align="center">
+<img src="../img/cc-fig1.png" width="400">
+</p>
+
+As these fragments are typically sequenced from the 5' end, the reads we obtain will not give us the fragment pileup shown in the image above. Rather, we get a read pileup on either side of the protein (on the positive and negative strand).
+
+<p align="center">
+<img src="../img/cc-fig2.png" width="400">
+</p>
+
+After aligining reads to the genome, the read density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks).
+
+<p align="center">
+<img src="../img/cc-fig3.png" width="400">
+</p>
 
 ### Modeling the shift size
 
-The tag density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks). MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
+MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
 
 To identify the shift size:
 
@@ -70,9 +89,6 @@ To identify the shift size:
 3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
 4. MACS **shifts all reads in the sample by d/2** toward the 3' ends to the most likely protein-DNA interaction sites
 
-<p align="center">
-<img src="../img/peak_shift3.png" width="400">
-</p>
 
 ### Scaling libraries
 
