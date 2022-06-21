@@ -59,7 +59,7 @@
 1. True or False: When evaluating signal profile plots and heatmaps, you do not observe any enrichment around the TSS - this is an indication that your experiment has failed.
 
 1. Which of the following statements is FALSE:
-  - A histone mark can give us identify active promoter regions in the genome
+  - A histone mark can provide us information about active promoter regions in the genome
   - The profile plot does not always have to be centered on the TSS of genes
   - **The qualitative assesment allows for defined conclusions about our data.**
   - A heatmap can be used as an alternative visualization for a profile plot, as the same data is being plotted
