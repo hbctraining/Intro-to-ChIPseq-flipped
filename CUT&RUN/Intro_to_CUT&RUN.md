@@ -42,11 +42,19 @@ _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-metho
 ChIP-seq is a notoriously challenging approach, in which target fragments are enriched from excess pools of sheared chromatin. Despite rigorous optimization and washing, the method is subject to high background. The resulting low signal to noise ratio makes it difficult to identify true binding sites.
 
 
-### Advantages of CUT&RUN compared to ChIP-seq:
+### Advantages of CUT&RUN
+
 - **Requires less starting material (smaller number of cells)**. For example, while the protocol calls for 500K cells, it could be used with as low as 5K cells
 - **Lower depth of sequencing**. You can produce high-quality CUT&RUN data with only 3–8 million reads per sample, compared to the 30 million or more reads required for ChIP-seq
 - **Background is signifincantly reduced**, using targeted release of genomic fragments.
 - **Lower costs**, by reducing antibody usage, library prep, and sequencing depth requirements
+
+
+### Limitations of CUT&RUN
+
+- **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for contemporary ChIP-seq protocols where enzymatic or sonicated DNA shearing must be optimized.
+- **Not all proteins have been optimized for the protocol.** Depending on your protein of interest, you may eed to invest time in pilot experiments to get the protocol working for you.
+- It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.
 
 
 <p align="center">
@@ -55,11 +63,6 @@ ChIP-seq is a notoriously challenging approach, in which target fragments are en
 
 _Image source: [Epicypher Blog](https://www.epicypher.com/resources/blog/cut-and-run-vs-cut-and-tag-which-one-is-right-for-you/)_
 
-### Any limitations to CUT&RUN?
-
-The primary limitation of CUT&RUN is the **likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for contemporary ChIP-seq protocols where enzymatic or sonicated DNA shearing must be optimized.
-
-Also, it is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.
 
 ## Controls for CUT&RUN
 
