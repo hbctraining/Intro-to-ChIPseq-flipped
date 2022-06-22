@@ -130,7 +130,7 @@ _It is not neccessary to include all or any of these options!_ We just want to b
 For the most part, **MACS2 remains the peak caller of choice for CUT&RUN data**. After alignment, fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. _The default narrow peak setting will suffice._
 
 
-Another recent approach developed by the Henikoff Lab is a tool called [SEACR](https://seacr.fredhutch.org/). Peak calling by Sparse Enrichment Analysis for CUT&RUN sequencing data, provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling. 
+Another **recent approach developed by the Henikoff Lab is a tool called [SEACR](https://seacr.fredhutch.org/)**. Peak calling by Sparse Enrichment Analysis for CUT&RUN sequencing data, provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling. 
 
 ChIP-seq experiments are typically sequenced deeply and thus feature high background, thus most peak calling algorithms designed for this type of data. By contrast, CUT&RUN data features exceedingly low background and low sequence depth. The sparseness of the background can increase false positives, resulting in any spurious background read being called as a peak. Thus, rather than requiring highly sensitive methods to distinguish signal from background noise, **peak calling from CUT&RUN data requires high specificity for true positive peaks**.
 
