@@ -66,14 +66,21 @@ _Image source: [Epicypher Blog](https://www.epicypher.com/resources/blog/cut-and
 
 ## Controls for CUT&RUN
 
-### Background control
+### Negative (background) control
 Similar to ChIP-seq, only a fraction of the DNA in at CUT&RUN sample will correspond to actual signal amidst background noise. However, **CUT&RUN is thought to produce a sharper stronger signal, so do we need an input control?**
 
 Rather than havng an input DNA control, **the use of a nonspecific rabbit IgG antibody is recommended by the Henikoff lab**. It will randomly coat the chromatin at low efficiency without sequence bias. While a no-antibody input DNA sample will generate a more diverse DNA library, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.
 
 ### Positive control
 
-To **assess protocol efficacy**, it is recommended to run, in parallel, a **control CUT&RUN with an antibody against a histone mark**. How does it help? After quantifying purified DNA, run it on the Bioanalyzer system. Transcription factor CUT&RUN DNA are typically around 50–150 bp and may not show up on the bioanalyzer electropherogram if run prior to amplification. This is due to the low concentration of DNA present. However, with the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces. This will provide an indication that the protocol is working.
+To **assess protocol efficacy**, it is recommended to run, in parallel, a **control CUT&RUN with an antibody against a histone mark**. How does it help? After quantifying purified DNA, run it on the Bioanalyzer system. Transcription factor CUT&RUN DNA are typically around 50–150 bp and may not show up on the bioanalyzer electropherogram if run prior to amplification. This is due to the low concentration of DNA present. However, with the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces. In the figure below, H3K4me3 and H3K27me3 libraries are predominantly enriched for mononucleosomes as indicated by the peak at 275 bp (~150 bp mononucleosomes + 125 bp sequence adapters). Bioanalyzer traces are the best indicator of success prior to sequencing. 
+
+<p align="center">
+<img src="img/bio_analyzer_CR.png" width=550>
+</p>
+
+_Typical Bioanalyzer traces for IgG negative control and H3K4me3 / H3K27me3 positive control CUT&RUN sequencing libraries. Image source: [Epicypher CUT&RUN Protocol v1.5.4 ](https://www.stratech.co.uk/wp-content/uploads/2020/07/cutana-cutrun-protocol.pdf)_
+
 
 ## Analysis of CUT&RUN
 
@@ -93,21 +100,29 @@ the first mate and ends for the second mate. Data should typically have a low re
 
 ### Alignment
 
-Trimming of low quality bases and removing any adapter sequence . After trimming, a minimum read length
-of 25bp was imposed, as reads smaller than this were hard to align accurately. 
+CUT&RUN libraries are sequenced using **paired-end reads which are are aligned by Bowtie2**. There are a few additional parameters that are used by various groups, which are not typically used with ChIP-seq data. They are listed and described below:
 
-The paired-end reads are aligned by Bowtie2 using parameters --end-to-end --very-sensitive --no-mixed --no-discordant --phred33 -I 10 -X 700 for mapping of inserts 10-700 bp in length.
+<p align="center">
+<img src="img/align_CR.png" width=250>
+</p>
 
-Critical step: There is no need to trim reads from out standard 25x25 PE sequencing, as adapter sequences will not be included in reads of inserts >25 bp. However, for users performing longer sequencing, reads will need to be trimmed by Cutadapt and mapped by --local --very-sensitive --no-mixed --no-discordant --phred33 -I 10 -X 700 to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+_CUT&RUN sequencing workflow. Image source: Adapted from [CUT&RUNTools: a flexible pipeline for CUT&RUN processing and footprint analysis]([https://www.stratech.co.uk/wp-content/uploads/2020/07/cutana-cutrun-protocol.pdf](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1802-4/figures/1))_
 
-Dovetail is
-unusual but encountered in CUT&RUN experiments. 
 
-bowtie2 --dovetail --threads $threads -x [$index] -1 $fastq1 -2 $fastq2
-The term 'dovetailing' describes mates which extend past one another, and is expected in CUT&RUN experiments. The --dovetail flag indicates that dovetailed alignments should be considered as concordant. 
+* `--end-to-end`: Bowtie2 will searche for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior.
+* `--very-sensitive`: a preset option which will result in Bowtie2 generally being slower, but more sensitive and more accurate.
+* `--no-mixed`: By default, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it then tries to find alignments for the individual mates. This option disables that behavior.
+* `--no-discordant`:  A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints,  This option disables that behavior.  
+* `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+* `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but encountered in CUT&RUN experiments. This flag indicates that dovetailed alignments should be considered as concordant. 
 
-bwa + stampy: https://star-protocols.cell.com/protocols/944#step-by-step-method-details improved alignment performance when benchmarked by https://www.sciencedirect.com/science/article/pii/S0888754317300204
+_It is not neccessary to include all or any of these options!_ We just want to bring to your attention that some combination of these options have been used by other groups. We encourage you to read through th literature and decide what is best for your data.
 
+> #### To trim or not to trim?
+> Trimming is optional.
+> * If reads are 25bp then there is no need to trim, as adapter sequences will not be included in reads of inserts >25 bp. 
+> * Trimming can help remove low quality bases and remove any adapter sequence. After trimming, a minimum read length of 25bp should be imposed, as reads smaller than this are hard to align accurately.  
+> * Should you choose not trim reads, you will need to use `--local` when runing Bowtie2 as this will perform "soft-clipping" to ignore parts of the reads which may be of low quality.
 
 
 ### Peak calling
@@ -116,5 +131,6 @@ bwa + stampy: https://star-protocols.cell.com/protocols/944#step-by-step-method-
 
 
 ***
+
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
 
