@@ -15,9 +15,9 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
-| 09:45 - 11:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/i7m8a95sasoerwv/Introduction%20to%20ChIP-seq%202021.pdf?dl=1) | Meeta |
+| 09:45 - 11:00 | [Introduction to ChIP-seq]() | Meeta |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe |
+| 11:05 - 11:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe 
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Jihe |
 
 
@@ -164,6 +164,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ## Building on this workshop
 * [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
+* [A Brief Introduction to CUT&RUN](../CUT&RUN/Intro_to_CUT&RUN.md)
 * [Advanced bash commands (aliases, copying files, and symlinks)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/more_bash_cluster.html)
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
 
