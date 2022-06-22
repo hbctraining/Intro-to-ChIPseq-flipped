@@ -59,10 +59,15 @@ The quality checks at this stage in the workflow include:
  
 * Determining the **percent uniquely mapping reads**, ideally this would be > 60% of the total read depth of your sample. The higher the percentage the more usable data you have to work with.
    *  High duplication can be a result of over-amplification. 
+
+<p align="center">
+<img src="../img/Duplicate_reads.png" width="400">
+</p>
+
    *  High number of multi-mapping reads can be due to mappability.
 
 <p align="center">
-<img src="../img/mapping_reads.png" width="600">
+<img src="../img/Multimapping_reads.png" width="400">
 </p>
 
 _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/)_
