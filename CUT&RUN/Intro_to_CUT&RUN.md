@@ -15,7 +15,7 @@ date: "April 19th,  2022"
 
  
 1. Cells/nuclei are bound to concanavalin A–coated magnetic beads.
-	- Original [Henikoff paper in eLife](), isolates nuclei. Using purified nuclei allows for maximal binding of antibodies to nuclear factors and will result in cleaner CUT&RUN signal compared to protocol using whole cells. 
+	- Original [Henikoff paper in eLife](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5310842/), isolates nuclei. Using purified nuclei allows for maximal binding of antibodies to nuclear factors and will result in cleaner CUT&RUN signal compared to protocol using whole cells. 
 	- More recent [bioArxiv paper](), whole cells are harvested. Introduce the usage of a strong detergent to permeabilize cells rather than to rely on extraction of nuclei.
 	
 2. Cell membranes (or nuclear membrances) are permeabilized with digitonin to allow the antibody access to its target (1h to overnight)
