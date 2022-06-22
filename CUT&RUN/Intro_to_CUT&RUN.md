@@ -66,11 +66,14 @@ _Image source: [Epicypher Blog](https://www.epicypher.com/resources/blog/cut-and
 
 ## Controls for CUT&RUN
 
-Typically, with ChIP-Seq it is highly recommended that each peak should be compared with the same region of the genome in a matched control sample because only a fraction of the DNA in corresponds to actual signal amidst background noise. **CUT&RUN is thought to produce a sharper stronger signal, so do we need an input control?**
+### Background control
+Similar to ChIP-seq, only a fraction of the DNA in at CUT&RUN sample will correspond to actual signal amidst background noise. However, **CUT&RUN is thought to produce a sharper stronger signal, so do we need an input control?**
 
-The recommendation from the Henikoff papers is do not use an input control (i.e. DNA purified from cells, but without adding any antibody for enrichment). Rather they recommend the use of a nonspecific rabbit IgG antibody that will randomly coat the chromatin at low efficiency without sequence bias. With a no-antibody control, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.
+Rather than havng an input DNA control, **the use of a nonspecific rabbit IgG antibody is recommended by the Henikoff lab**. It will randomly coat the chromatin at low efficiency without sequence bias. While a no-antibody input DNA sample will generate a more diverse DNA library, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.
 
-To **assess protocol efficacy**, it is recommended to run, in parallel, a **control CUT&RUN with an antibody against a histone mark**. How does it help? After quantifying purified DNA, run it on the Bioanalyzer system. Transcription factor CUT&RUN DNA are typically around 50–150 bp and may not show up on the bioanalyzer electropherogram if run prior to amplification. This is due to the low concentration of DNA present. However, with the control histone mark CUT&RUN, should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces.
+### Positive control
+
+To **assess protocol efficacy**, it is recommended to run, in parallel, a **control CUT&RUN with an antibody against a histone mark**. How does it help? After quantifying purified DNA, run it on the Bioanalyzer system. Transcription factor CUT&RUN DNA are typically around 50–150 bp and may not show up on the bioanalyzer electropherogram if run prior to amplification. This is due to the low concentration of DNA present. However, with the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces. This will provide an indication that the protocol is working.
 
 ## Analysis of CUT&RUN
 
@@ -85,76 +88,33 @@ of reads removed by trimming should be less than 10–15%, mostly corresponding 
 * **Read duplication rate**.  The read duplication rate is defined as the fraction of paired reads that have identical starts for
 the first mate and ends for the second mate. Data should typically have a low read duplication rate (10–15%), although the rate may be higher for factors with an affinity for low-complexity regions. Can be filtered out if needed.
 * **Alignment percentage**. Majority of reads (> 80%) should align uniquely to the species genome.
-* **Number of peaks and FrIP**
-
-### [CUT&RUNTools](https://github.com/fl-yu/CUT-RUNTools-2.0)
-An end-to-end computational pipeline specifically tailored to this technology. Latest version now available for single-cell analysis. CUT&RUNTools is implemented using Python, R, and BASH scripts.
-
-**Workflow/features:**
-* Takes paired-end sequencing readFASTQ files as the input and performs a set of analytical steps
-* Trimming of adapter sequences (Trimmomatic). A two-step read trimming process to improve the quality (K-seq).
-* Alignment to the reference genome (Bowtie2). Turning on dovetail alignment, designed to accept alignments for paired-end reads when there is a large degree of overlap between two mates of each pair.
-* Size selection: After alignment, fragments are divided into ≤ 120-bp and > 120-bp fractions. The ≤ 120-bp fraction which is likely to contain TF binding sites.
-* Peak calling (MACS2, and now SEACR in 2.0)
-* Estimation of cut matrix at single-nucleotide resolution (mostly used for footprinting)
-* De novo motif searching (MEME) and motif footprinting analysis, using sequences within 100 bp from the summit of each peak
-* Direct binding site identification
-* Data visualization
+* **Number of peaks and FrIP**. The number of peaks will vary depending on the protein of interest. For proteins where we expect limited binding teh fraction of reads in peaks will consequeuntly be lower.
 
 
-<p align="center">
-<img src="img/CRtools_figure1.png" width=500>
-</p>
+### Alignment
+
+Trimming of low quality bases and removing any adapter sequence . After trimming, a minimum read length
+of 25bp was imposed, as reads smaller than this were hard to align accurately. 
+
+The paired-end reads are aligned by Bowtie2 using parameters --end-to-end --very-sensitive --no-mixed --no-discordant --phred33 -I 10 -X 700 for mapping of inserts 10-700 bp in length.
+
+Critical step: There is no need to trim reads from out standard 25x25 PE sequencing, as adapter sequences will not be included in reads of inserts >25 bp. However, for users performing longer sequencing, reads will need to be trimmed by Cutadapt and mapped by --local --very-sensitive --no-mixed --no-discordant --phred33 -I 10 -X 700 to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+
+Dovetail is
+unusual but encountered in CUT&RUN experiments. 
+
+bowtie2 --dovetail --threads $threads -x [$index] -1 $fastq1 -2 $fastq2
+The term 'dovetailing' describes mates which extend past one another, and is expected in CUT&RUN experiments. The --dovetail flag indicates that dovetailed alignments should be considered as concordant. 
+
+bwa + stampy: https://star-protocols.cell.com/protocols/944#step-by-step-method-details improved alignment performance when benchmarked by https://www.sciencedirect.com/science/article/pii/S0888754317300204
 
 
-_Image source: ["CUT&RUNTools: a flexible pipeline for CUT&RUN processing and footprint analysis"](https://genomebiology.biomedcentral.com/track/pdf/10.1186/s13059-019-1802-4.pdf)_
+
+### Peak calling
 
 
-### [SEACR](https://seacr.fredhutch.org/)
-Peak calling by Sparse Enrichment Analysis for CUT&RUN sequencing data. An analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling. 
-
-* CUT&RUN data features exceedingly low background and low sequence depth, in comparison with ChIP-seq. 
-* ChIP-seq experiments are typically sequenced deeply and thus feature high background, thus most peak calling algorithms designed for this type of data. The sparseness of the background can increase false positives, resulting in any spurious background read being called as a peak.
-* Thus, rather than requiring highly sensitive methods to distinguish signal from background noise, **peak calling from CUT&RUN data requires high specificity for true positive peaks**.
-
-<p align="center">
-<img src="img/seacr_fig1.png" width=500>
-</p>
-
-_Image source: ["Peak calling by Sparse Enrichment Analysis for CUT&RUN chromatin profiling"](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4)_
 
 
-**Features of SEACR:**
-
-- model free and empirically data driven and therefore does not require arbitrary selection of parameters from a statistical model
-- fast, accurate, scalable and simple to use
-- peak calling is based on fragment block aggregation
-
-### [CnRAP (Cut & Run Analysis Pipeline)](https://github.com/mbassalbioinformatics/CnRAP)
-An analytical pipeline developed to analyze CUT&RUN data. Inspired by both Henikoff (SEACR) and Orkin (Cut&RunTools) lab pipelines.
-
-
-## Spike-in normalization
-
-There are multiple sources of technical variability that can hamper the direct comparison of binding signal strength between different conditions (in both, ChIP-seq and CUT&RUN data). For example, an increase in genomic occupancy of a chromatin factor could simply be the result of variability in the efficiency of immunoprecipitation between control and treated samples in a ChIP experiment.
-
-The spike-in strategy is based on the use of a fixed amount of exogenous material (i.e cells or chromatin) from another species that is added to sample in an effort to control for technical variation. Since we are adding a known amount (and the same amount) to each sample, we expect the number of mapped reads to the reference (for example E. coli) to also be similar.  
-
-* If the number of **mapped reads to the spike-in reference are roughly the same across samples**, then the observable differences in the reads of the experimental samples across conditions can be exclusively attributed to biological variation. 
-* If the number of **mapped reads to the spike-in reference are variable across samples**, this suggests that there is some amount of technical variation. 
-
-### Normalizing data using the spiked-in data
-
-In the case of the latter described above, a normalization factor can be easily calculated ad hoc to equilibrate the spike-in signal among samples. The same correction computed from spike-in reads is then used to normalize the experimental ChIP-seq, thus enabling the fair comparison of the ChIP-seq signal across the samples.
-
-**Different methods for computing the normalization factor:**
-
-No matter which method you implement, the first step is aligning your sample to the spike-in reference. Collect total number of reads and total number of mapped reads for each sample.
-
-1. Active motif
-- Take the sample with the lowest number of mapped reads (minMap). Take the minMap and divide by the total number of mapped reads in the sample to compute a normliaztion factor. 
-2. Epicypher
-- A similar approach, except rather than using the number of mapped reads use the percentage of mapped reads
-3. Constant 10K
-- 10,000 / (Number of mapped reads/2) 
+***
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
 
