@@ -15,7 +15,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 1:30 - 1:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
-| 1:45 - 3:00 | [Introduction to ChIP-seq]() | Meeta |
+| 1:45 - 3:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/k2xgo8sk8werzxa/Introduction%20to%20ChIP-seq%202022.pdf?dl=1) | Meeta |
 | 3:00 - 3:05 | Break|  |
 | 3:05 - 3:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe 
 | 3:50 - 4:00 | Overview of self-learning materials and homework submission | Jihe |
