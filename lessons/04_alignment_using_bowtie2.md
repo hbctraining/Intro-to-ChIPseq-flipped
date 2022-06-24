@@ -232,7 +232,8 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   <summary><b>Click here for solution</b></summary>
   
   <p><pre>
- 
+  
+  ```
   #!/bin/bash
    
   #SBATCH -p short              # partition name
@@ -254,7 +255,8 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
   ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
   
-  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
+  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam    
+  ```
   
   </pre></p>
   
