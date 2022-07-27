@@ -8,6 +8,31 @@ Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdi
 
 Approximate time: 45 minutes
 
+## Modifications
+
+**CUT&RUN**
+
+* Duplicate removal is optional in many CUT&RUN analysis approaches (Henikoff, CUT&RUN tools, and STAR protocols). 
+  * **Default is to keep duplicates. But, why?** Quoted from CUT&RUNtools paper: "...it is argued that nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, and shorter DNA fragments also increased the likelihood of identical reads that originated from different cells." Basically they say that the nature of the technique will increase likelihood of biological duplicates. Remove duplicates from CUT&RUN experiments with caution. First assess your library complexity and if you do not see an unreasonably high amount of duplication and you know you didn't over-amplify, you might not want to remove.
+* No mention of multi-mapper removal in any CUT&RUN analysis approaches either. Maybe because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option)
+* Filtering of BAM files by fragment size.
+   * After alignment, fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
+   * Done using sambamba: 
+
+```bash
+sambamba view --format \
+  bam --nthreads 6 \
+  -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
+```
+
+**ATAC-seq**
+
+* Uniquely mapping reads is critical. A unique mapping rate over 80% is typical for a successful ATAC-seq experiment. Duplicates and multi-mappers are removed. 
+* Filtering mitochondrial reads. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These reads should be discarded. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.
+* Filtering BAM files based on fragment size.
+   * Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)
+   * Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS.  Use sambamba code from above to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. Typically the NFR BAM is used for peak calling.  
+
 ## Learning Objectives
 
 * Describe the purpose of filtering alignment reads
