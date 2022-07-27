@@ -8,6 +8,10 @@ Contributors: Mary Piper, Radhika Khetani, Jihe Liu, Will Gammerdinger
 
 Approximate time: 
 
+## Modifications
+* Add text to indicate all quality metrics (and its interpretation) described in this lesson will also apply to CUT&RUN
+* In/near the over-represented sequences section we need a pull-down for ATAC-seq, explaining that because we are lookimg at open regions and specific protein-DNA binding that we will not see sequences, nor will we observe a high amount of k-mer content. All other metrics can be assessed similar to ChIP-seq
+
 ## Learning Objectives
 
 * Explain the components of a FASTQ file
