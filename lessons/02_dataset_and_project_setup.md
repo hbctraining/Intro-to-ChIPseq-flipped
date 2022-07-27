@@ -8,6 +8,10 @@ Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdi
 
 Approximate time: 30 minutes
 
+## Modifications
+* ADD TEXT to include a paragraph to say that the dataset we will use is ChIP-seq but as we walk through the steps of the workflow, we will include where things differ with CUT&RUN and ATAC-seq. This can be added right before introducing the dataset
+* ADD TEXT to data management section: Explaining that no matter what type of data you have the RDM is necessary. This always applies!**
+
 ## Learning Objectives
 
 * Describe the dataset and biological context
