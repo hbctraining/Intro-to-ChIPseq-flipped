@@ -18,6 +18,7 @@ Approximate time: 60 minutes
    	* `--keep-dup all`: Keep all reads since we have already filtered duplicates from our BAM files.
    	* `--nolambda`: MACS will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)
    * Add to "Other peak calling software" some examples of tools exclusively for ATAC-seq data (Genrich, F-Seq, HOMER)
+   * [Good paper](https://www.biorxiv.org/content/10.1101/496521v1.full)
 
 
 ## Learning Objectives
