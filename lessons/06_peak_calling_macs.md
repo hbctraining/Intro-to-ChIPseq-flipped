@@ -8,6 +8,18 @@ Contributors: Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdi
 
 Approximate time: 60 minutes
 
+## Modifcations
+* CUT&RUN: A note to explicitly state that there are no changes in how we run peak calling for CUT&RUN-seq data. The only thing we might add is `f BAMPE` since we have paired-end data.
+* A pull-down under the "macs2 parameters" section for ATAC-seq. To identify acccessible gregions in the genome we need to call peaks on the nuclesome-free BAM file obtained post-filtering. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline. While there may be other ATAC-seq specific callers out there, we have no experience with them so we stick with MACS2. As a general peak-caller, MACS can also be applied to any "DNA enrichment assays" if the question to be asked is simply: where we can find significant reads coverage than the random background.
+   * Open chromatin can be detected by piling up short fragments from NFRs
+   * Use the callpeaks command with the following parameters:
+   	* `-f BAMPE`: In paired-end analysis mode MACS2 interprets the full extent of the sequenced DNA fragments correctly, and discard alignments taht are not properly paired. When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the “R2” read) and then treats the remaining “R1” reads as if they were single-ended. It models the fragment lengths from the “single-end” R1 reads and then extends the read lengths to the average value from the mode. Why take erroneous fragment lengths when we can use actual fragment lengths from the PE data. 
+   	* `--nomodel` - bypass building the shifting model. No need to estimate fragment lengths since we have the actual values from the PE reads
+   	* `--keep-dup all`: Keep all reads since we have already filtered duplicates from our BAM files.
+   	* `--nolambda`: MACS will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)
+   * Add to "Other peak calling software" some examples of tools exclusively for ATAC-seq data (Genrich, F-Seq, HOMER)
+
+
 ## Learning Objectives
 
 * Describe the different components of the MACS2 peak calling algorithm
