@@ -107,3 +107,4 @@ Genrich
 * Analysis of multiple replicates; collectively calls peaks. No more IDR.
 * ATAC-seq mode: intervals are centered on transposase cut sites
 
+Good paper on different resources: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8191135/
