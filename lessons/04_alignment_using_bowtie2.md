@@ -40,9 +40,9 @@ In theory, this sounds like a very simple case of string matching. We take the s
 
 There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml).
 
-## To trim or not tor trim?
+## To trim or not to trim?
 
-Trimming is the process of removing unwanted sequence prior to sequence alignment. In general, trimming is an optional step. The 3' ends of the sequence may contain part of the Illumina sequencing adapter. This adapter contamination may prevent the reads from aligning to the reference genome correctly, thus adversely impacting the downstream analysis. You could evaluate potential adapter contamination either from the FastQC report (in "Overrepresented sequences" or "Adapter Contamination" sections), or from the size distribution of your sequencing libraries. If you suspect that your reads are contaminated with adapters, you should run an adapter removal tool. We list some additional considerations below whether trimming is needed.
+Trimming is the process of removing unwanted sequence prior to sequence alignment. In general, trimming is an optional step. The 3' ends of the sequence may contain part of the Illumina sequencing adapter. This adapter contamination may prevent the reads from aligning to the reference genome correctly, thus adversely impacting the downstream analysis. You could evaluate potential adapter contamination either from the FastQC report (in "Overrepresented sequences" or "Adapter Contamination" sections), or from the size distribution of your sequencing libraries. If you suspect that your reads are contaminated with adapters, you should run an adapter removal tool. We list some additional considerations below whether trimming is needed:
 
   * If the read length is 25bp, there is no need to trim - adapter sequences will not be included in reads of inserts >25 bp.
   * If you perform trimming, then there is no need to use soft-clipping during the alignment.
@@ -120,7 +120,7 @@ The command to run the alignment is simply `bowtie2`. Some additional arguments 
 * `-U`: /path/to/FASTQ_file
 * `-S`: /path/to/output/SAM_file
 
-For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below.
+For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below:
 
 <details>
 	<summary><b><i>CUT&RUN</i></b></summary>
