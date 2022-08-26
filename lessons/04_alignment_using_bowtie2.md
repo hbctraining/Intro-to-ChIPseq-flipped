@@ -6,28 +6,7 @@ date: "Aug 17th, 2021"
 
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
-Approximate time: 45 min
-
-## Modifications
-* After the bullet pointed list of parameters we use for Bowtie2 on ChIP-seq data, add two pull downs:
-   * CUT&RUN: There is variablity in terms of what parameters to use. Theoptions are different from one workflow to another. It is not neccessary to include any or all of these options. Rather we would like you to be aware that some combination of these options have been used by other groups. We encourage you to read through th literature and decide what is best for your data.  
-      * `--end-to-end`: Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
-      * `--very-sensitive`: a preset option which will result in Bowtie2 generally being slower, but more sensitive and more accurate.
-      * `--no-mixed`: By default, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it then tries to find alignments for the individual mates. This option disables that behavior.
-      * `--no-discordant`: A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints, This option disables that behavior.
-      * `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
-      * `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but encountered in CUT&RUN experiments. This flag indicates that dovetailed alignments should be considered as concordant.
-
-   * ATAC-seq: alignment is usually the same parameters as ChIP-seq, however the folowing can be added if needed:
-      * `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly
-      * `--very-sensitive`: better alignment results are frequently achieved with this.
-
-* Include a section on trimming: **To trim or not tor trim?** (this applies to ChIP-seq, CUT&RUN and ATAC-seq). Trimming is optional. The 3' ends may contain portions of the Illumina sequencing adapter. This adapter contamination may prevent the reads from aligning to the reference genome and adversely affect the downstream analysis. If you suspect that your reads may be contaminated with adapters (either from the FastQC report ["Overrepresented sequences" or "Adapter Contamination", or from the size distribution of your sequencing libraries), you should run an adapter removal tool.
-  * If reads are 25bp then there is no need to trim, as adapter sequences will not be included in reads of inserts >25 bp.
-  * If you trim, no need to use soft-clipping during alignment
-  * After trimming, a minimum read length of 25bp should be imposed, as reads smaller than this are hard to align accurately.
-  * Should you choose not trim reads, you will need to use --local when runing Bowtie2 as this will perform "soft-clipping" to ignore parts of the reads which may be of low quality.
-    
+Approximate time: 45 min    
        
 
 ## Learning Objectives
@@ -61,6 +40,14 @@ In theory, this sounds like a very simple case of string matching. We take the s
 
 There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml).
 
+## To trim or not tor trim?
+
+Trimming is the process of removing unwanted sequence prior to sequence alignment. In general, trimming is an optional step. The 3' ends of the sequence may contain part of the Illumina sequencing adapter. This adapter contamination may prevent the reads from aligning to the reference genome correctly, thus adversely impacting the downstream analysis. You could evaluate potential adapter contamination either from the FastQC report (in "Overrepresented sequences" or "Adapter Contamination" sections), or from the size distribution of your sequencing libraries. If you suspect that your reads are contaminated with adapters, you should run an adapter removal tool. We list some additional considerations below whether trimming is needed.
+
+  * If the read length is 25bp, there is no need to trim - adapter sequences will not be included in reads of inserts >25 bp.
+  * If you perform trimming, then there is no need to use soft-clipping during the alignment.
+  * After trimming, a minimum read length of 25bp should be imposed, as reads smaller than this are hard to align accurately.
+  * Should you choose not to trim reads, you will need to use `--local` when runing Bowtie2 - this will perform "soft-clipping" to ignore parts of the reads that are of low quality.
 
 ## Bowtie2
 
@@ -133,16 +120,26 @@ The command to run the alignment is simply `bowtie2`. Some additional arguments 
 * `-U`: /path/to/FASTQ_file
 * `-S`: /path/to/output/SAM_file
 
+For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below.
+
 <details>
 	<summary><b><i>CUT&RUN</i></b></summary>
-	<p> There is variablity in terms of what parameters to use. Theoptions are different from one workflow to another. It is not neccessary to include any or all of these options. Rather we would like you to be aware that some combination of these options have been used by other groups. We encourage you to read through th literature and decide what is best for your data.
-    
-      * `--end-to-end`: Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
-      * `--very-sensitive`: a preset option which will result in Bowtie2 generally being slower, but more sensitive and more accurate.
-      * `--no-mixed`: By default, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it then tries to find alignments for the individual mates. This option disables that behavior.
-      * `--no-discordant`: A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints, This option disables that behavior.
-      * `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
-      * `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but encountered in CUT&RUN experiments. This flag indicates that dovetailed alignments should be considered as concordant.</p>
+	<p> For CUT&RUN, the parameters you would choose different from one workflow to another. It might not neccessary to include any or all of these options. Rather, we list them here because some combination of these options have been reported by other groups. We encourage you to explore literatures that resemble your research and method, and decide what is best for your data.
+		
+    * `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
+    * `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
+    * `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
+    * `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
+    * `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+    * `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
+</details>
+
+<details>
+	<summary><b><i>ATAC-seq</i></b></summary>
+	<p> ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but the following options can be added if needed:
+		
+    * `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.
+    * `--very-sensitive`: better alignment results are frequently achieved with this.</p>
 </details>
 
 Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
