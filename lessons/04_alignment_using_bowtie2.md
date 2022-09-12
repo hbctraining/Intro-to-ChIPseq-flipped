@@ -125,7 +125,7 @@ For CUT&RUN and ATAC-seq, there are additional parameters that you want to explo
 <details>
 	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
 	<br>
-	<p> For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.<\b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.<\i>
+	<p> For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.</b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.</i>
 		
 * `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
 * `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
