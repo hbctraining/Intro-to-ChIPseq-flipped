@@ -8,19 +8,6 @@ Contributors: Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdi
 
 Approximate time: 60 minutes
 
-## Modifcations
-* CUT&RUN: A note to explicitly state that there are no changes in how we run peak calling for CUT&RUN-seq data. The only thing we might add is `f BAMPE` since we have paired-end data.
-* A pull-down under the "macs2 parameters" section for ATAC-seq. To identify acccessible gregions in the genome we need to call peaks on the nuclesome-free BAM file obtained post-filtering. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline. While there may be other ATAC-seq specific callers out there, we have no experience with them so we stick with MACS2. As a general peak-caller, MACS can also be applied to any "DNA enrichment assays" if the question to be asked is simply: where we can find significant reads coverage than the random background.
-   * Open chromatin can be detected by piling up short fragments from NFRs
-   * Use the callpeaks command with the following parameters:
-   	* `-f BAMPE`: In paired-end analysis mode MACS2 interprets the full extent of the sequenced DNA fragments correctly, and discard alignments taht are not properly paired. When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the “R2” read) and then treats the remaining “R1” reads as if they were single-ended. It models the fragment lengths from the “single-end” R1 reads and then extends the read lengths to the average value from the mode. Why take erroneous fragment lengths when we can use actual fragment lengths from the PE data. 
-   	* `--nomodel` - bypass building the shifting model. No need to estimate fragment lengths since we have the actual values from the PE reads
-   	* `--keep-dup all`: Keep all reads since we have already filtered duplicates from our BAM files.
-   	* `--nolambda`: MACS will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)
-   * Add to "Other peak calling software" some examples of tools exclusively for ATAC-seq data (Genrich, F-Seq, HOMER)
-   * [Good paper](https://www.biorxiv.org/content/10.1101/496521v1.full)
-
-
 ## Learning Objectives
 
 * Describe the different components of the MACS2 peak calling algorithm
@@ -224,6 +211,29 @@ Move the log files to the `log` directory we had created during our project setu
 $ mv macs2/*.log ../logs/
 ```
 
+As a general peak-caller, MACS can  be applied to any "DNA enrichment assays" if the question to be asked is simply: where we can find significant reads coverage than the random background. Below, we comment on changes required for CUT&RUN and ATAC-seq.
+
+<details>
+	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
+	<br>
+	<p> <b>There is very little required change for peak calling on CUT&RUN-seq data.</b> The only notable difference is the CUT&RUN sequencing data will typically be paired-end. To account for this, you can add the format parameter `f BAMPE`.
+		
+* `f BAMPE`: Paired-end analysis mode in MACS2. interprets the full extent of the sequenced DNA fragments correctly, and discards alignments that are not properly paired. When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the “R2” read) and then treats the remaining “R1” reads as if they were single-ended. It models the fragment lengths from the “single-end” R1 reads and then extends the read lengths to the average value from the mode. Using this mode with paired-end data enables the use of actual fragment lengths, for a more accurate end result</p>
+	
+</details>
+
+<details>
+	<summary><b><i>How do the parameters change for ATAC-seq</i></b></summary>
+	<br>
+	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline. There are other ATAC-seq specific callers, however we have no experience and are unable to comment wiythout benchmarking.
+		
+* `f BAMPE`: Paired-end analysis mode in MACS2.
+* `--nomodel`: Bypass building the shifting model. The read pileup does not represent a bimodal pattern, as there is no specific protein-DNA interaction that we are assaying. Open regions will be unimodal in nature, not requiring any shifting of reads.
+* `--keep-dup all`: Keep all reads since we have already filtered duplicates from our BAM files.
+* `--nolambda`: MACS2 will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)
+	
+</details>
+
 ## MACS2 Output files
 
 Change directories into `macs2`, and list the output files that we have generated.
@@ -276,6 +286,11 @@ We have used this lesson to describe to you the inner workings of the MACS2 peak
 * [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
 * [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
 * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
+* [Genrich](https://github.com/jsh58/Genrich): designed to be able to run all of the post-alignment steps through peak-calling with one command. Features include:
+	* Removal of mitochondrial reads and PCR duplicates
+	* Analysis of multimapping reads
+	* Analysis of replicates
+	* A specific _ATAC-seq mode_
 
 
 ***
