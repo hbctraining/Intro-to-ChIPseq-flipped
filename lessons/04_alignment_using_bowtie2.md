@@ -123,23 +123,27 @@ The command to run the alignment is simply `bowtie2`. Some additional arguments 
 For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below:
 
 <details>
-	<summary><b><i>CUT&RUN</i></b></summary>
-	<p> For CUT&RUN, the parameters you would choose different from one workflow to another. It might not neccessary to include any or all of these options. Rather, we list them here because some combination of these options have been reported by other groups. We encourage you to explore literatures that resemble your research and method, and decide what is best for your data.
+	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
+	<br>
+	<p> For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. **It might not be neccessary to include any or all of these options.**  _We encourage you to explore the literature that resemble your research and method, and decide what is best for your data._
 		
-    * `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
-    * `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
-    * `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
-    * `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
-    * `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
-    * `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
+* `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
+* `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
+* `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
+* `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
+* `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+* `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
+	
 </details>
 
 <details>
-	<summary><b><i>ATAC-seq</i></b></summary>
+	<summary><b><i>How do the parameters change for ATAC-seq?</i></b></summary>
+	<br>
 	<p> ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but the following options can be added if needed:
 		
-    * `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.
-    * `--very-sensitive`: better alignment results are frequently achieved with this.</p>
+* `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.
+* `--very-sensitive`: better alignment results are frequently achieved with this.</p>
+		
 </details>
 
 Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
