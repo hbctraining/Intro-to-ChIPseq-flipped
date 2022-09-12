@@ -139,7 +139,7 @@ For CUT&RUN and ATAC-seq, there are additional parameters that you want to explo
 <details>
 	<summary><b><i>How do the parameters change for ATAC-seq?</i></b></summary>
 	<br>
-	<p> ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but <b>the following options can be added if needed<\b>:
+	<p> ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but <b>the following options can be added if needed</b>:
 		
 * `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.
 * `--very-sensitive`: better alignment results are frequently achieved with this.</p>
