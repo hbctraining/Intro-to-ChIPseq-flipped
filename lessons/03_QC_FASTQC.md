@@ -288,10 +288,6 @@ The **[Sequence duplication level](https://www.bioinformatics.babraham.ac.uk/pro
 	<img src="../img/03_fastqc_duplication_level.png" width="600">
 </p>
 
-#### Per base GC content
-[NEEDS WORK] The enzymatic cut by Tn5 will introduce bias due to binding preference, which is associated with GC content and so we might observe some anomalies with GC ditribution plot.
-
-
 #### Over-represented sequences
 
 **[Over-represented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)** could come from actual biological significance, or biases introduced during the sequencing. With ChIP-seq, you expect to see over-represented sequences in the immunoprecipitation sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences in FastQC report doesn’t mean you have a bad experiment. If you observe over-represented sequences in the input sample, that usually suggests some bias in the protocol to specific regions. Here, there is no over-represented sequences in our `wt_sample2_chip` sample. 
