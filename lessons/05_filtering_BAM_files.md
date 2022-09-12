@@ -140,7 +140,6 @@ We filter out unmapped reads by specifying in the filter `not unmapped`, and dup
 
 Now that the alignment files contain only uniquely mapping reads, we are ready to perform peak calling!
 
-
 > ### Filtering out Blacklisted Regions
 > Although we do not perform this step, it is common practice to apply an additional level of filtering to our BAM files. That is, we remove alignments that occur with defined Blacklisted Regions. **We will filter out blacklist regions post-peak calling.**
 > 
@@ -155,6 +154,34 @@ Now that the alignment files contain only uniquely mapping reads, we are ready t
 > 
 > _bedtools is a suite of tools that we will discuss in more detail in a later lesson when blacklist filtering is applied._
 
+For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below:
+
+<details>
+	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
+	<br>
+	<p> * Duplicate removal is an optional step in many CUT&RUN analysis approaches. The default is to keep duplicates. This is because CUT&RUN increases the likelihood of biological duplicates. Therefore, we should remove duplicate with caution. We should assess the library complexity and check if there is an unreasonbly high amount of duplication. If not, and your experiment does not over-amplify, you might not want to remove the duplicate. But, why?** Quoted from CUT&RUNtools paper: "...it is argued that nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, and shorter DNA fragments also increased the likelihood of identical reads that originated from different cells." Basically they say that the nature of the technique will increase likelihood of biological duplicates. Remove duplicates from CUT&RUN experiments with caution. First assess your library complexity and if you do not see an unreasonably high amount of duplication and you know you didn't over-amplify, you might not want to remove.
+* No mention of multi-mapper removal in any CUT&RUN analysis approaches either. Maybe because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option)
+* Filtering of BAM files by fragment size.
+   * After alignment, fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
+   * Done using sambamba: 
+
+```bash
+sambamba view --format \
+  bam --nthreads 6 \
+  -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
+```
+</p>
+  
+  For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.</b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.</i>
+		
+* `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
+* `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
+* `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
+* `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
+* `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+* `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
+	
+</details>
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
