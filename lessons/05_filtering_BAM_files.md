@@ -165,7 +165,6 @@ sambamba view --format \
 	
 </details>
 
-Now that the alignment files contain only uniquely mapping reads, we are ready to perform peak calling!
 
 > ### Filtering out Blacklisted Regions
 > Although we do not perform this step, it is common practice to apply an additional level of filtering to our BAM files. That is, we remove alignments that occur with defined Blacklisted Regions. **We will filter out blacklist regions post-peak calling.**
