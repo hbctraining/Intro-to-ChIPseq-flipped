@@ -260,7 +260,7 @@ On the left side of the report, a summary of all the modules is given. **Don't t
 </p>
 
 
-***Please note that the evaluation of FASTQC metrics will remain the same for CUT&RUN data, however there are minor differences when working with ATAC-seq data. Where appropriate, we have added pull-down sections on ATAC-seq.
+> **Please note that the evaluation of FASTQC metrics will remain the same for CUT&RUN data, however there are minor differences when working with ATAC-seq data. Where appropriate, we have added pull-down sections on ATAC-seq.**
 
 #### Per base sequence quality
 The **[Per base sequence quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html)** plot is an important analysis module in FastQC for ChIP-seq; it provides the distribution of quality scores across all bases at each position in the reads. This information helps determine whether there are any problems during the sequencing of your data. Generally, we might observe a decrease in quality towards the ends of the reads, but we shouldn't see any quality drops at the beginning or in the middle of the reads.
@@ -293,7 +293,7 @@ The **[Sequence duplication level](https://www.bioinformatics.babraham.ac.uk/pro
 **[Over-represented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)** could come from actual biological significance, or biases introduced during the sequencing. With ChIP-seq, you expect to see over-represented sequences in the immunoprecipitation sample, because that's exactly what you're doing - enriching for particular sequences based on binding affinity. However, lack of over-represented sequences in FastQC report doesn’t mean you have a bad experiment. If you observe over-represented sequences in the input sample, that usually suggests some bias in the protocol to specific regions. Here, there is no over-represented sequences in our `wt_sample2_chip` sample. 
 
 <details>
-	<summary><i>Notes on ATAC-seq</i></summary>
+	<summary><b>Over-represented sequences in ATAC-seq</b></summary>
 	<br>Since we are evaluating open regions and specific protein-DNA binding, and not enriching for very specific regions like in ChIP, we do not expect to see over-represented sequences for ATAC-seq data.<br><br>
 </details>
 
@@ -308,7 +308,7 @@ The **[Kmer content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/H
 For our sample, we observe a significant amount of K-mer content and FastQC suggests a "Failure". However, for ChIP-seq data a "Failure" of this metric is expected and is actually a sign of good signal in your data. Remember that the DNA sequences we have collected are from binding sites of our protein of interest. We would hope that there is some enrichment of K-mers amongst the binding sites (i.e shared motifs). We don't expect this same result for the FastQC analysis of our input sample.
 
 <details>
-	<summary><i>Notes on ATAC-seq</i></summary>
+	<summary><b>K-mer content in ATAC-seq</b></summary>
 	<br>Since we are evaluating open regions and specific protein-DNA binding, and not enriching for very specific regions like in ChIP, we do not expect to see enrichment of specific kmers.<br><br>
 </details>
 
