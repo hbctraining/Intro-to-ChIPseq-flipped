@@ -1,5 +1,5 @@
 ---
-title: "Alignment and filtering"
+title: "Filtering BAM files"
 author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger"
 date: "Aug 10th, 2021"
 ---
@@ -7,32 +7,6 @@ date: "Aug 10th, 2021"
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
 Approximate time: 45 minutes
-
-## Modifications
-
-**CUT&RUN**
-
-* Duplicate removal is optional in many CUT&RUN analysis approaches (Henikoff, CUT&RUN tools, and STAR protocols). 
-  * **Default is to keep duplicates. But, why?** Quoted from CUT&RUNtools paper: "...it is argued that nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, and shorter DNA fragments also increased the likelihood of identical reads that originated from different cells." Basically they say that the nature of the technique will increase likelihood of biological duplicates. Remove duplicates from CUT&RUN experiments with caution. First assess your library complexity and if you do not see an unreasonably high amount of duplication and you know you didn't over-amplify, you might not want to remove.
-* No mention of multi-mapper removal in any CUT&RUN analysis approaches either. Maybe because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option)
-* Filtering of BAM files by fragment size.
-   * After alignment, fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
-   * Done using sambamba: 
-
-```bash
-sambamba view --format \
-  bam --nthreads 6 \
-  -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
-```
-
-**ATAC-seq**
-
-* Uniquely mapping reads is critical. A unique mapping rate over 80% is typical for a successful ATAC-seq experiment. Duplicates and multi-mappers are removed. 
-* Filtering mitochondrial reads. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These reads should be discarded. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.
-* Filtering BAM files based on fragment size.
-   * Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)
-   * Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS.  Use sambamba code from above to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. Typically the NFR BAM is used for peak calling.  
-   * Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase
 
 ## Learning Objectives
 
@@ -54,6 +28,15 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
  <img src="../img/Multimapping_reads.png" width="500">
 </p>
 
+<details>
+	<summary><b><i>Are multi-mappers treated differently for CUT&RUN and ATAC-seq data?</i></b></summary>
+	<br>
+	<p><b>Uniquely mapping reads is critical for ATAC-seq analysis.</b> A unique mapping rate over 80% is typical for a successful experiment. Multi-mappers are always removed. <p>
+	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option).
+</p>
+	
+</details>
+
 * Duplicate reads are reads that map at the exact same location, with the same coordinates and the same strand. These duplicates can arise from experimental artifacts, but can also contribute to genuine ChIP-signal.
     * **The bad kind of duplicates:** If initial starting material is low, this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. 
     * **The good kind of duplicates:** You can expect some biological duplicates with ChIP-seq since you are only sequencing a small part of the genome. This number can increase if your depth of coverage is excessive or if your protein only binds to few sites. If there are a good proportion of biological dupicates, removal can lead to an underestimation of the ChIP signal. 
@@ -67,6 +50,18 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > * You are planning on performing a differential binding analysis.
 > * You are expecting binding in repetitive regions (also, use paired-end sequencing) 
 > * You have included [UMIs](https://www.illumina.com/techniques/sequencing/ngs-library-prep/multiplexing/unique-molecular-identifiers.html) into your experimental setup.
+
+<details>
+	<summary><b><i>Are duplicates treated differently for CUT&RUN or ATAC-seq?</i></b></summary>
+	<br>
+	<p><b> Duplicate removal is always performed for ATAC-seq data.</b><br>
+	<p> <b>Duplicate removal is an optional step in many CUT&RUN analysis approaches</b>. The default is usually to keep duplicates, because CUT&RUN increases the likelihood of biological duplicates. More specifically, nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, increasing the likelihood of identical reads that are originated from different cells. Therefore, we should remove duplicate with caution. Assess the library complexity first, and then check if there are unreasonbly high amount of duplications. If not, and your experiment does not over-amplify, you might not want to remove the duplicate. <br>
+	
+</p>
+	
+</details>
+
+### Filtering workflow
 
 The older version of Bowtie2 had an argument that allowed us to easily perform filtering during the alignment process. but the latest Bowtie2 does not have this option. As a result, the filtering will be done with the use of a tool called [sambamba](https://lomereiter.github.io/sambamba/). Sambamba is an open source tool that provides methods for working with SAM/BAM files, similar to samtools, except with faster processing times and in some cases added functionality. 
 
@@ -138,6 +133,38 @@ wt_sample2_chip_sorted.bam > wt_sample2_chip_final.bam
 
 We filter out unmapped reads by specifying in the filter `not unmapped`, and duplicates with `not duplicate`. Also, among the reads that are aligned, we filter out multimappers by specifying `[XS] == null`. 'XS' is a tag generated by Bowtie2 that gives an alignment score for the second-best alignment, and it is only present if the read is aligned and more than one alignment is found for the read.
 
+<details>
+	<summary><b><i>Click here for additional filtering considerations for CUT&RUN data</i></b></summary>
+	<br>
+	<p> Once the CUT&RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
+		
+   * Example code for filtering BAM files by fragment size: 
+
+```bash
+sambamba view --format \
+  bam --nthreads 6 \
+  -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
+```
+</p>
+	
+</details>
+
+<details>
+	<summary><b><i>Click here for additional filtering considerations for ATAC-seq data</i></b></summary>
+	<br>
+	<p>
+		There are two additional filtering steps that need to be performed for ATAC-seq data analysis:
+		
+* <b>Filtering mitochondrial reads</b>. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These <b>reads should be discarded</b>. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.
+* <b>Filtering BAM files based on fragment size.</b>
+	* Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)
+	* Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b>
+	* Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase
+
+</p>
+	
+</details>
+
 Now that the alignment files contain only uniquely mapping reads, we are ready to perform peak calling!
 
 > ### Filtering out Blacklisted Regions
@@ -154,35 +181,7 @@ Now that the alignment files contain only uniquely mapping reads, we are ready t
 > 
 > _bedtools is a suite of tools that we will discuss in more detail in a later lesson when blacklist filtering is applied._
 
-For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below:
 
-<details>
-	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
-	<br>
-	<p> Duplicate removal is an optional step in many CUT&RUN analysis approaches. The default is usually to keep duplicates, because CUT&RUN increases the likelihood of biological duplicates. More specifically, nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, and shorter DNA fragments also increase the likelihood of identical reads that are originated from different cells (https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1802-4). Therefore, we should remove duplicate with caution: assess the library complexity first, and then check if there are unreasonbly high amount of duplications. If not, and your experiment does not over-amplify, you might not want to remove the duplicate.
-		
-There are no mention of multi-mapper removal step in CUT&RUN analysis approaches neither. Maybe because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option)
-* Filtering of BAM files by fragment size.
-   * After alignment, fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
-   * Done using sambamba: 
-
-```bash
-sambamba view --format \
-  bam --nthreads 6 \
-  -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
-```
-</p>
-  
-  For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.</b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.</i>
-		
-* `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
-* `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
-* `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
-* `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
-* `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
-* `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
-	
-</details>
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
