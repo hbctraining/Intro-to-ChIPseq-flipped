@@ -1,5 +1,5 @@
 ---
-title: "Experimental design considerations and understanding the ChIP-seq workflow"
+title: "Experimental design considerations"
 author: "Mary Piper, Radhika Khetani, Meeta Mistry, Shannan Ho Sui, Will Gammerdinger"
 date: "September 15th, 2021"
 ---
@@ -8,10 +8,7 @@ Approximate time: 45 minutes
 
 ## Learning Objectives
 
-* Identify public research consortia for gene regulation and the resources they provide
-* Explain experimental design considerations for a ChIP experiment
-* Describe the steps involved in a ChIP-seq analysis workflow
-
+* 
 
 ## Unraveling the epigenetic landscape
 It is clear that DNA sequence and transcription factor availability alone are not sufficient for effective gene regulation in eukaryotes. Epigenetic factors at various levels also have an essential role. DNA wraps around histones to form nucleosomes, which fold and condense to form chromatin. In the processes of DNA replication and transcription, some regions of chromatin are opened and regulatory machinery can bind to the exposed DNA binding sites. In addition, the chromatin structure can undergo dynamic epigenetic modifications, such as DNA methylation, histone modification and chromatin remodelling.
@@ -25,10 +22,7 @@ It is clear that DNA sequence and transcription factor availability alone are no
 _Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Projects can teach us about how we are who we are"](https://portlandpress.com/biochemist/article/37/5/24/773/From-DNA-to-a-human-What-the-ENCODE-and-Roadmap)_
 
 
-
-
-
-## ChIP-seq: A method for detecting and characterizing protein–DNA interactions
+### ChIP-seq: A method for detecting and characterizing protein–DNA interactions
 
 In this workshop we will be focusing on the ChIP-seq technology. <u>Ch</u>romatin <u>I</u>mmuno<u>p</u>recipitation followed by sequencing (ChIP-seq) is a central method in epigenomic research. In ChIP experiments, a transcription factor, cofactor, or other chromatin protein of interest is enriched by immunoprecipitation from cross-linked cells, along with its associated DNA. The immunoprecipitated DNA fragments are then sequenced, followed by identification of enriched regions of DNA or peaks. These peak calls can then be used to make biological inferences by determining the associated genomic features and/or over-represented sequence motifs. 
 
@@ -41,7 +35,93 @@ _Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Proj
 
 ChIP-seq has been widely used for many transcription factors, histone modifications, chromatin modifying complexes, and other chromatin-associated proteins in a wide variety of organisms. As such, **there is much diversity in the way ChIP-seq experiments are designed and the way analyses are executed.**
 
-In this lesson, we describe a few general guidelines for setting up a ChIP-seq experiment and outline the basic analysis workflow.
+
+### CUT&RUN: An improved alternative to ChIP-seq
+
+ChIP-seq is a notoriously challenging approach. Despite rigorous optimization and washing, the method is subject to high background. The resulting low signal to noise ratio makes it difficult to identify true binding sites.
+
+**C**leavage **U**nder **T**argets and **R**elease **U**sing **N**uclease (CUT&RUN) is an innovative chromatin mapping strategy that is **rapidly gaining traction in the field**. The protocol requires less than a day to go from from cells to DNA, and can be done entirely on the benchtop using standard equipment that is already present in most molecular biology laboratories.
+
+#### How does it work?
+
+CUT&RUN is a native endonuclease-based method based on the binding of an antibody to a chromatin-associated protein in situ and the recruitment of a protein A-micrococcal nuclease fusion (pA-MN) to the antibody to efficiently cleave DNA surrounding binding sites.
+
+<details>
+	<summary><b>Click here for more specifics on the CUT&RUN protocol</b></summary>
+	<br>
+	<p> Below we describe each step of the protocol in some detail:
+		
+1. Cells/nuclei are bound to concanavalin A–coated magnetic beads.
+	- In the original [Henikoff lab paper](https://elifesciences.org/articles/21856) they isolate nuclei. Using purified nuclei allows for maximal binding of antibodies to nuclear factors and will result in cleaner CUT&RUN signal compared to protocol using whole cells. 
+	- In the more [recent paper, also from the Henikoff lab](https://elifesciences.org/articles/46314), whole cells are harvested. They introduce the use of a strong detergent to permeabilize cells rather than relying on the extraction of nuclei.
+	
+2. Cell membranes (or nuclear membrances) are permeabilized with digitonin to allow the antibody access to its target (1h to overnight)
+3. The Protein A fused MNase is then added. Protein A binds the Immunoglobulin G (IgG) on the primary antibody (or mock IgG) thus targeting the MNase to antibody bound proteins.
+4. The nuclease is briefly activated to digest the DNA around the target protein. This targeted digestion is controlled by the release of (previously chelated) calcium, which MNase requires for its nuclease activity. The nuclease reaction is performed on ice, and only for a short period of time, thus precisely controlling the amount of cutting and thereby mitigating noise generated by off target digestion. 
+5. At this point mononucleosomal-sized DNA fragments from a different organism is added (spike-in DNA).
+6. Fragments are released from nuclei by a short incubation at 37 °C. 
+7. These short DNA fragments are then purified for subsequent library preparation and high-throughput sequencing.
+		
+</details>
+
+<p align="center">
+<img src="../CUT&RUN/img/CR_protocol_schematic.png" width="700">
+</p>
+
+_Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-method-for-studying-protein-dna-interactions)_
+
+
+> #### What about CUT&TAG?
+> For the **C**leavage **U**nder **T**argets and **Tag**mentation assay, pAG is fused to a hyperactive Tn5 transposase (pAG-Tn5) pre-loaded with sequencing adaptors, and is activated by magnesium to simultaneously fragment and “tag” antibody-labelled chromatin with adaptors. This bypasses traditional library prep steps and accelerates sample processing. However, it only works well with nuclei.
+> 
+> Both assays were developed in the laboratories of Dr. Steven Henikoff (Fred Hutchinson Cancer Research Center, Seattle, WA, USA) and Dr. Ulrich Laemmli (University of Geneva, Switzerland).
+
+### CUT&RUN versus ChIP-seq
+
+| Advantages of CUT&RUN       | Limitations of CUT&RUN |
+|:-----------:|:----------:|
+| **Requires less starting material (smaller number of cells)**. It could be used with as low as 5K cells.       | **Not all proteins have been optimized for the protocol.** You may need to invest time in pilot experiments to get the protocol working for you. | 
+|**Lower depth of sequencing**. You can produce high-quality CUT&RUN data with only 3–8 million reads per sample.      | **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for ChIP-seq protocols where DNA shearing must be optimized. | 
+| **Background is significantly reduced**, using targeted release of genomic fragments.       | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.| 
+| **Lower costs**, by reducing antibody usage, library prep, and sequencing depth requirements | | 
+
+
+### ATAC-seq: Assaying open regions in the genome
+
+A popular approach used to identify open regions of the genome is the **A**ssay for **T**ransposase-**A**ccessible **C**hromatin (ATAC) followed by high throughput sequencing.  The ATAC-Seq method was first [published in 2013](https://www.ncbi.nlm.nih.gov/pubmed/24097267) in the journal Nature Methods by lead researcher Jason Buenrostro in the labs of Howard Chang and William Greenleaf at Stanford University.
+
+#### How does it work?
+
+* Utilizes hyperactive Tn5 transposase to insert sequencing adapters into the open chromatin regions 
+* Tn5 tagmentation simultaneously fragments the genome and tags the resulting DNA with sequencing adapters
+* Amplify and sequence
+
+<p align="center">
+<img src="../ATAC-seq/img/atacseq_schematic.png" width="500">
+</p>
+
+_Image source: [Buenrostro et al., 2015](https://www.ncbi.nlm.nih.gov/pubmed/24097267)_
+
+The method relies on the hyperactive Tn5 transposase that was already being used for tagmentation-based NGS library preparation methods. The authors hypothesized that if a similar approach was used in vivo, the **addition of the adapters would mainly take place in open chromatin regions, where no steric hindrance of the transposase would occur**, allowing the enzyme to preferentially access these regions.
+
+#### Why ATAC-seq?
+
+* The main advantage over existing methods is the **simplicity** of the library preparation protocol:
+	* Tn5 insertion followed by two rounds of PCR.
+	* no sonication or phenol-chloroform extraction like FAIRE-seq
+	* no antibodies like ChIP-seq
+	* no sensitive enzymatic digestion like MNase-seq or DNase-seq
+	
+* **Short time requirement.** Unlike similar methods, which can take up to four days to complete, ATAC-seq preparation can be completed in under three hours.
+* **Low starting cell number** than other open chromatin assays (500 to 50K cells recommended for human).
+
+
+## DNA fragments and the corresponding data signal
+
+### Protein-DNA binding profiles
+
+# Chromatin accessibiliy
+
 
 ## Experimental design considerations
 
