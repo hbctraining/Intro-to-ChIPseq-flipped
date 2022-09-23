@@ -82,9 +82,9 @@ _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-metho
 
 | Advantages of CUT&RUN       | Limitations of CUT&RUN |
 |:-----------:|:----------:|
-| **Requires less starting material (smaller number of cells)**. It could be used with as low as 5K cells.       | **Not all proteins have been optimized for the protocol.** You may need to invest time in pilot experiments to get the protocol working for you. | 
-|**Lower depth of sequencing**. You can produce high-quality CUT&RUN data with only 3–8 million reads per sample.      | **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for ChIP-seq protocols where DNA shearing must be optimized. | 
-| **Background is significantly reduced**, using targeted release of genomic fragments.       | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.| 
+| **Requires less starting material (smaller number of cells)**. It could be used with as low as 5K cells.  | **Not all proteins have been optimized for the protocol.** You may need to invest time in pilot experiments to get the protocol working for you. | 
+|**Lower depth of sequencing**. You can produce high-quality CUT&RUN data with only 3–8 million reads per sample.  | **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for ChIP-seq protocols where DNA shearing must be optimized. | 
+| **Background is significantly reduced**, using targeted release of genomic fragments.  | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.| 
 | **Lower costs**, by reducing antibody usage, library prep, and sequencing depth requirements | | 
 
 ---
@@ -118,12 +118,16 @@ The method relies on the hyperactive Tn5 transposase that was already being used
 * **Short time requirement.** Unlike similar methods, which can take up to four days to complete, ATAC-seq preparation can be completed in under three hours.
 * **Low starting cell number** than other open chromatin assays (500 to 50K cells recommended for human).
 
----
 
 ## Profiling chromatin structure
 
 ### Protein-DNA binding 
-Narrow peaks are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (red and orange in the image above).
+In a typical primary ChIP-seq analysis pipeline, the sequence reads are mapped to a reference genome and areas with the highest coverage (peaks) are determined.  When we visualize the reads in a genome viewer **these regions present with a characteristic signal profile** depending on the protein of interest.
+
+* **Narrow peaks**: a signal profile spanning a small region but with high amplitude (shown in the red track in the image below). The narrow peak profile is generally observed for most transcription factors, but also for some regulatory elements (i.e. CTCF). 
+* **Mixed peaks:** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown below is RNA polymerase II (orange), which has a sharp peak followed by a broader (lower amplitude) region of enrichment.
+* **Broad peaks:** present as larger regions of enrichment across the gene body, and are typically observed with speicific histone marks as described below.
+
 
 <p align="center">
 <img src="../img/binding_profiles_narrow.png" width="500">
@@ -133,23 +137,28 @@ _Image adapted from: [Park P., Nature Reviews Genetics (2009) **10**: 669–680]
 
 
 ### Histone modifications
+When it comes to analyzing histone modifications, the histone code has the potential to be massively complex with each of the four standard histones possibly being modified at multiple sites with different modifications in their N-terminal ends. But in practice, researchers tend to limit themselves to a few modifications on **Histone 3 with well characterized roles in gene regulation**: 
 
-When it comes analyzing histone modifications, the histone code has the potential to be massively complex with each of the four standard histones possibly being modified at multiple sites with different modifications in their N-terminal ends. But in practice, researchers tend to limit themselves to a few modifications on histone 3 with well characterized roles in gene regulation: 
-Active promoters: H3K4me3, H3K9Ac 
-Active enhancers: H3K27Ac, H3K4me1 
-Repressor: H3K9me3 and H3K27me3 
-Actively transcribed gene bodies: H3K36me3 
+* **Active promoters** (narrow peak): H3K4me3, H3K9Ac 
+* **Active enhancers** (narrow peak): H3K27Ac, H3K4me1 
+* **Repressor** (broad peak): H3K9me3 and H3K27me3 
+* **Actively transcribed gene bodies** (broad peak): H3K36me3 
+
+<p align="center">
+<img src="../img/histone_marks.png" width="500">
+</p>
+
+_Image source: Lim et al, 2010, Epigenomics_
 
 ### Chromatin accessibility
 
+The schematic below illustrates the representative DNA fragments and the expected signal profile obtained from current chromatin accessibility assays.
 
-In one assay, **ATAC-seq is able to simultaneously assess three different aspects of chromatin architecture** at high resolution:
+* **Open chromatin**: FAIRE-seq, DNAse-seq
+* **Transcription factor occupancy**: DNAse-seq
+* **Nucleosome occupancy**: MNase-seq
 
-1. Maps open chromatin
-2. Transcription factor occupancy
-3. Nucleosome occupancy
-
-The schematic below illustrates the representative DNA fragments and corresponding data signal obtained from current chromatin accessibility assays. You can see how the ATAC-seq profile is an aggregate off all of the other assays.
+In one assay, **ATAC-seq is able to simultaneously assess three different aspects of chromatin architecture** at high resolution. Therefore, in our data we will tend to see regions corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp) respectively). 
 
 <p align="center">
 <img src="../ATAC-seq/img/chromatin_architecture.jpeg" width="500">
@@ -242,46 +251,19 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 > #### Do we see batch effects in ChIP-seq data?
 > Typically, batch effects are not as big of a concern with ChIP-seq data. However, it is best to run everything in parallel as much as possible. If you only have a single sample group, it should be more feasible to prepare all samples together (since there are fewer). For multiple sample groups, if you are not able to process all samples together, split replicates of the different sample groups across batches. This way you avoid any potential confounding.
 
-### Types of binding profiles
-
-A major factor to consider when choosing your sequencing depth is the type of binding profile you are expecting. There are three types of binding profiles, generally speaking: narrow, broad and mixed. The variations in profiles are depicted in the image below:
-
-<p align="center">
-<img src="../img/binding_profiles.jpg" width="500">
-</p>
-
-*Image source: [Park P., Nature Reviews Genetics (2009) **10**: 669–680](https://www.nature.com/articles/nrg2641).*
-
-* **Narrow peaks** are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. *E.g. CTCF and RNA polymerase II (red and orange in the image above).*
-* **Broad peaks** present as larger regions of enrichment across the gene body. This type of profile is often associated with histone modifications that mark domains — for example, transcribed or repressed regions. *E.g. H3K36me3 and H3K27me3 (green and blue in the image above).*
-* **Mixed peaks** are more difficult to discern, as the profile is a mixture of narrow and broad. The example shown is RNA polymerase II (orange), which has a sharp peak followed by a broad region of enrichment.
-
-The table below is adapted from the [ENCODE data standards page](https://www.encodeproject.org/chip-seq/histone-encode4/), which categorizes the different histone marks by their signal profile. Knowing the profile expected for a given histone mark can help you determine the appropriate sequencing depth.
-   
-|Broad Peaks	| Narrow Peaks |	Exceptions/Mixed Peaks |
-|---------------|---------------|---------------|
-|H3F3A|H2AFZ|H3K9me3|
-|H3K27me3|H3ac||
-|H3K36me3|H3K27ac||
-|H3K4me1|H3K4me2||
-|H3K79me2|H3K4me3||
-|H3K79me3|H3K9ac||
-|H3K9me1|||
-|H3K9me2|||
-|H4K20me1|||
-|H3K9me3|||
-
 ### Sequencing considerations
 
-Below we list some general guidelines and things to think about when sending your samples to the sequencing facility:
+|       | ChIP-seq| CUT&RUN | ATAC-seq |
+|:-----------:|:----------:|:----------:|
+| Read length    | 50- to 150-bp* |  |  |
+| Sequencing mode    | Single-end reads are sufficient in most cases** |  |  |
+| Sequencing depth    | |  |  |
 
-#### Read length
-* Read length should be between 50- to 150-bp
-* Single-end reads are sufficient in most cases
-    * Longer reads and paired-end reads will improve mappability
-    * Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements
-* Balance cost with value of more informative reads
+_*Longer reads and paired-end reads will improve mappability
+_**Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements
+Balance cost with value of more informative reads
     * i.e. spending money on replicates is more important than longer reads or paired-end
+
 
 #### Sequencing depth
 
