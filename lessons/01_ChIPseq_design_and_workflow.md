@@ -21,6 +21,7 @@ It is clear that DNA sequence and transcription factor availability alone are no
 
 _Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Projects can teach us about how we are who we are"](https://portlandpress.com/biochemist/article/37/5/24/773/From-DNA-to-a-human-What-the-ENCODE-and-Roadmap)_
 
+---
 
 ### ChIP-seq: A method for detecting and characterizing protein–DNA interactions
 
@@ -35,6 +36,7 @@ _Image source: ["From DNA to a human: What the ENCODE and Roadmap Epigenome Proj
 
 ChIP-seq has been widely used for many transcription factors, histone modifications, chromatin modifying complexes, and other chromatin-associated proteins in a wide variety of organisms. As such, **there is much diversity in the way ChIP-seq experiments are designed and the way analyses are executed.**
 
+---
 
 ### CUT&RUN: An improved alternative to ChIP-seq
 
@@ -85,6 +87,7 @@ _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-metho
 | **Background is significantly reduced**, using targeted release of genomic fragments.       | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.| 
 | **Lower costs**, by reducing antibody usage, library prep, and sequencing depth requirements | | 
 
+---
 
 ### ATAC-seq: Assaying open regions in the genome
 
@@ -115,12 +118,44 @@ The method relies on the hyperactive Tn5 transposase that was already being used
 * **Short time requirement.** Unlike similar methods, which can take up to four days to complete, ATAC-seq preparation can be completed in under three hours.
 * **Low starting cell number** than other open chromatin assays (500 to 50K cells recommended for human).
 
+---
 
-## DNA fragments and the corresponding data signal
+## Profiling chromatin structure
 
-### Protein-DNA binding profiles
+### Protein-DNA binding 
+Narrow peaks are short degenerate regions of sequence that present as punctate binding sites. This type of profile is generally observed for protein–DNA binding (i.e most transcription factors) or histone modifications at regulatory elements. E.g. CTCF and RNA polymerase II (red and orange in the image above).
 
-# Chromatin accessibiliy
+<p align="center">
+<img src="../img/binding_profiles_narrow.png" width="500">
+</p>
+
+_Image adapted from: [Park P., Nature Reviews Genetics (2009) **10**: 669–680](https://www.nature.com/articles/nrg2641)_
+
+
+### Histone modifications
+
+When it comes analyzing histone modifications, the histone code has the potential to be massively complex with each of the four standard histones possibly being modified at multiple sites with different modifications in their N-terminal ends. But in practice, researchers tend to limit themselves to a few modifications on histone 3 with well characterized roles in gene regulation: 
+Active promoters: H3K4me3, H3K9Ac 
+Active enhancers: H3K27Ac, H3K4me1 
+Repressor: H3K9me3 and H3K27me3 
+Actively transcribed gene bodies: H3K36me3 
+
+### Chromatin accessibility
+
+
+In one assay, **ATAC-seq is able to simultaneously assess three different aspects of chromatin architecture** at high resolution:
+
+1. Maps open chromatin
+2. Transcription factor occupancy
+3. Nucleosome occupancy
+
+The schematic below illustrates the representative DNA fragments and corresponding data signal obtained from current chromatin accessibility assays. You can see how the ATAC-seq profile is an aggregate off all of the other assays.
+
+<p align="center">
+<img src="../ATAC-seq/img/chromatin_architecture.jpeg" width="500">
+</p>
+
+_Image source: [Tsompana and Buck, 2014](https://pubmed.ncbi.nlm.nih.gov/25473421/)_
 
 
 ## Experimental design considerations
