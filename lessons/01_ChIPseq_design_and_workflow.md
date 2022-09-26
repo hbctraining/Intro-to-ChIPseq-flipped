@@ -195,7 +195,7 @@ Ensure that you have a sufficient amount of starting material because the ChIP w
 <details>
 	<summary><b><i>Click here for ATAC-seq guidelines</i></b></summary>
 	<br>
-	<p>For human assays the requirement of cell number <b>ranges from 50K to 500K.</b>
+	<p>For ATAC-seq the requirement of cell number <b>ranges from 50K to 500K.</b>
 </p>
 	
 </details>
@@ -276,7 +276,7 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 <details>
 	<summary><b><i>Do we need controls for ATAC-seq?</i></b></summary>
 	<br>
-	<p><b>In ATAC-seq, you do not have a control.</b> Intuitively, one might think we need to correct the bias caused by the Tn4 enzyme. However, the original studies show that the intrinsic cutting preference/bias of the transposon is minimal and so controls are not neccessary.
+	<p><b>In ATAC-seq, you do not have a control.</b> Intuitively, one might think we need to correct the bias caused by the Tn5 transposase. However, the original studies show that the intrinsic cutting preference/bias of the transposon is minimal and so controls are not neccessary.
 </p>
 	
 </details>
@@ -285,7 +285,7 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 
 As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 2-3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance of peaks and identify a set of reproducible enriched regions with greater confidence. If you have multiple sample groups and are planning a differential enrichment analysis, increasing the number of replicates will give you more statistical power to find changes between groups.
 
-> **NOTE: Replicates are necessary for both CUT&RUN and ATAC-seq, for all of the reasons described above**
+> ***NOTE: Replicates are necessary for both CUT&RUN and ATAC-seq, for all of the reasons described above.***
 
 <p align="center">
 <img src="../img/replicates.png" width="500">
@@ -313,7 +313,7 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 
 ## Public resources
 
-To that end, there are various consortia that have formed to collect data across studies and make it publicly available. Ultimately, resources like this enable researchers to piece together the epigenomic landscape contributing to cell identity, development, lineage specification, and disease. 
+There are various consortia that have formed to collectdata across studies and make it publicly available. Ultimately, resources like this enable researchers to piece together the epigenomic landscape contributing to cell identity, development, lineage specification, and disease. 
 
 ### The ENCODE project
 
@@ -330,18 +330,6 @@ The [NIH Roadmap Epigenomics Project](http://www.roadmapepigenomics.org/) has co
 
 The data is presented as  **an atlas, where users can explore epigenome maps for stem cells and primary ex vivo tissues** selected to represent the normal counterparts of tissues and organ systems frequently involved in human disease. Data can be viewed in the browser or downloaded locally.
 
-
-## Understanding the ChIP-seq analysis workflow
-
-In the same way that the experimental design setup is a process, the analysis also takes some thought and decision making. Below we have depicted an end-to-end analysis workflow for ChIP-sequencing data. **Our focus for this workshop will be on the top half of this workflow diagram**.
-
-All of the software required to get us from **raw sequence reads to peak calls** are command-line tools and accessible on O2, the HMS-RC high performance cluster. As we encounter each of the tools, we will describe it's purpose and how it functions. Where applicable we can delve a bit deeper to understand the inner workings of the algorithm, such that we can thoroughly understand the output. Each step of the workflow will require a specific file format. You will notice that we have annotated these file formats on the workflow below. We will describe these file formats in more detail in the respective lessons.
-
-<p align="center">
-<img src="../img/chipseq_fullworkflow_sept2021.png" width="700">
-</p>
-
-> **NOTE:** Boxes in green cover topics that will not be covered here, but will be a focus of the ChIP-seq Part II workshop (_material development in progress_). It is also worth noting that the green boxes also represent analysis steps which require a working knowledge of R. The color fade indicates that there are some parts of "Peak Call QC" which are covered in this workshop with the use of command-line tools, and other methods which are R-based and will be covered in Part II. 
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
