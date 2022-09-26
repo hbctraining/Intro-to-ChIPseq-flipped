@@ -171,11 +171,7 @@ _Image source: [Tsompana and Buck, 2014](https://pubmed.ncbi.nlm.nih.gov/2547342
 
 When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we also encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
 
-Below, is the **decision tree** that was presented earlier in the workshop (lecture). From this, we highlight some important points below:
-
-<p align="center">
-<img src="../img/expt_decisiontree.png" width="900">
-</p>
+> *NOTE: When relevant, we include comaprisons to CUT&RUN and ATAC-seq to demonstrate how guidelines change for the different assays.*
 
 
 ### Starting material
@@ -208,7 +204,7 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 
 > **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol, although the data is not included here. The p300 protein [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
 
-### Input control
+### Controls
 
 A ChIP-Seq peak should be compared with the same region of the genome in a matched control sample because only a fraction of the DNA in our ChIP sample corresponds to actual signal amidst background noise. 
 
@@ -241,6 +237,8 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 
 As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 2-3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance of peaks and identify a set of reproducible enriched regions with greater confidence. If you have multiple sample groups and are planning a differential enrichment analysis, increasing the number of replicates will give you more statistical power to find changes between groups.
 
+> **NOTE: Replicates are necessary for both CUT&RUN and ATAC-seq, for all of the reasons described above**
+
 <p align="center">
 <img src="../img/replicates.png" width="500">
 </p>
@@ -254,29 +252,16 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 ### Sequencing considerations
 
 |       | ChIP-seq| CUT&RUN | ATAC-seq |
-|:-----------:|:----------:|:----------:|
-| Read length    | 50- to 150-bp* |  |  |
-| Sequencing mode    | Single-end reads are sufficient in most cases** |  |  |
-| Sequencing depth    | |  |  |
+|-----------|:----------:|:----------:|:----------:|
+| Read length    | 50-150 bp | 50-75 bp | 50-75 bp |
+| Sequencing mode    | Single-end reads are sufficient in most cases. Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements. _Sequence the input controls to equal or higher depth than your ChIP samples._ | Paired-end reads are recommended to retain fragment size information. It also is allows us to more accurately obtain the minimal protein protected region after MNase digestion.  | Paired-end is used to obtain fragment size information, useful for quality metrics and nucelosomal positioning. It also gives more information on the Tn5 cutting sites. |
+| Sequencing depth (narrow peaks) | For standard transcription factors we recommend between **20-40 million total read depth** | For most targets, **3-8 million** paired-end reads are sufficient. | **50 million** for changes in chromatin accessibility; **200 million** for TF footprinting |
+| Sequencing depth (broad peaks)   |  A **minimum of 40M total read depth; more is better** for detecting some histone marks | A minimum of **10 million reads**, but can be higher. | N/A |
 
-_*Longer reads and paired-end reads will improve mappability
-_**Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements
-Balance cost with value of more informative reads
-    * i.e. spending money on replicates is more important than longer reads or paired-end
+> ***NOTE 1**: Balance cost with value of more informative reads. For example, if you have the money then spend it on replicates. This is more beneficial than longer reads or paired-end (in th ecase of ChIP-seq).*
+> 
+> ***NOTE 2**: The sequence depth guidelines are for mammalian cells. Organisms with smaller genomes will generally tend to have lower depth.*
 
-
-#### Sequencing depth
-
-* Narrow peak profiles
-     * **Mammalian cells**; ENCODE suggests a minimum of 10 million uniquely mapped reads. For standard transcription factors we recommend between **20-40 million total read depth**
-     * **Worms and flies**; ENCODE suggests a minimum of **2 million uniquely mapped reads**. We recommend between **4-8 million total read depth**.
-     
-* Broad peak profiles
-     * Generally require a higher sequence depth
-     * **Mammalian cells** require a **minimum of 40M total read depth; more is better** for detecting some histone marks
-     * **Worms and flies; less is known** and so the numbers vary across studies. We suggest a **minimum of 8M total read depth.**
-
-* Sequence the input controls to equal or higher depth than your ChIP samples
 
 ## Public resources
 
