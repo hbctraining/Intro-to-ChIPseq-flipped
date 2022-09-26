@@ -80,11 +80,11 @@ _Image source: ["AddGene Blog"](https://blog.addgene.org/cutrun-a-improved-metho
 
 ### CUT&RUN versus ChIP-seq
 
-| Advantages of CUT&RUN       | Limitations of CUT&RUN |
-|:-----------:|:----------:|
-| **Requires less starting material (smaller number of cells)**. It could be used with as low as 5K cells.  | **Not all proteins have been optimized for the protocol.** You may need to invest time in pilot experiments to get the protocol working for you. | 
-|**Lower depth of sequencing**. You can produce high-quality CUT&RUN data with only 3–8 million reads per sample.  | **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. A similar limitation exists for ChIP-seq protocols where DNA shearing must be optimized. | 
-| **Background is significantly reduced**, using targeted release of genomic fragments.  | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex. In such cases, total DNA may be extracted after the digestion.| 
+| Advantages of CUT&RUN | Limitations of CUT&RUN |
+|:----------------:|:----------:|
+| **Requires less starting material** (smaller number of cells).   | **Not all proteins have been optimized for the protocol.** You may need to invest time in pilot experiments to get the protocol working for you. | 
+|**Lower depth of sequencing**.  | **Likelihood of over-digestion of DNA** due to inappropriate timing of the Calcium-dependent MNase reaction. | 
+| **Background is significantly reduced**, using targeted release of genomic fragments.  | It is possible that a **chromatin complex could be too large to diffuse out** or that protein–protein interactions retain the cleaved complex.| 
 | **Lower costs**, by reducing antibody usage, library prep, and sequencing depth requirements | | 
 
 ---
