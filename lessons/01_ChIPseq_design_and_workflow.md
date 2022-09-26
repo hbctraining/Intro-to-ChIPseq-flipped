@@ -175,10 +175,31 @@ When starting out with your experiment, there are many things to think about. We
 
 
 ### Starting material
+
+**ChIP-seq**
+
 Ensure that you have a sufficient amount of starting material because the ChIP will only enrich for a small proportion. For a standard protocol, you want approximately 2 x 10<sup>6</sup> cells per immunoprecipitation. If it is difficult to obtain that many samples from your experiment, consider using low input methods. Ultimately, higher amounts of starting material yield more consistent and reproducible protein-DNA enrichments.
 
 > #### Can I pool samples if I don't have enough cells?
 > We generally recommend that you try to steer clear of pooling (for ChIP-seq and other NGS applications). There is variability between samples and mixing them together can increase background noise and dilute signal. In the case where you have small amounts of starting material, we suggest using [CUT&RUN](https://elifesciences.org/articles/21856).
+
+<details>
+	<summary><b><i>Click here for CUT&RUN guidelines</i></b></summary>
+	<br>
+	<p>It is recommended to start with <b>500,000 native (unfixed) cells, particularly when mapping new targets or using new cell types.</b> Following initial validation of workflows using 500,000 cells and control antibodies, cell numbers can be reduced (as low as 5K cells).
+</p>
+	
+</details>
+
+
+<details>
+	<summary><b><i>Click here for ATAC-seq guidelines</i></b></summary>
+	<br>
+	<p>For human assays the requirement of cell number <b>ranges from 50K to 500K.</b>
+</p>
+	
+</details>
+
 
 
 ### Quality control of your ChIP
@@ -204,6 +225,19 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 
 > **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol, although the data is not included here. The p300 protein [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
 
+<details>
+	<summary><b><i>Positive controls for CUT&RUN</i></b></summary>
+	<br>
+	<p><b>A control CUT&RUN with an antibody against a histone mark is receommended, to assess protocol efficacy.</b> After quantifying purified DNA, the fragments (50-150 bp) may not show up on the bioanalyzer electropherogram due to the low concentration of DNA present. With the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces as shown below. 
+	
+  <p align="center">
+  <img src="../img/H3K4me3_bioanalyzer.png" width="500">
+  </p>
+
+</p>
+	
+</details>
+
 ### Controls
 
 A ChIP-Seq peak should be compared with the same region of the genome in a matched control sample because only a fraction of the DNA in our ChIP sample corresponds to actual signal amidst background noise. 
@@ -215,7 +249,6 @@ There are a number of **artifacts that tend to generate pileups of reads that co
 * ‘hyper-ChIPable’ regions: loci that are commonly enriched in ChIP datasets. Certain genomic regions are more susceptible to immunoprecipitation, therefore show increased ChIP signals for unrelated DNA-binding and chromatin-binding proteins.
 
 There are two kinds of controls that can be used for ChIP-seq: **IgG control** and **input control**. 
-
 
 <p align="center">
 <img src="../img/F1.large.jpg" width="400">
@@ -232,6 +265,21 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 > 
 > The short answer is, yes having an input sample matched with each IP is ideal. However, studies have shown input replicates to have strong reproducibility in some cases. Thus, if there are constraints with budget or obtaining enough sample, having one input per sample group can suffice. 
 
+<details>
+	<summary><b><i>Do we need controls for CUT&RUN?</i></b></summary>
+	<br>
+	<p>Similar to ChIP-seq, only a fraction of the DNA in a CUT&RUN sample will correspond to actual signal amidst background noise. Rather than having an input DNA control, <b>the use of a nonspecific rabbit IgG antibody is recommended by the Henikoff lab</b>. It will randomly coat the chromatin at low efficiency without sequence bias. While a no-antibody input DNA sample will generate a more diverse DNA library, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.
+</p>
+	
+</details>
+
+<details>
+	<summary><b><i>Do we need controls for ATAC-seq?</i></b></summary>
+	<br>
+	<p><b>In ATAC-seq, you do not have a control.</b> Intuitively, one might think we need to correct the bias caused by the Tn4 enzyme. However, the original studies show that the intrinsic cutting preference/bias of the transposon is minimal and so controls are not neccessary.
+</p>
+	
+</details>
 
 ### Replicates
 
