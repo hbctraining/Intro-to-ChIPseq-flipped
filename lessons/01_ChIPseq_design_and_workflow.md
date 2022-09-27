@@ -221,14 +221,12 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 <img src="../img/ChIP_qPCR_QC.png" width="500">
 </p>
 
-* If you don't have any known targets for your protein, run a **postive control ChIP**. Histone H3 or H3k4me3 usually work very well. Since there is loads of H3K4me3 present at most TSSs you could design primers against the promoter of a housekeeping gene. If you have a good signal present, you will at least know the protocol is working well.
-
-> **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol, although the data is not included here. The p300 protein [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
+* If you don't have any known targets for your protein, run a **postive control ChIP**. Histone H3 or H3K4me3 usually work very well. Since there is loads of H3K4me3 present at most TSSs you could design primers against the promoter of a housekeeping gene. If you have a good signal present, you will at least know the protocol is working well.
 
 <details>
-	<summary><b><i>Positive controls for CUT&RUN</i></b></summary>
+	<summary><b><i>Testing the efficacy of the CUT&RUN protocol</i></b></summary>
 	<br>
-	<p><b>A control CUT&RUN with an antibody against a histone mark is receommended, to assess protocol efficacy.</b> After quantifying purified DNA, the fragments (50-150 bp) may not show up on the bioanalyzer electropherogram due to the low concentration of DNA present. With the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces as shown below. 
+	<p><b>A control CUT&RUN with an antibody against a histone mark is recommended, to assess protocol efficacy.</b> After quantifying purified DNA, the fragments (50-150 bp) may not show up on the bioanalyzer electropherogram due to the low concentration of DNA present. With the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces as shown below. 
 	
   <p align="center">
   <img src="../img/H3K4me3_bioanalyzer.png" width="500">
@@ -237,6 +235,10 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 </p>
 	
 </details>
+
+> **NOTE:** The authors of this study also included a positive control sample using an antibody against p300 to test the protocol, although the data is not included here. The p300 protein [has been shown](https://pubmed.ncbi.nlm.nih.gov/19212405/) to have binding sites in the cortex. 
+
+
 
 ### Controls
 
@@ -280,6 +282,26 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 </p>
 	
 </details>
+
+### Spike-in DNA
+
+There are multiple sources of **technical variability that can hamper the direct comparison of binding signal strength between different conditions** (in both, ChIP-seq and CUT&RUN data). For example, an increase in genomic occupancy of a chromatin factor could simply be the result of variability in the efficiency of immunoprecipitation between control and treated samples in a ChIP experiment.
+
+The spike-in strategy is based on the **use of a fixed amount of exogenous chromatin** from another species that is added to sample in an effort **to control for technical variation**. Since we are adding a known amount (and the same amount) to each sample, we expect the number of mapped reads to the reference (in the example below, _Drosophila_) to also be similar.  
+
+<p align="center">
+<img src="../img/Spike_In_Flow_Chart_web.jpeg" width="400">
+</p>
+
+*Image source: [ActiveMotif documenatation]([https://dx.doi.org/10.15252%2Fembj.201592958](https://www.activemotif.com/catalog/1063/chip-seq-spike-in))*
+
+* If the number of **mapped reads to the spike-in reference are roughly the same across samples**, then the observable differences in the reads of the experimental samples across conditions can be exclusively attributed to biological variation. 
+* If the number of **mapped reads to the spike-in reference are variable across samples**, this suggests that there is some amount of technical variation. 
+
+**How do we control for any observed variation?**
+
+To correct for technical variation, a normalization factor can be easily calculated ad hoc to equilibrate the spike-in signal among samples. The same correction computed from spike-in reads is then used to normalize the experimental ChIP-seq, thus enabling the fair comparison of the ChIP-seq signal across the samples.
+
 
 ### Replicates
 
