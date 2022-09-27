@@ -325,8 +325,8 @@ As with any high-throughput experiment, a single assay is often subject to a sub
 |-----------|:----------:|:----------:|:----------:|
 | **Read length**    | 50-150 bp | 50-75 bp | 50-75 bp |
 | **Sequencing mode**    | Single-end reads are sufficient in most cases. Paired-end is good (and necessary) for allele-specific chromatin events, and investigations of transposable elements. _Sequence the input controls to equal or higher depth than your ChIP samples._ | Paired-end reads are recommended to retain fragment size information. It also is allows us to more accurately obtain the minimal protein protected region after MNase digestion.  | Paired-end is used to obtain fragment size information, useful for quality metrics and nucelosomal positioning. It also gives more information on the Tn5 cutting sites. |
-| **Sequencing depth** | For standard transcription factors we recommend between **20-40 million total read depth** | For most targets, **3-8 million** paired-end reads are sufficient. | **50 million** for changes in chromatin accessibility; **200 million** for TF footprinting |
-| **Sequencing depth (broad peaks)**   |  A **minimum of 40M total read depth; more is better** for detecting some histone marks | A minimum of **10 million reads**, but can be higher. | N/A |
+| **Sequencing depth** | For standard transcription factors we recommend between **20-40 million total read depth** | For most targets (narrow or broad profiles), **3-8 million** paired-end reads are sufficient. | **50 million** for changes in chromatin accessibility; **200 million** for TF footprinting |
+| **Sequencing depth (broad peaks)**   |  A **minimum of 40M total read depth; more is better** for detecting some histone marks | N/A | N/A |
 
 > ***NOTE 1**: Balance cost with value of more informative reads. For example, if you have the money then spend it on replicates. This is more beneficial than longer reads or paired-end (in th ecase of ChIP-seq).*
 > 
