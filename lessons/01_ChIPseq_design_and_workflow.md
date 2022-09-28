@@ -311,6 +311,11 @@ There are various **approaches to computing the normalization factor**, we have 
 
 The **per-sample normalization factor** computed from either of the three approaches, equilibrates the spike-in signal among samples. That same factor from is then **used to normalize the experimental ChIP-seq samples** (which in theory exhibit the same amount of technical variation), thus enabling the fair comparison of the ChIP-seq signal across the samples. 
 
+> #### References for spike-in normalization
+> * [Epicypher CUT&RUN protocol](https://www.epicypher.com/content/documents/protocols/cutana-cut&run-protocol.pdf) (see Appendix III)
+> * [ActiveMotif Spike-in Normalization Strategy](https://www.activemotif.com/documents/1977.pdf)
+> * [Kong NR et al STAR Protocols, August 2021](https://star-protocols.cell.com/protocols/944)
+
 
 ### Replicates
 
