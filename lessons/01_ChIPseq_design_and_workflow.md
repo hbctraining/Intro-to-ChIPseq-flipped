@@ -285,22 +285,31 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 
 ### Spike-in DNA
 
-There are multiple sources of **technical variability that can hamper the direct comparison of binding signal strength between different conditions** (in both, ChIP-seq and CUT&RUN data). For example, an increase in genomic occupancy of a chromatin factor could simply be the result of variability in the efficiency of immunoprecipitation between control and treated samples in a ChIP experiment.
+There are multiple sources of **technical variability that can hamper the direct comparison of binding signal strength between different conditions** (in both, **ChIP-seq and CUT&RUN** data). For example, an increase in genomic occupancy of a chromatin factor could simply be the result of variability in the efficiency of immunoprecipitation between control and treated samples in a ChIP experiment.
 
 The spike-in strategy is based on the **use of a fixed amount of exogenous chromatin** from another species that is added to sample in an effort **to control for technical variation**. Since we are adding a known amount (and the same amount) to each sample, we expect the number of mapped reads to the reference (in the example below, _Drosophila_) to also be similar.  
 
 <p align="center">
-<img src="../img/Spike_In_Flow_Chart_web.jpeg" width="400">
+<img src="../img/Spike_In_Flow_Chart_web.png" width="400">
 </p>
 
-*Image source: [ActiveMotif documenatation]([https://dx.doi.org/10.15252%2Fembj.201592958](https://www.activemotif.com/catalog/1063/chip-seq-spike-in))*
+*Image source: Adapted from [ActiveMotif documentation]([https://dx.doi.org/10.15252%2Fembj.201592958](https://www.activemotif.com/catalog/1063/chip-seq-spike-in))*
 
 * If the number of **mapped reads to the spike-in reference are roughly the same across samples**, then the observable differences in the reads of the experimental samples across conditions can be exclusively attributed to biological variation. 
+    * There is no normalization required.
 * If the number of **mapped reads to the spike-in reference are variable across samples**, this suggests that there is some amount of technical variation. 
+    * A normalization factor can be computed.
 
-**How do we control for any observed variation?**
 
-To correct for technical variation, a normalization factor can be easily calculated ad hoc to equilibrate the spike-in signal among samples. The same correction computed from spike-in reads is then used to normalize the experimental ChIP-seq, thus enabling the fair comparison of the ChIP-seq signal across the samples.
+There are various **approaches to computing the normalization factor**, we have outlined some of them below:
+
+
+<p align="center">
+<img src="../img/spikeinNorm.png" width="800">
+</p>
+
+
+The **per-sample normalization factor** computed from either of the three approaches, equilibrates the spike-in signal among samples. That same factor from is then **used to normalize the experimental ChIP-seq samples** (which in theory exhibit the same amount of technical variation), thus enabling the fair comparison of the ChIP-seq signal across the samples. 
 
 
 ### Replicates
