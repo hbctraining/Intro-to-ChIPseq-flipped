@@ -171,7 +171,7 @@ _Image source: [Tsompana and Buck, 2014](https://pubmed.ncbi.nlm.nih.gov/2547342
 
 When starting out with your experiment, there are many things to think about. We have highlighted some of the important points in the previous lecture and within this lesson, but we also encourage you to peruse the [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). Although it was published in 2012, much of the information is still very valid and used in practice today.
 
-> *NOTE: When relevant, we include comaprisons to CUT&RUN and ATAC-seq to demonstrate how guidelines change for the different assays.*
+> **_NOTE: When relevant, we include comaprisons to CUT&RUN and ATAC-seq to demonstrate how guidelines change for the different assays._**
 
 
 ### Starting material
@@ -240,7 +240,7 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 
 
 
-### Controls
+### Negative Controls
 
 A ChIP-Seq peak should be compared with the same region of the genome in a matched control sample because only a fraction of the DNA in our ChIP sample corresponds to actual signal amidst background noise. 
 
@@ -311,6 +311,11 @@ There are various **approaches to computing the normalization factor**, we have 
 
 The **per-sample normalization factor** computed from either of the three approaches, equilibrates the spike-in signal among samples. That same factor from is then **used to normalize the experimental ChIP-seq samples** (which in theory exhibit the same amount of technical variation), thus enabling the fair comparison of the ChIP-seq signal across the samples. 
 
+**When should I use spike-in normalized data?**
+
+It is important that you qualitatively assess the data, because the normalization is only as good as the spike-in that was administered. The percent of reads mapping to the spike-in is typically 1% and no greater than 5%. A range is to be considered, because there is always a chance of human error due to the variability in protocols. After normalizing data with spike-in DNA, we typically recommend that you **evaluate and make and informed decision whether or not to include it in your analysis.**
+
+
 > #### References for spike-in normalization
 > * [Epicypher CUT&RUN protocol](https://www.epicypher.com/content/documents/protocols/cutana-cut&run-protocol.pdf) (see Appendix III)
 > * [ActiveMotif Spike-in Normalization Strategy](https://www.activemotif.com/documents/1977.pdf)
@@ -319,7 +324,7 @@ The **per-sample normalization factor** computed from either of the three approa
 
 ### Replicates
 
-As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 2-3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance of peaks and identify a set of reproducible enriched regions with greater confidence. If you have multiple sample groups and are planning a differential enrichment analysis, increasing the number of replicates will give you more statistical power to find changes between groups.
+As with any high-throughput experiment, a single assay is often subject to a substantial amount of variability. Thus, it is highly recommended to setup your experimental design with a **minimum of 3 biological replicates**. Presumably, two replicates measuring the same underlying biology should have high consistency but that is not always the case. Having replicates allow you to evaluate concordance of peaks and identify a set of reproducible enriched regions with greater confidence. If you have multiple sample groups and are planning a differential enrichment analysis, increasing the number of replicates will give you more statistical power to find changes between groups.
 
 > ***NOTE: Replicates are necessary for both CUT&RUN and ATAC-seq, for all of the reasons described above.***
 
