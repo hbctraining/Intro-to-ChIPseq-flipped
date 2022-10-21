@@ -6,7 +6,8 @@ date: "Aug 17th, 2021"
 
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
 
-Approximate time: 45 min
+Approximate time: 45 min    
+       
 
 ## Learning Objectives
 
@@ -26,7 +27,12 @@ Now that we have assessed the quality of our sequence data, we are ready to alig
 <img src="../img/chipseq_alignworkflow_sept2021.png" width="600">
 </p>
 
-In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is actually quite difficult! This is because the reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample. Additionally, we have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors, and also non-unique alignment due to the short length of reads and high percentage of repetitive regions in the genome (e.g. repetitive regions = >50% of the human genome).
+In theory, this sounds like a very simple case of string matching. We take the sequence read and figure out where it originated from in the reference genome. However, in practice, this is **actually quite difficult!** This is because:
+
+* The reference genome we are searching is large and complex (e.g. the human genome is ~3,200,000,000bp). 
+* By contrast, the reads we are searching for are much smaller (50-150bp), and they are on the range of millions for a given sample.
+* We have to consider non-exact matching of the read to the reference due to natural variation and sequencing errors.
+* We have to consider non-unique alignment due to the short length of reads and high percentage of repetitive regions in the genome (e.g. repetitive regions = >50% of the human genome).
 
 <p align="center">
 <img src="../img/Alignment_errors.png" width="700">
@@ -34,6 +40,14 @@ In theory, this sounds like a very simple case of string matching. We take the s
 
 There are many different tools that have been developed for alignment of next-generation sequencing data, and some that are more suitable to different technologies. A popular tool commonly used with ChIP-seq data, and the one that we will be using in this workshop is [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml).
 
+## To trim or not to trim?
+
+Trimming is the process of removing unwanted sequence prior to sequence alignment. In general, trimming is an optional step. The 3' ends of the sequence may contain part of the Illumina sequencing adapter. This adapter contamination may prevent the reads from aligning to the reference genome correctly, thus adversely impacting the downstream analysis. You could evaluate potential adapter contamination either from the FastQC report (in "Overrepresented sequences" or "Adapter Contamination" sections), or from the size distribution of your sequencing libraries. If you suspect that your reads are contaminated with adapters, you should run an adapter removal tool. We list some additional considerations below whether trimming is needed:
+
+  * If the read length is 25bp, there is no need to trim - adapter sequences will not be included in reads of inserts >25 bp.
+  * If you perform trimming, then there is no need to use soft-clipping during the alignment.
+  * After trimming, a minimum read length of 25bp should be imposed, as reads smaller than this are hard to align accurately.
+  * Should you choose not to trim reads, you will need to use `--local` when runing Bowtie2 - this will perform "soft-clipping" to ignore parts of the reads that are of low quality.
 
 ## Bowtie2
 
@@ -105,6 +119,32 @@ The command to run the alignment is simply `bowtie2`. Some additional arguments 
 * `-x`: /path/to/genome_indices_directory
 * `-U`: /path/to/FASTQ_file
 * `-S`: /path/to/output/SAM_file
+
+For CUT&RUN and ATAC-seq, there are additional parameters that you want to explore, and we list them below:
+
+<details>
+	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
+	<br>
+	<p> For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.</b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.</i>
+		
+* `--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.
+* `--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.
+* `--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.
+* `--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.
+* `-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.
+* `--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</p>
+	
+</details>
+
+<details>
+	<summary><b><i>How do the parameters change for ATAC-seq?</i></b></summary>
+	<br>
+	<p> ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but <b>the following options can be added if needed</b>:
+		
+* `-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.
+* `--very-sensitive`: better alignment results are frequently achieved with this.</p>
+		
+</details>
 
 Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
 
@@ -227,7 +267,8 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   <summary><b>Click here for solution</b></summary>
   
   <p><pre>
- 
+  
+  ```
   #!/bin/bash
    
   #SBATCH -p short              # partition name
@@ -249,7 +290,8 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
   -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
   ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
   
-  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam        
+  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam    
+  ```
   
   </pre></p>
   

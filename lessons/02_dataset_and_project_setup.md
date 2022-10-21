@@ -1,7 +1,7 @@
 ---
 title: "Introduction to the dataset and project organization"
 author: "Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger"
-date: "Sept 1st, 2021"
+date: "Sept 12th, 2022"
 ---
 
 Contributors: Mary Piper, Radhika Khetani, Meeta Mistry, Jihe Liu, Will Gammerdinger
@@ -13,12 +13,13 @@ Approximate time: 30 minutes
 * Describe the dataset and biological context
 * Explain the need for data management and project organization
 
-
 ## Introduction to the dataset
 
 For this workshop we will be working with ChIP-seq data from a recent publication in Neuron by Baizabal et al. (2018) [[1]](https://doi.org/10.1016/j.neuron.2018.04.033). 
 
-The authors in this paper sought to understand how chromatin-modifying enzymes function in neural stem cells to establish the epigenetic landscape that determines cell type and stage-specific gene expression. Chromatin-modifying enzymes are transcriptional regulators that control gene expression through covalent modification of DNA or histones. 
+***Please note that even though we are utilizing a ChIP-seq dataset for this workshop, we will be highlighting how the code/parameters will differ if you are analyzing either ATAC-seq or CUT&RUN data.***
+
+Baizabal et al. sought to understand how chromatin-modifying enzymes function in neural stem cells to establish the epigenetic landscape that determines cell type and stage-specific gene expression. Chromatin-modifying enzymes are transcriptional regulators that control gene expression through covalent modification of DNA or histones. 
 
 <p align="center">
 <img src="../img/05Epigenetics06-edit.png" width="400">
@@ -77,13 +78,12 @@ Our dataset consists of two WT samples and two KO samples. For each of the IP sa
 <img src="../img/expt_design_prdm16.png" width="700">
 </p>
 
-
 ## Implementing data management best practices
 
-In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html), we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis.
+In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html), we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis. 
 
 <p align="center">
-<img src="../img/data-lifecycle-base.png" width="500">
+<img src="../img/data-lifecycle-base.png" width="900">
 </p>
 
 _Image acquired from the [Harvard Biomedical Data Management Website](https://datamanagement.hms.harvard.edu/data-lifecycle)_
@@ -135,7 +135,6 @@ $ mkdir raw_data reference_data scripts logs meta results
 
 $ tree     # this will show you the directory structure you just created
 ```
-
 
 **This is a generic directory structure and can be tweaked based on personal preference and analysis workflow.**
 

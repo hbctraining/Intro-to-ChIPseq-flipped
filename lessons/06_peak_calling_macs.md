@@ -53,10 +53,29 @@ MACS provides different options for dealing with **duplicate tags** at the exact
 
 > _We do not need to worry about this option, since **we filtered out the duplicates during the [post-alignment filtering step](05_filtering_BAM_files.md).**_
 
+### The bimodal nature of ChIP-seq data 
+
+Below, we have illustrated the protein of interest and the fragments of DNA (green) which have been obtained from the immunoprecipitation.
+
+<p align="center">
+<img src="../img/cc-fig1.png" width="400">
+</p>
+
+As these fragments are typically sequenced from the 5' end, the reads we obtain will not give us the fragment pileup shown in the image above. Rather, we get a read pileup on either side of the protein (on the positive and negative strand).
+
+<p align="center">
+<img src="../img/cc-fig2.png" width="400">
+</p>
+
+After aligining reads to the genome, the read density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks).
+
+<p align="center">
+<img src="../img/cc-fig3.png" width="400">
+</p>
 
 ### Modeling the shift size
 
-The tag density around a true binding site should show a **bimodal enrichment pattern** (or paired peaks). MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
+MACS takes advantage of this bimodal pattern to empirically model the shifting size, thus better locating the precise binding sites.
 
 To identify the shift size:
 
@@ -70,9 +89,6 @@ To identify the shift size:
 3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
 4. MACS **shifts all reads in the sample by d/2** toward the 3' ends to the most likely protein-DNA interaction sites
 
-<p align="center">
-<img src="../img/peak_shift3.png" width="400">
-</p>
 
 ### Scaling libraries
 
@@ -195,6 +211,30 @@ Move the log files to the `log` directory we had created during our project setu
 $ mv macs2/*.log ../logs/
 ```
 
+As a general peak-caller, MACS2 can be applied to any DNA enrichment assays if the question to be asked is simply: _"Where we can find significant reads coverage than the random background?"_ Below, we comment on changes required for peak calling on CUT&RUN and ATAC-seq data.
+
+<details>
+	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
+	<br>
+	<p> <b>There is very little required change for peak calling on CUT&RUN-seq data.</b> The only notable difference is the CUT&RUN sequencing data will typically be paired-end. To account for this, you can add the format parameter.
+		
+* `f BAMPE`: Paired-end analysis mode in MACS2. In this mode, MACS2 interprets the full extent of the sequenced DNA fragments correctly, and discards alignments that are not properly paired. 
+		
+_When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the “R2” read) and then treats the remaining “R1” reads as if they were single-ended. It models the fragment lengths from the “single-end” R1 reads and then extends the read lengths to the average value from the mode. Using **this mode** with paired-end data **enables the use of actual fragment lengths**, for a more accurate end result_</p>
+	
+</details>
+
+<details>
+	<summary><b><i>How do the parameters change for ATAC-seq</i></b></summary>
+	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline. There are other ATAC-seq specific callers, however we have no experience and are unable to comment without benchmarking.
+<p>
+	
+* `f BAMPE`: Paired-end analysis mode in MACS2.
+* `--nomodel`: Bypass building the shifting model. The read pileup does not represent a bimodal pattern, as there is no specific protein-DNA interaction that we are assaying. Open regions will be unimodal in nature, not requiring any shifting of reads.
+* `--keep-dup all`: Keep all reads since we have already filtered duplicates from our BAM files.
+* `--nolambda`: MACS2 will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)	
+</details>
+
 ## MACS2 Output files
 
 Change directories into `macs2`, and list the output files that we have generated.
@@ -247,6 +287,11 @@ We have used this lesson to describe to you the inner workings of the MACS2 peak
 * [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
 * [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
 * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
+* [Genrich](https://github.com/jsh58/Genrich): designed to be able to run all of the post-alignment steps through peak-calling with one command. Features include:
+	* Removal of mitochondrial reads and PCR duplicates
+	* Analysis of multimapping reads
+	* Analysis of replicates
+	* A specific _ATAC-seq mode_
 
 
 ***

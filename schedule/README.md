@@ -74,10 +74,10 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:15 | Self-learning lessons review |  All |
-| 10:15 - 11:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Jihe |
-| 11:00- 11:05 | Break|  |
-| 11:05 - 12:00 | [Peak calling](../lessons/06_peak_calling_macs.md) | Meeta |
+| 1:30 - 2:15 | Self-learning lessons review |  All |
+| 2:15 - 3:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Jihe |
+| 3:00 - 3:05 | Break|  |
+| 3:05 - 4:00 | [Peak calling](../lessons/06_peak_calling_macs.md) | Meeta |
 
 ### Before the next class:
 
@@ -87,7 +87,7 @@ I. Please **study the contents** and **work through all the code** within the fo
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Now that we have called peaks for each of our samples, it's time to look at the output. The output of MACS2 includes various files, with the narrowPeak file being the most important for interpretation. <br><br>In this lesson you will cover:<br>
              - The basics of the BED file format (and how it extends to narrowPeak files)<br>
-             - The BEDtools suite of tools<br>
+             - The bedtools suite of tools<br>
              - Filtering and intersecting BED files <br><br>
         </details>
    
@@ -114,7 +114,7 @@ I. Please **study the contents** and **work through all the code** within the fo
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
    * **Upload the saved text file** to [Dropbox]() the **day before the next class**.
-   
+
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
 * Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
@@ -125,11 +125,11 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:00 | Self-learning lessons review | All |
-| 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
-| 10:30- 10:35 | Break|  |
-| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
-| 11:45 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
+| 1:30 - 2:00 | Self-learning lessons review | All |
+| 2:00 - 2:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
+| 2:30 - 2:35 | Break|  |
+| 2:35 - 3:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
+| 3:45 - 4:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
 
 
 ## Answer keys
@@ -147,12 +147,24 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ***
 
+## Resources
+* ENCODE Data Standards and Processing Pipeline Information for [Histone](https://www.encodeproject.org/chip-seq/histone/) and [Transcription Factors](https://www.encodeproject.org/chip-seq/transcription_factor/)
+* [ENCODE guidelines and practices for ChIP-seq](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3431496/). An older paper, but a good outline of general best practices.
+* Experimental design considerations:
+    * [Thermofisher Step-by-step guide to a successful ChIP experiment](https://www.thermofisher.com/us/en/home/life-science/antibodies/antibodies-learning-center/antibodies-resource-library/antibody-application-notes/step-by-step-guide-successful-chip-assays.html)
+    * "Chromatin Immunoprecipitation (ChIP) Principles and How to Obtain Quality Results", [BenchSci Blog](https://blog.benchsci.com/chromatin-immunoprecipitation-chip-principles-and-how-to-obtain-quality-results)
+    * [O’Geen et al (2011), Methods Mol Biol](https://pubmed.ncbi.nlm.nih.gov/21913086/) - A focus on performing ChIP assays to characterize histone modifications
+* [Jung et al (2014). NAR.](https://academic.oup.com/nar/article/42/9/e74/1248114) - Impact of sequencing depth in ChIP-seq experiments 
+
+
 
 ## Building on this workshop
 * [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
+* [A Brief Introduction to CUT&RUN](../CUT&RUN/Intro_to_CUT&RUN.md)
 * [Advanced bash commands (aliases, copying files, and symlinks)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/more_bash_cluster.html)
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
 
 
 ***
+
 *These materials have been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
