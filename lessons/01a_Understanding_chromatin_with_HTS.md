@@ -165,7 +165,7 @@ _Image source: [Tsompana and Buck, 2014](https://pubmed.ncbi.nlm.nih.gov/2547342
 
 ## Public resources
 
-There are various consortia that have formed to collectdata across studies and make it publicly available. Ultimately, resources like this enable researchers to piece together the epigenomic landscape contributing to cell identity, development, lineage specification, and disease. 
+The enormous amount of **freely accessible functional genomics data is an invaluable resource** for interrogating the biological function of multiple DNA-interacting players and chromatin modifications by large-scale comparative analyses. There are various consortia that have formed to collect data across studies and make it available to the research community. Ultimately, resources like this enable researchers to **piece together the epigenomic landscape contributing to cell identity, development, lineage specification, and disease**. We have described two popular resources below, but note that there are additional repositories in addition to various platforms developed for quick retrieval and comparative analysis.
 
 ### The ENCODE project
 
