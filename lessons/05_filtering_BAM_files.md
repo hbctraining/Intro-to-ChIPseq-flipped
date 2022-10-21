@@ -146,12 +146,12 @@ Markdown
 	<br>There are two additional filtering steps that need to be performed for ATAC-seq data analysis:<br>	
 <ul><li><b>Filtering mitochondrial reads</b>. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These <b>reads should be discarded</b>. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.</li>
 <li><b>Filtering BAM files based on fragment size.</b>
-<li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (&lt; 100 bp) and mono-, di-, and tri-nucleosomes (~200, 400, 600 bp, respectively)</li>
+<ul><li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (&lt; 100 bp) and mono-, di-, and tri-nucleosomes (~200, 400, 600 bp, respectively)</li>
 <li>Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&amp;RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b></li>
-<li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul><br>	
-  </details>
+<li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul></ul><br>
+ </details>
 
-Test_4
+Test_5
 
 > ### Filtering out Blacklisted Regions
 > Although we do not perform this step, it is common practice to apply an additional level of filtering to our BAM files. That is, we remove alignments that occur with defined Blacklisted Regions. **We will filter out blacklist regions post-peak calling.**
