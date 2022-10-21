@@ -22,6 +22,8 @@ Peak calling, the next step in our workflow, is a computational method used to i
 <img src="../img/chipseq_peakworkflow_sept2021.png" width="700">
 </p>
 
+### ChIP-seq
+
 For ChIP-seq experiments, what we observe from the alignment files is a **strand asymmetry with read densities on the +/- strand, centered around the binding site**. The 5' ends of the selected fragments will form groups on the positive- and negative-strand. The distributions of these groups are then assessed using statistical measures and compared against background (input or IgG samples) to determine if the site of enrichment is likely to be a real binding site.
 
 <p align="center">
@@ -30,10 +32,27 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
+### CUT&RUN
+
+### ATAC-seq
+
+### Tools for peak calling
 There are various tools that are available for peak calling. Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or narrow peaks. There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods** to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson](01_ChIPseq_design_and_workflow.md#types-of-binding-profiles).
 
 > #### What if I am not sure what type of binding profile to expect?
 > In this scenario, we advise peak calling for both narrow and broad profiles. This will require additional time for some exploration to determine what is best for your data.
+
+There are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
+
+* [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
+* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
+* [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
+* [Genrich](https://github.com/jsh58/Genrich): designed to be able to run all of the post-alignment steps through peak-calling with one command. Features include:
+	* Removal of mitochondrial reads and PCR duplicates
+	* Analysis of multimapping reads
+	* Analysis of replicates
+	* A specific _ATAC-seq mode_
+
 
 
 ## MACS2
@@ -280,18 +299,6 @@ $ wc -l *.narrowPeak
 ***
 
 In the next lesson, we will delve deeper into the output files and gain an understanding of the different file formats.
-
-### Other peak calling software
-We have used this lesson to describe to you the inner workings of the MACS2 peak caller. This is a very popular tool in the field, however there are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
-
-* [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
-* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
-* [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
-* [Genrich](https://github.com/jsh58/Genrich): designed to be able to run all of the post-alignment steps through peak-calling with one command. Features include:
-	* Removal of mitochondrial reads and PCR duplicates
-	* Analysis of multimapping reads
-	* Analysis of replicates
-	* A specific _ATAC-seq mode_
 
 
 ***
