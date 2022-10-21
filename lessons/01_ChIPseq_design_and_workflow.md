@@ -51,7 +51,7 @@ CUT&RUN is a native endonuclease-based method based on the binding of an antibod
 <details>
 	<summary><b>Click here for more specifics on the CUT&RUN protocol</b></summary>
 	<br>Below we describe each step of the protocol in some detail:<br>
-1. Cells/nuclei are bound to concanavalin A–coated magnetic beads.<br>
+<br>1. Cells/nuclei are bound to concanavalin A–coated magnetic beads.<br>
 <br><li><p> In the original <a href="https://elifesciences.org/articles/21856">Henikoff lab paper</a> they isolate nuclei. Using purified nuclei allows for maximal binding of antibodies to nuclear factors and will result in cleaner CUT&RUN signal compared to protocol using whole cells.</p></li>
 <li><p> In the more <a href="https://elifesciences.org/articles/46314">recent paper, also from the Henikoff lab</a>, whole cells are harvested. They introduce the use of a strong detergent to permeabilize cells rather than relying on the extraction of nuclei.</p></li>
 <br>2. Cell membranes (or nuclear membrances) are permeabilized with digitonin to allow the antibody access to its target (1h to overnight)<br>
