@@ -34,7 +34,14 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 ### CUT&RUN
 
+In contrast with ChIP-seq, CUT&RUN is an in situ epigenome profiling technique that uses an antibody-targeted micrococcal nuclease (MNase) fusion protein to selectively digest and liberate DNA fragments at sites of protein binding while leaving the remainder of the genome behind [(Meers MP et al, 2019)](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4). Since **CUT&RUN still produces read pileups on either side of the bound protein, the bimodal pattern described above will also be observed** in the data. However, because of the increased precision of the digestion there is much lower background in comparison to ChIP-seq.
+
+While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN) which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
+
+
 ### ATAC-seq
+
+
 
 ### Tools for peak calling
 There are various tools that are available for peak calling. Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or narrow peaks. There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods** to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson](01_ChIPseq_design_and_workflow.md#types-of-binding-profiles).
