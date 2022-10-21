@@ -69,7 +69,7 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 * If you don't have any known targets for your protein, run a **postive control ChIP**. Histone H3 or H3K4me3 usually work very well. Since there is loads of H3K4me3 present at most TSSs you could design primers against the promoter of a housekeeping gene. If you have a good signal present, you will at least know the protocol is working well.
 
 <details>
-	<summary><b><i>Testing the efficacy of the CUT&RUN protocol</i></b></summary>
+	<summary><b><i>Should I test the efficacy of the CUT&RUN protocol?</i></b></summary>
 	<br>
 	<p><b>A control CUT&RUN with an antibody against a histone mark is recommended, to assess protocol efficacy.</b> After quantifying purified DNA, the fragments (50-150 bp) may not show up on the bioanalyzer electropherogram due to the low concentration of DNA present. With the control histone mark CUT&RUN, you should see mono-, di-, and tri-nucleosomes in the Bioanalyzer traces as shown below. 
 	
