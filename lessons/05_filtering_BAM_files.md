@@ -32,10 +32,9 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 	<summary><b><i>Are multi-mappers treated differently for CUT&RUN and ATAC-seq data?</i></b></summary>
 	<br>
 	<p><b>Uniquely mapping reads is critical for ATAC-seq analysis.</b> A unique mapping rate over 80% is typical for a successful experiment. Multi-mappers are always removed.</p>
-	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option).
-</p>
-	
+	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option).</p>
  </details>
+
 
 * Duplicate reads are reads that map at the exact same location, with the same coordinates and the same strand. These duplicates can arise from experimental artifacts, but can also contribute to genuine ChIP-signal.
     * **The bad kind of duplicates:** If initial starting material is low, this can lead to overamplification of this material before sequencing. Any biases in PCR will compound this problem and can lead to artificially enriched regions. 
