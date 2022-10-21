@@ -7,8 +7,9 @@ date: "October 15th, 2022"
 Approximate time: 45 minutes
 
 ## Learning Objectives
-
-* 
+* Compare and contrast three methods for investigating chromatin biology: ChIP-seq, CUT&RUN, ATAC-seq
+* Understand the signal profiles that result from each method
+* Review some popular public resources for accessing functional genomics data 
 
 ## Unraveling the epigenetic landscape
 It is clear that DNA sequence and transcription factor availability alone are not sufficient for effective gene regulation in eukaryotes. Epigenetic factors at various levels also have an essential role. DNA wraps around histones to form nucleosomes, which fold and condense to form chromatin. In the processes of DNA replication and transcription, some regions of chromatin are opened and regulatory machinery can bind to the exposed DNA binding sites. In addition, the chromatin structure can undergo dynamic epigenetic modifications, such as DNA methylation, histone modification and chromatin remodelling.
