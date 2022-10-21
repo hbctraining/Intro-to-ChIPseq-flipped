@@ -130,8 +130,7 @@ We filter out unmapped reads by specifying in the filter `not unmapped`, and dup
 
 <details>
 	<summary><b><i>Click here for additional filtering considerations for CUT&amp;RUN data</i></b></summary>
-	<br>
-	<p> Once the CUT&amp;RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used.</p>
+	<br>Once the CUT&amp;RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used.
 	Example code for filtering BAM files by fragment size:<br>
 <pre>bash
 sambamba view --format \
@@ -140,18 +139,19 @@ sambamba view --format \
 </pre>	
  </details>
 
+Markdown
 
 <details>
 	<summary><b><i>Click here for additional filtering considerations for ATAC-seq data</i></b></summary>
 	<br>There are two additional filtering steps that need to be performed for ATAC-seq data analysis:<br>	
 <ul><li><b>Filtering mitochondrial reads</b>. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These <b>reads should be discarded</b>. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.</li>
 <li><b>Filtering BAM files based on fragment size.</b>
-<ul><li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (&lt; 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)</li>
+<ul><li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (&lt; 100 bp) and mono-, di-, and tri-nucleosomes (200, 400, 600 bp, respectively)</li>
 <li>Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&amp;RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b></li>
 <li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul></ul><br>	
  </details>
 
-Test_2
+Test_3
 
 > ### Filtering out Blacklisted Regions
 > Although we do not perform this step, it is common practice to apply an additional level of filtering to our BAM files. That is, we remove alignments that occur with defined Blacklisted Regions. **We will filter out blacklist regions post-peak calling.**
