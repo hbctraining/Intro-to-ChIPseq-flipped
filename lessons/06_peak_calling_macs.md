@@ -33,7 +33,6 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
 ### CUT&RUN
-
 While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
 
 <p align="center">
@@ -44,26 +43,7 @@ _Image source: ["Peak calling by Sparse Enrichment Analysis for CUT&RUN chromati
 
 
 ### ATAC-seq
-
-
-
-### Tools for peak calling
-There are various tools that are available for peak calling. Peak calling algorithms are often specialized in identifying one of **two types of enrichment**: broad peaks or narrow peaks. There are also many tools out there that are capable of handling both types of profiles, and have specific methods for each. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller and/or the specific methods** to run. For more detail on the different types of binding profiles, please refer to the discussion from [an earlier lesson](01_ChIPseq_design_and_workflow.md#types-of-binding-profiles).
-
-> #### What if I am not sure what type of binding profile to expect?
-> In this scenario, we advise peak calling for both narrow and broad profiles. This will require additional time for some exploration to determine what is best for your data.
-
-There are many other peak callers and depending on the data you are working with, it can be worth exploring more. Below, we provide the names of some other peak calling software, but this is by no means an exhaustive list.
-
-* [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling. 
-* [epic2](https://github.com/biocore-ntnu/epic2): ideal for broad peak calling (a re-implementation of an older tool called SICER)
-* [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
-* [Genrich](https://github.com/jsh58/Genrich): designed to be able to run all of the post-alignment steps through peak-calling with one command. Features include:
-	* Removal of mitochondrial reads and PCR duplicates
-	* Analysis of multimapping reads
-	* Analysis of replicates
-	* A specific _ATAC-seq mode_
-
+The goal of ATAC-seq is to identify regions of accessible chromatin, and, by proxy, regulatory elements and sites of transcription factor binding. Calling peaks therefore represents the identification of regions of the genome that are enriched for aligned reads, similar to what we do for ChIP-seq. Currently, **MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline**. There are **several parameters that need to be changed** compared to the ChIP-seq analysis workflow, and we describe them in detail towards the end of this lesson. Specifically, we need to account for the differences which include 1) lack of an input sample (negative control), and 2) the lack of biomodal read distribution (i.e. no need to shift reads). There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or they are exclusively designed for it (i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166)).
 
 
 ## MACS2
@@ -156,6 +136,17 @@ Next, a Poisson distribution p-value is computed based on λ. A region is consid
 ### Estimation of false discovery rate
 
 Each peak is considered an independent test. Therefore, when we encounter thousands of significant peaks detected in a sample, we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS2, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
+
+> ### Other peak callers
+> There are many other tools out there that are capable of handling both types of profiles (e.g. narrow, broad); each having specific sub-commands and/or modes to do so. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller** to run. 
+> 
+> Some other commonly referenced callers include:
+> * [HOMER](http://homer.ucsd.edu/homer/): a suite of tools for peak calling and motif discovery.
+> * [SPP](https://www.encodeproject.org/software/spp/): an R package, that is implemented in the ENCODE processing pipeline. Best for narrow peak calling.
+>    * Uses a sliding window to calculate scores based on fragment counts from up- and downstream flanking windows. 
+> * [epic2](https://github.com/biocore-ntnu/epic2): Ideal for broad peak calling (a re-implementation of an older tool called SICER)
+> * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
+
 
 ## Running MACS2 
 
@@ -256,7 +247,7 @@ _When PE datasets are analyzed in single-end mode, MACS2 eliminates the second r
 
 <details>
 	<summary><b><i>How do the parameters change for ATAC-seq</i></b></summary>
-	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline. There are other ATAC-seq specific callers, however we have no experience and are unable to comment without benchmarking.
+	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline, and so below we provide the recommended parameter changes if using ATAC-seq data as input.
 <p>
 	
 * `f BAMPE`: Paired-end analysis mode in MACS2.
