@@ -51,14 +51,10 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > * You have included [UMIs](https://www.illumina.com/techniques/sequencing/ngs-library-prep/multiplexing/unique-molecular-identifiers.html) into your experimental setup.
 
 <details>
-	<summary><b><i>Are duplicates treated differently for CUT&RUN or ATAC-seq?</i></b></summary>
-	<br>
-	<p><b> Duplicate removal is always performed for ATAC-seq data.</b><br>
-	<p> <b>Duplicate removal is an optional step in many CUT&RUN analysis approaches</b>. The default is usually to keep duplicates, because CUT&RUN increases the likelihood of biological duplicates. More specifically, nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, increasing the likelihood of identical reads that are originated from different cells. Therefore, we should remove duplicate with caution. Assess the library complexity first, and then check if there are unreasonbly high amount of duplications. If not, and your experiment does not over-amplify, you might not want to remove the duplicate. <br>
-	
-</p>
-	
-</details>
+	<summary><b><i>Are duplicates treated differently for CUT&RUN or ATAC-seq?</i></b></summary><br>
+	<p><b>Duplicate removal is always performed for ATAC-seq data.</b></p><br>
+	<p><b>Duplicate removal is an optional step in many CUT&RUN analysis approaches</b>. The default is usually to keep duplicates, because CUT&RUN increases the likelihood of biological duplicates. More specifically, nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, increasing the likelihood of identical reads that are originated from different cells. Therefore, we should remove duplicate with caution. Assess the library complexity first, and then check if there are unreasonbly high amount of duplications. If not, and your experiment does not over-amplify, you might not want to remove the duplicate. <br></p>
+ </details>
 
 ### Filtering workflow
 
@@ -135,34 +131,24 @@ We filter out unmapped reads by specifying in the filter `not unmapped`, and dup
 <details>
 	<summary><b><i>Click here for additional filtering considerations for CUT&RUN data</i></b></summary>
 	<br>
-	<p> Once the CUT&RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used. 
-		
-   * Example code for filtering BAM files by fragment size: 
-
-```bash
+	<p> Once the CUT&RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used.</p>
+	Example code for filtering BAM files by fragment size:<br>
+<pre>bash
 sambamba view --format \
   bam --nthreads 6 \
   -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam
-```
-</p>
-	
-</details>
+</pre>	
+ </details>
 
 <details>
 	<summary><b><i>Click here for additional filtering considerations for ATAC-seq data</i></b></summary>
-	<br>
-	<p>
-		There are two additional filtering steps that need to be performed for ATAC-seq data analysis:
-		
-* <b>Filtering mitochondrial reads</b>. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These <b>reads should be discarded</b>. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.
-* <b>Filtering BAM files based on fragment size.</b>
-	* Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)
-	* Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b>
-	* Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase
-
-</p>
-	
-</details>
+	<br>There are two additional filtering steps that need to be performed for ATAC-seq data analysis:<br>	
+<ul><li><b>Filtering mitochondrial reads</b>. The mitochondrial genome, which is more accessible due to the lack of chromatin packaging will result in extremely high read coverage. These <b>reads should be discarded</b>. Since there are no ATAC-seq peaks of interest in the mitochondrial genome, these reads are discarded. The Omni-ATAC method uses detergents to remove mitochondria from the samples prior to sequencing and is another option to deal with this issue.</li>
+<li><b>Filtering BAM files based on fragment size.</b>
+	<ul><li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)</li>
+	<ul><li>Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b></li>
+	<li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul></ul>
+ </details>
 
 
 > ### Filtering out Blacklisted Regions
