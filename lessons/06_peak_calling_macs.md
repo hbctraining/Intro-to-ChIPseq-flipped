@@ -34,9 +34,13 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 ### CUT&RUN
 
-In contrast with ChIP-seq, CUT&RUN is an in situ epigenome profiling technique that uses an antibody-targeted micrococcal nuclease (MNase) fusion protein to selectively digest and liberate DNA fragments at sites of protein binding while leaving the remainder of the genome behind [(Meers MP et al, 2019)](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4). Since **CUT&RUN still produces read pileups on either side of the bound protein, the bimodal pattern described above will also be observed** in the data. However, because of the increased precision of the digestion there is much lower background in comparison to ChIP-seq.
+While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
 
-While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN) which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
+<p align="center">
+<img src="../CUT&RUN/img/seacr_fig1.png" width=500>
+</p>
+
+_Image source: ["Peak calling by Sparse Enrichment Analysis for CUT&RUN chromatin profiling"](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4)_
 
 
 ### ATAC-seq
