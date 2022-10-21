@@ -74,10 +74,10 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 1:30 - 2:15 | Self-learning lessons review |  All |
-| 2:15 - 3:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Jihe |
-| 3:00 - 3:05 | Break|  |
-| 3:05 - 4:00 | [Peak calling](../lessons/06_peak_calling_macs.md) | Meeta |
+| 9:30 - 10:15 | Self-learning lessons review |  All |
+| 10:15 - 11:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Jihe |
+| 11:00 - 11:05 | Break|  |
+| 11:05 - 12:00 | [Peak calling](../lessons/06_peak_calling_macs.md) | Meeta |
 
 ### Before the next class:
 
@@ -125,11 +125,11 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 1:30 - 2:00 | Self-learning lessons review | All |
-| 2:00 - 2:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
-| 2:30 - 2:35 | Break|  |
-| 2:35 - 3:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
-| 3:45 - 4:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
+| 9:30 - 10:00 | Self-learning lessons review | All |
+| 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
+| 10:30 - 10:35 | Break|  |
+| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
+| 11:45 - 12:00 | [Wrap-up](../lectures/Wrap-up_new.pdf) | Meeta |
 
 
 ## Answer keys
