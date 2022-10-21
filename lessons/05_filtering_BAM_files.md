@@ -147,7 +147,8 @@ sambamba view --format \
 <li><b>Filtering BAM files based on fragment size.</b>
 <ul><li>Typically, a successful ATAC-seq experiment should generate a fragment size distribution plot with decreasing and periodical peaks corresponding to the nucleosome-free regions (NFR) (< 100 bp) and mono-, di-, and tri-nucleosomes (~ 200, 400, 600 bp, respectively)</li>
 <li>Fragments from the NFR are expected to be enriched around the transcription start site (TSS). Fragments from nucleosome-bound regions are expected to be depleted at TSS with a slight enrichment of flanking regions around TSS. <i>Use example sambamba code</i> from above (CUT&RUN filtering) to filter out fragments by size. A BAM for NFR, mono-nuc, di-nuc, tr-nuc. <b>Typically the NFR BAM is used for peak calling.</b></li>
-<li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul></ul><br>
+<li>Shift the reads in the BAM file. Reads should be shifted + 4 bp and − 5 bp for positive and negative strand respectively, to account for the 9-bp duplication created by DNA repair of the nick by Tn5 transposase</li></ul><br>
+	
  </details>
 
 
