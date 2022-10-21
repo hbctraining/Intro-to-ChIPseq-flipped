@@ -126,20 +126,20 @@ For CUT&RUN and ATAC-seq, there are additional parameters that you want to explo
 	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
 	<br>
 	For CUT&RUN, there are additional parameters that can be used. Here, we list options that have been reported by other groups. <b>It might not be neccessary to include any or all of these options.</b>  <i>We encourage you to explore the literature that resemble your research and method, and decide what is best for your data.</i><br>
-	<ul><li>`--end-to-end`: An opposite option of `--local`. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.</li>
-	<li>`--very-sensitive`: A preset option that results in slower running, but more sensitive and more accurate result.</li>
-	<li>`--no-mixed`: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.</li>
-	<li>`--no-discordant`: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.</li>
-	<li>`-I 10 -X 700`: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.</li>
-	<li>`--dovetail`: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</li></ul>	
+	<ul><li><code>--end-to-end</code>: An opposite option of <code>--local</code>. Bowtie2 will search for alignments involving all of the read characters. This is also called an "untrimmed" or "unclipped" alignment, and is only used when trimming is done prior to alignment.</li>
+	<li><code>--very-sensitive</code>: A preset option that results in slower running, but more sensitive and more accurate result.</li>
+	<li><code>--no-mixed</code>: Suppress unpaired alignments for paired reads. Otherwise, without this option, when Bowtie2 cannot find a concordant or discordant alignment for a pair, it tries to find alignments for the individual mates.</li>
+	<li><code>--no-discordant</code>: Suppress discordant alignments for paired reads. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints.</li>
+	<li><code>-I 10 -X 700</code>: For specifying the size range of inserts. In this example, 10-700 bp in length is used to ignore any remaining adapter sequence at the 3’ ends of reads during mapping.</li>
+	<li><code>--dovetail</code>: The term 'dovetailing' describes mates which extend past one another. It is unusual but is frequently encountered in CUT&RUN experiments. This option indicates that dovetailed alignments should be considered as concordant.</li></ul>	
  </details>
 
 <details>
 	<summary><b><i>How do the parameters change for ATAC-seq?</i></b></summary>
 	<br>
 	ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but <b>the following options can be added if needed</b>:<br>		
-<ul><li>`-X <int>`: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.</li>
-<li>`--very-sensitive`: better alignment results are frequently achieved with this.</li>
+<ul><li><code>-X <int></code>: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.</li>
+<li><code>--very-sensitive</code>: better alignment results are frequently achieved with this.</li></ul>
  </details>
 
 Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
