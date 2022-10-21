@@ -8,17 +8,20 @@
 * Please **study the contents** and **work through all the exercises** within the following lessons:
   * [Shell basics review](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/shell_review.html)
   * [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html)
+  * [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html)
   
   
 ## Day 1
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 1:30 - 1:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
-| 1:45 - 3:00 | [Introduction to ChIP-seq](https://www.dropbox.com/s/k2xgo8sk8werzxa/Introduction%20to%20ChIP-seq%202022.pdf?dl=1) | Meeta |
-| 3:00 - 3:05 | Break|  |
-| 3:05 - 3:50 | [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html) | Jihe 
-| 3:50 - 4:00 | Overview of self-learning materials and homework submission | Jihe |
+| 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
+| 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing]() | Dr. Shannan Ho Sui |
+| 11:00- 11:05 | Break|  |
+| 11:05 - 11:20 | [HPC review (exercises)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html#exercises) | Jihe |
+| 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Jihe |
+| 11:50 - 12:00 | Overview of self-learning materials and homework submission | Meeta|
+
 
 
 ### Before the next class:
@@ -27,21 +30,14 @@ I. Please **study the contents** and **work through all the code** within the fo
    1. [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before you begin thinking about performing a ChIP-seq experiment, it is important to plan for it. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
-             - Review different types of controls for ChIP-seq<br>
-             - Highlight the sequencing considerations for different binding profiles<br>
-             - Introduce you to the ChIP-seq analysis workflow<br><br>
+         <br>Before you begin thinking about performing the experiment, it is important to plan for it and choose a protocol that is best suited for you. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
+             - Review three different types of methods for exploring chromatin biology<br>
+             - Highlight the experimental design considerations for each method<br>
+             - Highlight the sequencing considerations for each method R<br><br>
         </details>
    
-   2. [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>We are ready (and excited!) to get started with our ChIP-seq analysis. But, wait! There are just a few things to do before we get our hands on the data. <br><br>In this lesson you will:<br>
-            - Learn about the dataset we are using in this workshop<br>
-            - Organize your space, so you are setup for success<br><br>
-         </details>
 
-   3. [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
+   2. [Quality Control of Sequence Data: Running FASTQC and evaluating results](../lessons/03_QC_FASTQC.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>The first step of most NGS analyses is to evaluate the quality of your sequencing reads. <br><br>In this lesson you will explore:<br>
@@ -49,7 +45,7 @@ I. Please **study the contents** and **work through all the code** within the fo
             - The HTML report that is returned from FASTQC and how to interepret the different plots<br><br>
         </details>
         
-   4. [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
+   3. [Alignment using Bowtie2](../lessons/04_alignment_using_bowtie2.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>The next step is taking our high quality reads and figuring out where in the genome the originated from. In theory this seems like a simple task, but in practice it is quite challenging. <br><br>In this lesson you will cover:<br>
@@ -68,7 +64,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/9kCUWtXRx1P2AZNsR8qQ) the **day before the next class**.
+   * **Upload the saved text file** to [Dropbox]() the **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -117,8 +113,8 @@ I. Please **study the contents** and **work through all the code** within the fo
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/KYkDi8pcJue9wlrPnNOu) the **day before the next class**.
-   
+   * **Upload the saved text file** to [Dropbox]() the **day before the next class**.
+
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
 * Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
