@@ -245,7 +245,7 @@ As a general peak-caller, MACS2 can be applied to any DNA enrichment assays if t
 	<br>
 	<b>There is very little required change for peak calling on CUT&amp;RUN-seq data.</b> The only notable difference is the CUT&amp;RUN sequencing data will typically be paired-end. To account for this, you can add the format parameter.<br><br>
 <ul><li><code>f BAMPE</code>: Paired-end analysis mode in MACS2. In this mode, MACS2 interprets the full extent of the sequenced DNA fragments correctly, and discards alignments that are not properly paired.</li></ul>
-<i>When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the &quot;R2&quot; read) and then treats the remaining &quot;R1&quot; reads as if they were single-ended. It models the fragment lengths from the &quot;single-end&quot; R1 reads and then extends the read lengths to the average value from the mode. Using <b>this mode</b> with paired-end data <b>enables the use of actual fragment lengths</b>, for a more accurate end result</i><br>	
+<i>When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the &quot;R2&quot; read) and then treats the remaining &quot;R1&quot; reads as if they were single-ended. It models the fragment lengths from the &quot;single-end&quot; R1 reads and then extends the read lengths to the average value from the mode. Using <b>this mode</b> with paired-end data <b>enables the use of actual fragment lengths</b>, for a more accurate end result</i><br><br>	
  </details>
 
 <details>
