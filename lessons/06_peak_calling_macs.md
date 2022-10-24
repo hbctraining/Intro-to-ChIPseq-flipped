@@ -43,7 +43,13 @@ _Image source: ["Peak calling by Sparse Enrichment Analysis for CUT&RUN chromati
 
 
 ### ATAC-seq
-The goal of ATAC-seq is to identify regions of accessible chromatin, and, by proxy, regulatory elements and sites of transcription factor binding. Calling peaks therefore represents the identification of regions of the genome that are enriched for aligned reads, similar to what we do for ChIP-seq. Currently, **MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline**. There are **several parameters that need to be changed** compared to the ChIP-seq analysis workflow, and we describe them in detail towards the end of this lesson. Specifically, we need to account for the differences which include 1) lack of an input sample (negative control), and 2) the lack of biomodal read distribution (i.e. no need to shift reads). There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or they are exclusively designed for it (i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166)).
+The goal of ATAC-seq is to identify regions of accessible chromatin, and, by proxy, regulatory elements and sites of transcription factor binding. Calling peaks therefore represents the identification of regions of the genome that are enriched for aligned reads, similar to what we do for ChIP-seq. Currently, **MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline**. There are **several parameters that need to be changed** compared to the ChIP-seq analysis workflow, and we describe them in detail towards the end of this lesson. Specifically, we need to account for the differences which include:
+
+1. Lack of an input sample (negative control)
+2. Lack of biomodal read distribution (i.e. no need to shift reads). 
+
+
+_NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or they are exclusively designed for it (i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
 
 
 ## MACS2
