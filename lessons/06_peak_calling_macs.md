@@ -250,7 +250,7 @@ As a general peak-caller, MACS2 can be applied to any DNA enrichment assays if t
 
 <details>
 	<summary><b><i>How do the parameters change for ATAC-seq</i></b></summary>
-	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline, and so below we provide the recommended parameter changes if using ATAC-seq data as input.
+	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline, and so below we provide the recommended parameter changes if using ATAC-seq data as input.<br>
 <ul><li><code>f BAMPE</code>: Paired-end analysis mode in MACS2.</li>
 <li><code>--nomodel</code>: Bypass building the shifting model. The read pileup does not represent a bimodal pattern, as there is no specific protein-DNA interaction that we are assaying. Open regions will be unimodal in nature, not requiring any shifting of reads.</li>
 <li><code>--keep-dup all</code>: Keep all reads since we have already filtered duplicates from our BAM files.</li>
