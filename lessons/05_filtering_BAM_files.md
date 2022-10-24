@@ -151,8 +151,6 @@ sambamba view --format \
  </details>
 
 
-Test_9
-
 > ### Filtering out Blacklisted Regions
 > Although we do not perform this step, it is common practice to apply an additional level of filtering to our BAM files. That is, we remove alignments that occur with defined Blacklisted Regions. **We will filter out blacklist regions post-peak calling.**
 > 
