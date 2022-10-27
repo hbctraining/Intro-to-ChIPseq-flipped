@@ -23,7 +23,9 @@ Now that we have completed peak calling, we are ready to perform QC on our calle
 <img src="../img/chipseq_bedtoolsworkflow_sept2021.png" width="600">
 </p>
 
-In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format** (**B**rowser **E**xtensible **D**ata). We will discuss the output files that we obtained from MACS2 peak calling, specifically describing the contents of the narrowPeak files and how it relates to BED. You will then get acquainted with **`bedtools`, a new suite of tools that is very helpful when working with BED files and other related file formats**, and use it to complete the following tasks for the WT and KO peak calls from this PRDM16 dataset:
+In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format** (**B**rowser **E**xtensible **D**ata). We will also describe the contents of the narrowPeak files (output from MACS2) and how it relates to BED. 
+
+We will use **`bedtools`, a suite of tools that is very helpful when working with BED files and other related file formats**, to complete the following tasks for the WT and KO peak calls from this PRDM16 dataset:
 
 1. Filter out peaks that overlap with the blacklisted regions
 2. Assess the replicate concordance within sample groups, to see how many peaks are reproducible. 
@@ -107,6 +109,8 @@ $ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.13
 ### bedtools intersect
 
 The [`bedtools intersect`](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html) command within bedtools evaluates A (file 1) and finds regions that overlap in B (file 2). We will use this command to do both the filtering of peaks (from blacklisted regions) and assessing the overlap of peaks (between replicates).
+
+> **_NOTE: All of the operations performed below can similarly be used on peaks called from CUT&RUN and ATAC-seq data as well._**
 
 <p align="center">
 <img src="../img/bedtools_intersect.png" width="600">
