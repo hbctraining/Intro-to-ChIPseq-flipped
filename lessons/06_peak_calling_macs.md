@@ -49,7 +49,7 @@ The goal of ATAC-seq is to identify regions of accessible chromatin, and, by pro
 2. Lack of biomodal read distribution (i.e. no need to shift reads). 
 
 
-_NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or they are exclusively designed for it (i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
+_NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or there are caller that are exclusively designed for ATAC-seq(i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
 
 
 ## MACS2
