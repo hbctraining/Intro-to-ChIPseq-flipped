@@ -29,7 +29,7 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 </p>
 
 <details>
-	<summary><b><i>Are multi-mappers treated differently for CUT&RUN and ATAC-seq data?</i></b></summary>
+	<summary><b><i>Click here to read about how multi-mappers are treated for CUT&RUN and ATAC-seq data?</i></b></summary>
 	<br>
 	<p><b>Uniquely mapping reads is critical for ATAC-seq analysis.</b> A unique mapping rate over 80% is typical for a successful experiment. Multi-mappers are always removed.</p>
 	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option).</p>
@@ -51,7 +51,7 @@ A key issue when working with a ChIP-seq data is to **move forward with only the
 > * You have included [UMIs](https://www.illumina.com/techniques/sequencing/ngs-library-prep/multiplexing/unique-molecular-identifiers.html) into your experimental setup.
 
 <details>
-	<summary><b><i>Are duplicates treated differently for CUT&RUN or ATAC-seq?</i></b></summary><br>
+	<summary><b><i>Click here to read about how duplicates are treated for CUT&RUN or ATAC-seq?</i></b></summary><br>
 	<p><b>Duplicate removal is always performed for ATAC-seq data.</b></p><br>
 	<p><b>Duplicate removal is an optional step in many CUT&RUN analysis approaches</b>. The default is usually to keep duplicates, because CUT&RUN increases the likelihood of biological duplicates. More specifically, nuclease cleavage of chromatin by its stereotypical nature is influenced by conformation of chromatin and/or nuclease bias, increasing the likelihood of identical reads that are originated from different cells. Therefore, we should remove duplicate with caution. Assess the library complexity first, and then check if there are unreasonbly high amount of duplications. If not, and your experiment does not over-amplify, you might not want to remove the duplicate. <br></p>
  </details>
