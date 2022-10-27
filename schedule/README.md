@@ -91,7 +91,7 @@ I. Please **study the contents** and **work through all the code** within the fo
              - Filtering and intersecting BED files <br><br>
         </details>
    
-   2. [Creating bigWig files](../lessons/08_creating_bigwig_files.md)
+   2. [File formats for peak visualization](../lessons/08_creating_bigwig_files.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>ChIP-seq data is best evaluated by visualizing peaks. However, in order to do so we require the appropriate file formats.
