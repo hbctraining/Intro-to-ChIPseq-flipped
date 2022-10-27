@@ -114,10 +114,9 @@ $ module load python/2.7.12 deeptools/3.0.2
 
 ### Normalization
 
-Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normalization, which is great if we want to compare different samples to each other (that vary in terms of sequencing depth). DeepTools offers different methods of normalization as listed below, each is perfomed per bin. The default is no normalization.
+Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normalization, which is great if we want **to compare different samples to each other and they vary in terms of sequencing depth**. DeepTools offers different **methods of normalization** as listed below, each is perfomed per bin. The default is no normalization.
 
-> NOTE: We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033). However, it is highly recommended to choose one of the approaches described.
-
+> NOTE: We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033). However, it is highly recommended to choose one of the methods described.
 
 * Reads Per Kilobase per Million mapped reads (RPKM)
   * number of reads per bin / (number of mapped reads (in millions) * bin length (kb))
@@ -130,8 +129,10 @@ Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normaliz
   * scaling factor is determined from the sequencing depth: total number of mapped reads * fragment length) / effective genome size
   * this option requires an effectiveGenomeSize
   
+
 **Spike-in normalization**
 
+Another option for normalization is to **normalize each samples using a scale factor/ normalization factor**. By default the scale factor is set to 1 in deepTools. If we performed our experiemnt
 
 
 ### bamCoverage from deepTools
