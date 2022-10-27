@@ -12,12 +12,12 @@ Approximate time: 30 minutes
 * Differentiate between the different file formats available for peak visualization
 * Create bigWig files using `deepTools`
 
-## Setting up for QC on peak calls
+## Peak visualization
 
 Now that we have identified regions in the genome that are enriched through some interaction with PRDM16, we can **take those regions and visually assess the amount of signal observed**. This can be done in one of two ways:
 
-* Uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups.
-* Create profile plots and heatmaps to look at the signal aggregated over all binding sites. 
+1. Uploading the data to a genome viewer such as the Broad's [Integrative Genome Viewer (IGV)](https://software.broadinstitute.org/software/igv/) or the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgGateway), to explore the genome and specific loci for pileups.
+2. Create profile plots and heatmaps to look at the signal aggregated over all binding sites. 
 
 **In order to perform any of assessments described above, you will need a file in the appropriate format.** 
 
@@ -59,9 +59,12 @@ The Wiggle format (wig) also allows the display of continuous data. This format 
 
 The bigWig format is an indexed *binary* form of the wiggle file format, and is useful for large amounts of dense and continuous data to be displayed in a genome browser as a graphical track. As mentioned above, the visual representation of this format is very similar to bedGraph.
 
+> **_NOTE: All of the above file formats are also applicable to CUT&RUN and ATAC-seq data._** 
+
+
 ## Creating bigWig files
 
-For this workshop, we will focus on creating bigWig files, as we will be using them in the next lesson for qualitative assessment. The general procedure is to take our **alignment files (BAM) and convert them into bigWig files**, and we will do this using [`deepTools`](http://deeptools.readthedocs.org/en/latest/content/list_of_tools.html). 
+For this workshop, we will focus on creating bigWig files, as we will be using them in the next lesson for qualitative assessment. BigWig files have a much smaller data footprint compared to BAM files, especially as your bin size (a parameter described below) increases. The general procedure is to take our **alignment files (BAM) and convert them into bigWig files**, and we will do this using [`deepTools`](http://deeptools.readthedocs.org/en/latest/content/list_of_tools.html). 
 
 <p align="center">
 <img src="../img/bam_to_bigwig.png" width="700">
@@ -109,6 +112,28 @@ Finally, let's make sure we have the required modules loaded to use `deepTools`:
 $ module load python/2.7.12 deeptools/3.0.2 
 ```
 
+### Normalization
+
+Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normalization, which is great if we want to compare different samples to each other (that vary in terms of sequencing depth). DeepTools offers different methods of normalization as listed below, each is perfomed per bin. The default is no normalization.
+
+> NOTE: We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033). However, it is highly recommended to choose one of the approaches described.
+
+
+* Reads Per Kilobase per Million mapped reads (RPKM)
+  * number of reads per bin / (number of mapped reads (in millions) * bin length (kb))
+* Counts per million (CPM); this is similar to CPM in RNA-seq
+  * number of reads per bin / number of mapped reads (in millions)
+* Bins Per Million mapped reads (BPM); same as TPM in RNA-seq
+  * number of reads per bin / sum of all reads per bin (in millions)
+* Reads per genomic content (RPGC)
+  * number of reads per bin / scaling factor for 1x average coverage 
+  * scaling factor is determined from the sequencing depth: total number of mapped reads * fragment length) / effective genome size
+  * this option requires an effectiveGenomeSize
+  
+**Spike-in normalization**
+
+
+
 ### bamCoverage from deepTools
 
 This command takes a **BAM file as input** and evaluates which areas of the genome have reads associated with them, i.e. how much of the genome is "covered" with reads. The coverage is calculated as the number of reads per bin, where bins are short consecutive sections of the genome (bins) that can be defined by the user. The **output of this command can be either a bedGraph or a bigWig file**. We will be generating a bigWig file, since that format has a much smaller data footprint, especially as the bin size increases.
@@ -120,8 +145,6 @@ These are some parameters of bamCoverage that are worth considering:
 * `smoothLength`: defines a window, larger than the `binSize`, to average the number of reads over. This helps produce a more continuous plot.
 * `centerReads`: reads are centered with respect to the fragment length as specified by `extendReads`. This option is useful to get a sharper signal around enriched regions.
 
-> #### When should I normalize the data in my bigWig files?
-> Normalizing is recommended if you want to compare different samples to each other, and those samples vary in terms of sequencing depth. We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033).
 
 We will be using the bare minimum of parameters as shown in the code below. We decrease the bin size to increase the resolution of the track (this also means larger file size). If you are interested, feel free to test out some of the other parameters to create different bigWig files. You can load them into a genome viewer like IGV and observe the differences.
 
