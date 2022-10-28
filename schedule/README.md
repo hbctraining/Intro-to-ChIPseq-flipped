@@ -160,7 +160,6 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ## Building on this workshop
 * [Integration of ChIP-seq and RNA-seq](../lessons/integrating_rna-seq_and_chip-seq.md)
-* [A Brief Introduction to CUT&RUN](../CUT&RUN/Intro_to_CUT&RUN.md)
 * [Advanced bash commands (aliases, copying files, and symlinks)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/more_bash_cluster.html)
 * [Introduction to R workshop materials](https://hbctraining.github.io/Intro-to-R-flipped/#lessons) 
 
