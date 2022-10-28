@@ -64,7 +64,7 @@ The bigWig format is an indexed *binary* form of the wiggle file format, and is 
 
 ## Creating bigWig files
 
-For this workshop, we will focus on creating bigWig files, as we will be using them in the next lesson for qualitative assessment. BigWig files have a much smaller data footprint compared to BAM files, especially as your bin size (a parameter described below) increases. The general procedure is to take our **alignment files (BAM) and convert them into bigWig files**, and we will do this using [`deepTools`](http://deeptools.readthedocs.org/en/latest/content/list_of_tools.html). 
+For this workshop, we will focus on creating bigWig files, as we will be using them in the next lesson for qualitative assessment. BigWig files have a much smaller data footprint compared to BAM files, especially as your bin size (a parameter described below) increases. The general procedure is to take our **alignment files (BAM) and convert them into bigWig files**, and we will do this using [`deepTools`](http://deeptools.readthedocs.org/en/latest/content/list_of_tools.html). The coverage is calculated as the number of reads per bin, where bins are short consecutive counting windows of a defined size. It is possible to extended the length of the reads to better reflect the actual fragment length. 
 
 <p align="center">
 <img src="../img/bam_to_bigwig.png" width="700">
