@@ -114,7 +114,7 @@ $ module load python/2.7.12 deeptools/3.0.2
 
 ### Normalization
 
-Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normalization, which is great if we want **to compare different samples to each other and they vary in terms of sequencing depth**. DeepTools offers different **methods of normalization** as listed below, each is perfomed per bin. The default is no normalization.
+The methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normalization, which is great if we want **to compare different samples to each other and they vary in terms of sequencing depth**. DeepTools offers different **methods of normalization** as listed below, each is perfomed per bin. The default is no normalization.
 
 > NOTE: We will not normalize the data we are working with because we are following the methods described in [Baizabal, 2018](https://doi.org/10.1016/j.neuron.2018.04.033). However, it is highly recommended to choose one of the methods described.
 
@@ -132,7 +132,9 @@ Methods for bigWig creation (`bamCoverage` and `bamCompare`) allows for normaliz
 
 **Spike-in normalization**
 
-Another option for normalization is to **normalize each samples using a scale factor/ normalization factor**. By default the scale factor is set to 1 in deepTools. If we performed our experiemnt
+Another option for normalization is to **normalize each sample using a scale factor/ normalization factor**. By default the scale factor is set to 1 in deepTools. In an earlier lesson, we described the spike-in strategy and how to compute a normalization factor for each indidvidual sample. Those values can be used when creating bigWig files. The `--scaleFactor` parameter takes in the user provided value and each bin is multiplied by this value. **If normalizing with a scale factor, be sure that none of the other normalization methods are applied.** 
+
+> _NOTE: The `scaleFactor` is not applicable to ATAC-seq data, as the spike-in strategy is not used._
 
 
 ### bamCoverage from deepTools
