@@ -78,6 +78,30 @@ Our dataset consists of two WT samples and two KO samples. For each of the IP sa
 <img src="../img/expt_design_prdm16.png" width="700">
 </p>
 
+### Connect to O2
+
+Let's get started with the hands-on component by typing in the following command to log in to O2:
+
+```bash
+ssh username@o2.hms.harvard.edu
+```
+
+You will receive a prompt for your password, and you should type in your associated password; **note that the cursor will *not move* as you type in your password**.
+
+A warning might pop up the first time you try to connect to a remote machine, type "Yes" or "Y". 
+
+Once logged in, you should see the O2 icon, some news, and the command prompt, e.g. `[rc_training10@login01 ~]$`.
+
+> Note 1: `ssh` stands for secure shell. All of the information (like your password) going between your computer and the O2 login computer is encrypted when using `ssh`.
+ 
+Next, you will need to **start an interactive session**.  A login node's only function is to enable users to log in to a cluster, it is not meant to be used for any actual work/computing. Since we will be doing some work, let's get on to a compute node:
+
+```bash
+$ srun --pty -p interactive -t 0-3:00 --mem 1G  /bin/bash
+```
+
+**Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
+
 ## Implementing data management best practices
 
 In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html), we describe the data lifecycle and the **different aspects to consider when working on your own projects**. Here, we implement some of those strategies to get ourselves setup before we begin with any analysis. 
@@ -87,20 +111,6 @@ In a [previous lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-
 </p>
 
 _Image acquired from the [Harvard Biomedical Data Management Website](https://datamanagement.hms.harvard.edu/data-lifecycle)_
-
-> **NOTE:** You will want to make sure you are **logged into O2 an on a compute node** before you continue through this lesson. Type in the following command with your username to login:
-> 
-> ```bash
-> ssh username@o2.hms.harvard.edu
-> ```
-> 
-> To start an interactive session with 2 cores:
-> 
-> ```bash
-> $ srun --pty -p interactive -t 0-3:00 --mem 8G  /bin/bash
-> ```
-> 
-> **Make sure that your command prompt is now preceded by a character string that contains the word "compute".**
 
 
 ### Planning and organization
