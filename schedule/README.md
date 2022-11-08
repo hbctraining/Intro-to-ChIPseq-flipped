@@ -33,7 +33,7 @@ I. Please **study the contents** and **work through all the code** within the fo
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Before you begin thinking about performing the experiment, it is important to plan for it and choose a protocol that is best suited for you. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
              - Highlight the experimental design considerations for ChIP-seq and compare and contrast with CUT&RUN and ATAC-seq<br>
-             - Highlight the sequencing considerations for each method R<br><br>
+             - Highlight the sequencing considerations for each methods listed above<br><br>
         </details>
    
 
