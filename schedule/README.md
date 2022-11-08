@@ -8,7 +8,8 @@
 * Please **study the contents** and **work through all the exercises** within the following lessons:
   * [Shell basics review](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/shell_review.html)
   * [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html)
-  * [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html)
+  * [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html)
+  * [A review of high-throughput sequencing methods for understanding chromatin biology](../lessons/01a_Understanding_chromatin_with_HTS.md)
   
   
 ## Day 1
@@ -18,7 +19,7 @@
 | 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop.pdf) | Meeta |
 | 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing]() | Dr. Shannan Ho Sui |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:20 | [HPC review (exercises)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/03_working_on_HPC.html#exercises) | Jihe |
+| 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Jihe |
 | 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Jihe |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Meeta|
 
@@ -27,12 +28,11 @@
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Experimental design considerations and understanding the ChIP-seq workflow](../lessons/01_ChIPseq_design_and_workflow.md)
+   1. [Experimental design considerations for HTS of chromatin](../lessons/01b_experimental_design_considerations.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Before you begin thinking about performing the experiment, it is important to plan for it and choose a protocol that is best suited for you. There are many things to consider depending on the cells you are working with, and your protein of interest. <br><br>In this lesson, we will:<br>
-             - Review three different types of methods for exploring chromatin biology<br>
-             - Highlight the experimental design considerations for each method<br>
+             - Highlight the experimental design considerations for ChIP-seq and compare and contrast with CUT&RUN and ATAC-seqbr>
              - Highlight the sequencing considerations for each method R<br><br>
         </details>
    
@@ -55,7 +55,7 @@ I. Please **study the contents** and **work through all the code** within the fo
         </details>
 
 
-> **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it).
+> **NOTE:** To run through the code above, you will need to be **logged into O2** and **working on a compute node** (i.e. your command prompt should have the word `compute` in it). **Need a refresher on the cluster?** Check out [this lesson](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) from the pre-reading assignment.
 > 1. Log in using `ssh rc_trainingXX@o2.hms.harvard.edu` and enter your password (replace the "XX" in the username with the number you were assigned in class). 
 > 2. Once you are on the login node, use `srun --pty -p interactive -t 0-2:30 --mem 1G /bin/bash` to get on a compute node or as specified in the lesson. > 3. Proceed only once your command prompt has the word `compute` in it.
 > 4. If you log out between lessons (using the `exit` command twice), please follow points 1. and 2. above to log back in and get on a compute node when you restart with the self learning.
