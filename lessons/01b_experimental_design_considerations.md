@@ -62,6 +62,8 @@ Your ChIP experiment is only as good as your antibody! The more specific the ant
 * Check a few regions by **qPCR to confirm that the pull-down worked**. Create primers for regions of the genome you expect your protein of interest to bind. The PCR is performed on the immunoprecipitated material, before sending it for sequencing. 
     * You can also check a region of DNA that you do not expect to be enriched and thus do not expect to be amplified by qPCR, to show that your ChIP is specific (negative control)
 
+> **Note that you cannot do a qPCR on a CUT&RUN library, the fragments are too short.** See below for a positive control option instead. 
+
 <p align="center">
 <img src="../img/ChIP_qPCR_QC.png" width="500">
 </p>
