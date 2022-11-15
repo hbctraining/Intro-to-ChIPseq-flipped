@@ -140,7 +140,6 @@ For CUT&RUN and ATAC-seq, there are additional parameters that you want to explo
 	ATAC-seq usually uses the same parameters as ChIP-seq for alignment, but <b>the following options can be added if needed</b>:<br>	
 <ul><li><code>-X &lt;int&gt;</code>: Maximum DNA fragment length (default 500bp). If you anticipate that you may have DNA fragments longer than the default value, you should increase this parameter accordingly.</li>
 <li><code>--very-sensitive</code>: better alignment results are frequently achieved with this.</li></ul>
-	edited
  </details>
 
 Below is an example of the **full command to run bowtie2 on a single FASTQ file `wt_sample2_chip`**. Details on Bowtie2 and its functionality can be found in the [user manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml); we encourage you to peruse through to get familiar with all available options.
