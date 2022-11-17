@@ -70,7 +70,7 @@ Before we begin, you will want to make sure you are **logged into O2.** To start
 > **NOTE:** Check to see that you are not already on a compute node! Interactive session should always be run from the login node. If the text before your command prompt contains the word 'compute', _do not run the code below_.
 
 ```bash
-$ srun --pty -p interactive -t 0-2:30 --mem 10G -c 2 --reservation=HBC2 /bin/bash
+$ srun --pty -p interactive -t 0-2:30 --mem 10G -c 2 /bin/bash
 ```
 
 We will also load the required modules for this lesson:
