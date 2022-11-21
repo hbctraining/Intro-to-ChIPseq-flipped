@@ -261,7 +261,7 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
 
 <details>
   <summary><b>Click here for solution</b></summary>
-  
+  <br><b>Do not copy paste the SBATCH options from below. There are spaces incorporated which will cause the script to throw an error.</b><br>
   <p><pre>
  #!/bin/bash
    
