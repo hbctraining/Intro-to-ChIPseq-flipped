@@ -98,6 +98,7 @@ I. Please **study the contents** and **work through all the code** within the fo
          <br><br>In this lesson you will:<br>
             - Learn about different file formats for peak visualization<br>
             - Create bigWig files<br><br>
+            - Discuss normalization metrics and considerations when choosing a method <br><br>
          </details>
 
    3. [Qualitative assessment of peak enrichment using deepTools](../lessons/09_data_visualization.md)
