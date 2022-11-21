@@ -237,7 +237,7 @@ Genome alignment can take a while to finish, so we won't run it in an interactiv
 vim ~/chipseq_workshop/scripts/alignment.sbatch
 ```
 
-> NOTE: In the `vim`, press `i` to start the editing mode. Once done, type `:wq` to save and exit.
+> NOTE: In the `vim`, press `i` to start the editing mode. Once done, press ESC to get back into command mode and type `:wq` to save and exit.
 
 Let's specify the job submission options as below (don't forget the shebang line, `#!/bin/bash` at the begining):
 
@@ -257,7 +257,9 @@ In the body of the script, add the code required to:
 * Run bowtie2 to obtain a SAM file
 * Convert the SAM file to a BAM file using samtools. 
 
-Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. **NOTE: for this script, do not use the `2>` operator.** Instead of creating a log file, we will examine what happens to the standard out/error during a job submission. Once you are done, submit the script as a job, using `sbatch ~/chipseq_workshop/scripts/alignment.sbatch` command.
+Please refer to the corresponding code we discussed earlier in this lesson, to fill up the whole script. Once you are done, submit the script as a job, using `sbatch ~/chipseq_workshop/scripts/alignment.sbatch` command.
+
+> _**NOTE: for this script, do not use the `2>` operator.**_ Instead of creating a log file, we will examine what happens to the standard out/error during a job submission.
 
 <details>
   <summary><b>Click here for solution</b></summary>
