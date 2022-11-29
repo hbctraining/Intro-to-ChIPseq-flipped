@@ -390,6 +390,7 @@ Below is what this second script (`chipseq_analysis_on_allfiles.slurm`) would lo
 #SBATCH -p short 		# partition name
 #SBATCH -t 0-2:00 		# hours:minutes runlimit after which job will be killed
 #SBATCH -c 2 		# number of cores requested -- this needs to be greater than or equal to the number of cores you plan to use to run your job
+#SBATCH --mem=8G           # total memory requested
 #SBATCH --job-name chipseq 		# Job name
 #SBATCH -o %j.out			# File to which standard out will be written
 #SBATCH -e %j.err 		# File to which standard error will be written
@@ -434,7 +435,7 @@ Due to the space limit in our home directory, we will loop through only two `KO`
 for fq in ~/chipseq_workshop/raw_data/ko_*_chip.fastq.gz
 do
 
-sbatch -p short -t 0-2:00 -c 2 --job-name chipseq-analysis -o %j.out -e %j.err \
+sbatch -p short -t 0-2:00 -c 2 --mem=8G --job-name chipseq-analysis -o %j.out -e %j.err \
 --wrap="sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh $fq"
 
 sleep 1	    # wait 1 second between each job submission
