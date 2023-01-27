@@ -192,13 +192,13 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 --regionsLabel "" \
 --perGroup \
 --colors red blue \
---samplesLabel "PRDM16_sample1" "PRDM16_sample2" \
+--samplesLabel "WT_replicate1" "WT_replicate2" \
 --refPointLabel "PRDM16 binding sites"
 ```
 
 - Plot2: encode fig 6a
 > NOTE: the prompt will show the message "The following chromosome names did not match between the bigwig files", which is fine. It is not an error message.
-> **run 20 min in an interactive node, 11 min in sbatch script**
+> **run 20 min in an interactive node**
 ```
 computeMatrix reference-point --referencePoint center \
 -b 4000 -a 4000 \
@@ -216,7 +216,38 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 --regionsLabel "" \
 --perGroup \
 --colors blue green red orange \
---samplesLabel "PRDM16" "H3K4me" "H3K4me3" "H3K27me3" \
+--samplesLabel "WT_replicate2" "H3K4me" "H3K4me3" "H3K27me3" \
+--refPointLabel "PRDM16 binding sites"
+```
+
+- Plot2: encode update with K27ac
+```
+#!/bin/sh
+
+#SBATCH -p priority
+#SBATCH -c 6
+#SBATCH -t 0-2:00
+#SBATCH --mem 16G
+#SBATCH -e 0917_encode_update.err
+#SBATCH -o 0917_encode_update.out
+#SBATCH --mail-type=ALL
+
+module load gcc/6.2.0 python/2.7.12 deeptools/3.0.2 
+
+computeMatrix reference-point --referencePoint center \
+-b 4000 -a 4000 \
+-R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+-S ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k04me1UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k27me3UE14_mm10.bw /n/groups/hbctraining/harwell-datasets/encode-chipseq/H3k27acUE14_mm10.bw \
+--skipZeros \
+-o ~/chipseq_workshop/results/visualization/wt_encode_matrix_update.gz \
+-p 6
+
+plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix_update.gz \
+-out ~/chipseq_workshop/results/visualization/figures/plot2_wt_encode_update.png \
+--regionsLabel "" \
+--perGroup \
+--colors blue green red orange \
+--samplesLabel "WT_replicate2" "H3K4me" "H3K27me3" "H3K27ac" \
 --refPointLabel "PRDM16 binding sites"
 ```
 
@@ -238,7 +269,7 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_acetylation_ma
 --regionsLabel "" \
 --perGroup \
 --colors blue red green \
---samplesLabel "PRDM16" "H3K27ac Embryonic" "H3K27ac Adult" \
+--samplesLabel "WT_replicate2" "H3K27ac Embryonic" "H3K27ac Adult" \
 --refPointLabel "PRDM16 binding sites"
 ```
 
@@ -259,11 +290,126 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
 --regionsLabel "" \
 --perGroup \
 --colors blue red \
---samplesLabel "PRDM16_WT" "PRDM16_KO" \
+--samplesLabel "WT" "KO" \
 --refPointLabel "PRDM16 binding sites"
+```
+
+- Plot5: TSS region
+```
+#!/bin/sh
+
+#SBATCH -p priority
+#SBATCH -c 6
+#SBATCH -t 0-4:00
+#SBATCH --mem 16G
+#SBATCH -e 0917_TSS.err
+#SBATCH -o 0917_TSS.out
+#SBATCH --mail-type=ALL
+
+module load gcc/6.2.0 python/2.7.12 deeptools/3.0.2 
+
+computeMatrix reference-point --referencePoint TSS \
+-b 4000 -a 4000 \
+-R ~/chipseq_workshop/reference_data/mm10-allknownGenes.bed \
+-S ~/chipseq_workshop/results/visualization/bigWig/wt_sample1_chip.bw ~/chipseq_workshop/results/visualization/bigWig/wt_sample2_chip.bw \
+--skipZeros \
+-o ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
+-p 6
+
+plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
+-out ~/chipseq_workshop/results/visualization/figures/plot1_wt_TSS.png \
+--regionsLabel "" \
+--perGroup \
+--colors red blue \
+--samplesLabel "WT_replicate1" "WT_replicate2" \
+--refPointLabel "TSS" \
+--yMax 12
 ```
 
 - Note
 1. Use the range of 4 kb before and after the center
 2. Need to lift the encode profile from mm9 to mm10 (using CrossMap)
 
+
+# lesson 10: Automating script
+```
+#!/bin/bash/
+
+# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file that is ready for peak calling. Bowtie2 is the aligner used, and the BAM file is sorted by genomic coordinates and has multi-mappers and duplicate reads removed using samtools.
+# USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
+
+# initialize a variable with an intuitive name to store the name of the input fastq file
+fq=$1
+
+# grab base of filename for naming outputs
+base=`basename $fq .fastq.gz`
+echo "Start processing $base ..."    
+
+# directory with bowtie genome index
+genome=/n/groups/shared_databases/bowtie2_indexes/mm10
+
+# make all of the output directories
+# The -p option means mkdir will create the whole path if it 
+# does not exist and refrain from complaining if it does exist
+mkdir -p ~/chipseq_workshop/results/fastqc
+mkdir -p ~/chipseq_workshop/results/bowtie2
+
+# set up output filenames and locations
+fastqc_out=~/chipseq_workshop/results/fastqc
+bowtie_results=~/chipseq_workshop/results/bowtie2
+
+## set up file names
+align_sam=~/chipseq_workshop/results/bowtie2/${base}.sam
+align_bam=~/chipseq_workshop/results/bowtie2/${base}.bam
+align_sorted=~/chipseq_workshop/results/bowtie2/${base}_sorted.bam
+align_final=~/chipseq/results/bowtie2/${base}_final.bam
+
+# set up the software environment
+module load fastqc/0.11.3
+module load gcc/6.2.0  
+module load bowtie2/2.2.9
+module load samtools/1.9
+export PATH=/n/app/bcbio/tools/bin:$PATH 	# for using 'sambamba'
+
+echo "FastQC analysis ..."
+
+# Run FastQC and place the output to the appropriate folder
+fastqc -o $fastqc_out $fq
+
+echo "Bowtie2 alignment ..."
+
+# Run bowtie2
+bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
+
+echo "Convert SAM to BAM ..."
+
+# Create BAM from SAM
+samtools view -h -S -b -o $align_bam $align_sam
+
+echo "Filtering BAM file ..."
+
+# Sort BAM file by genomic coordinates
+samtools sort $align_bam -o $align_sorted 
+
+# Filter out duplicates
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
+
+# Create indices for all the bam files for visualization and QC
+samtools index $align_final
+
+echo "The process for $base is finished!"
+```
+
+```
+#! /bin/bash
+
+for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
+do
+
+sbatch -p short -t 0-2:00 -n 8 --job-name chipseq-analysis -o %j.out -e %j.err \
+--wrap="sh ~/chipseq_workshop/scripts/chipseq_automating.sh $fq"
+
+sleep 1	    # wait 1 second between each job submission
+  
+done
+```
