@@ -1,0 +1,5 @@
+SampleID,Factor,Replicate,bamReads,ControlID,bamControl,Peaks,PeakCaller,Tissue,Condition
+KO_1_chip,KO,1,data/bams/KO_pair1_chip_final.bam,KO_1_input,data/bams/KO_pair1_input_final.bam,data/peakcalls/KO_pair1_peaks.narrowPeak,narrow,NA,NA
+KO_2_chip,KO,2,data/bams/KO_pair2_chip_final.bam,KO_2_input,data/bams/KO_pair2_input_final.bam,data/peakcalls/KO_pair2_peaks.narrowPeak,narrow,NA,NA
+WT_1_chip,WT,1,data/bams/WT_pair2_chip_final.bam,WT_1_input,data/bams/WT_pair2_input_final.bam,data/peakcalls/WT_pair2_peaks.narrowPeak,narrow,NA,NA
+WT_2_chip,WT,2,data/bams/WT_pair3_chip_final.bam,WT_2_input,data/bams/WT_pair3_input_final.bam,data/peakcalls/WT_pair3_peaks.narrowPeak,narrow,NA,NA
