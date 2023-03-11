@@ -39,7 +39,7 @@ This workshop focuses on teaching computational skills to enable the effective u
 
 To cite material from this course in your publications, please use:
 
-> Meeta Mistry, Shannan Ho Sui, Jihe Liu, Mary Piper, William Gammerdinger, & Radhika Khetani. (2022, January 6). hbctraining/Intro-to-ChIPseq-flipped: ChIP-seq Data Analysis Lessons from HCBC (first release). Zenodo. https://doi.org/10.5281/zenodo.5825871
+> Meeta Mistry, Shannan Ho Sui, Jihe Liu, Mary Piper, William Gammerdinger, & Radhika Khetani. (2023, March 11). hbctraining/Intro-to-ChIPseq-flipped: Understanding Chromatin Biology - Lessons from HCBC (2nd release). Zenodo. https://doi.org/10.5281/zenodo.7723255
 
 A lot of time and effort went into the preparation of these materials. Citations help us understand the needs of the community, gain recognition for our work, and attract further funding to support our teaching activities. Thank you for citing this material if it helped you in your data analysis.
 
