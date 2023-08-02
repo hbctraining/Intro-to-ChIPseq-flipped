@@ -16,6 +16,11 @@
 
 > These materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.
 
+### Lessons
+* [Workshop schedule (trainer-led learning)](schedule/)
+* [Self-learning]()
+
+
 ### Description
 
 This repository has teaching materials for the Understanding chromatin biology using high throughput sequencing workshop. 
