@@ -19,8 +19,8 @@
 | 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop_Nov2022.pdf) | Meeta |
 | 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Introduction_to_ChIP-seq_2022.pdf) | Dr. Shannan Ho Sui |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Jihe |
-| 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Jihe |
+| 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Will |
+| 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Will |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Meeta|
 
 
@@ -75,7 +75,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 9:30 - 10:15 | Self-learning lessons review |  All |
-| 10:15 - 11:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Jihe |
+| 10:15 - 11:00 | [Filtering BAM files](../lessons/05_filtering_BAM_files.md) | Will |
 | 11:00 - 11:05 | Break|  |
 | 11:05 - 12:00 | [Peak calling](../lessons/06_peak_calling_macs.md) | Meeta |
 
@@ -129,7 +129,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | 9:30 - 10:00 | Self-learning lessons review | All |
 | 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
 | 10:30 - 10:35 | Break|  |
-| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Jihe |
+| 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Will |
 | 11:45 - 12:00 | [Wrap-up](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/raw/main/lectures/Wrap-up_new.pdf) | Meeta |
 
 
