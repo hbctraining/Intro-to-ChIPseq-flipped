@@ -62,9 +62,9 @@ I. Please **study the contents** and **work through all the code** within the fo
 >
 
 2. **Complete the exercises**:
-   * Each lesson above contain exercises; please go through each of them.
-   * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/s6KCYi4HaZe2XqfaZ1FT) the **day before the next class**.
+   * Each lesson above contains exercises; please go through each of them.
+   * Copy over your solutions into the [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLScjRp6hWlKHhH7TqUPOnCoL1oQXdhzioD4btp-lV0-CRunV-Q/viewform?usp=sf_link) the **day before the next class**.
+
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -112,9 +112,8 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 
 2. **Complete the exercises**:
-   * Each lesson above contain exercises; please go through each of them.
-   * **Copy over** your code from the exercises into a text file. 
-   * **Upload the saved text file** to [Dropbox](https://www.dropbox.com/request/XjLfMVNh5FUWA7Q6K7tX) the **day before the next class**.
+   * Each lesson above contains exercises; please go through each of them.
+   * Copy over your solutions into the [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLScvsB3pAbhSzvrx8HoRzpKXqYrU-k55DDqvwkUmoQAJFZIK4w/viewform?usp=sf_link) the **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
