@@ -68,7 +68,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://pollev.com/discourses/VTmNdeWVXhzTcWOzZvSPu/respond).
+* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/discourses/dpXLe2Z2zma4PVQqCGhYz/respond).
 
 ## Day 2
 
@@ -118,7 +118,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://pollev.com/discourses/VTmNdeWVXhzTcWOzZvSPu/respond).
+* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/discourses/dpXLe2Z2zma4PVQqCGhYz/respond).
 
 ***
 
