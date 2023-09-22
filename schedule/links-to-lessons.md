@@ -23,7 +23,7 @@
 
 ## Notes
 * These materials focus on the use of local computational resources at Harvard, which are **only accessible to Harvard affiliates**
-* Non-Harvard folks can [download the data]() and set up to work on their local clusters (with the help of local system administrators)
+* Non-Harvard folks can [download the data](../lessons/downloading_data.md) and set up to work on their local clusters (with the help of local system administrators)
 
 ### Instructions for Harvard researchers with access to HMS-RC's O2 cluster
 
