@@ -63,12 +63,11 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 2. **Complete the exercises**:
    * Each lesson above contains exercises; please go through each of them.
-   * Copy over your solutions into the [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLScjRp6hWlKHhH7TqUPOnCoL1oQXdhzioD4btp-lV0-CRunV-Q/viewform?usp=sf_link) the **day before the next class**.
+   * Copy over your solutions into the [Google Forms](https://forms.gle/uwqY9zzqfUEZEdQ78) the **day before the next class**.
 
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/discourses/dpXLe2Z2zma4PVQqCGhYz/respond).
 
 ## Day 2
 
@@ -113,11 +112,10 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 2. **Complete the exercises**:
    * Each lesson above contains exercises; please go through each of them.
-   * Copy over your solutions into the [Google Forms](https://docs.google.com/forms/d/e/1FAIpQLScvsB3pAbhSzvrx8HoRzpKXqYrU-k55DDqvwkUmoQAJFZIK4w/viewform?usp=sf_link) the **day before the next class**.
+   * Copy over your solutions into the [Google Forms](https://forms.gle/JZKs9AMmePdsoDPd8) the **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/discourses/dpXLe2Z2zma4PVQqCGhYz/respond).
 
 ***
 
