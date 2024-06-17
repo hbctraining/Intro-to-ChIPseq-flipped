@@ -16,8 +16,8 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Intro_to_workshop_all.pdf) | Meeta |
-| 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/Introduction_to_ChIP-seq_2023.pdf) | Dr. Shannan Ho Sui |
+| 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/workshop_intro_slides.pdf) | Meeta |
+| 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing]() | Dr. Shannan Ho Sui |
 | 11:00- 11:05 | Break|  |
 | 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Will |
 | 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Will |
