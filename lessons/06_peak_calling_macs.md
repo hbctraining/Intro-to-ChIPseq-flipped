@@ -32,6 +32,8 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 
 *Image source: [Wilbanks and Faccioti, PLoS One 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471)*
 
+A common question is how do we navigate the myriad of options for peak calling, and how do we determine which is best for our data? A study by [Wilbanks & Facciotti (2010). PLoS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471), conducted an evaluation of algorithm performance in ChIP-Seq peak detection of 12 different peak callers. The conclusion was that while there was some consensus among them, the number of peaks identified by each was highly variable. A commonly used tool for identifying binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS), and is what we will be using in this workshop.
+
 ### CUT&RUN
 While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
 
@@ -53,7 +55,7 @@ _NOTE: There are additional ChIP-seq tools that have functionality to accomodate
 
 
 ## MACS2
-A commonly used tool for identifying binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS). The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites (narrow peaks), it is also suited for larger regions (broad peaks). 
+The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites (narrow peaks), it is also suited for larger regions (broad peaks). 
 
 We will be using **MACS2** in this workshop. The **underlying algorithm for peak calling remains the same as the original MACS**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
