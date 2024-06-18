@@ -117,8 +117,13 @@ There are two kinds of controls that can be used for ChIP-seq: **IgG control** a
 <details>
 	<summary><b><i>Do we need controls for CUT&RUN?</i></b></summary>
 	<br>
-	<p>Similar to ChIP-seq, only a fraction of the DNA in a CUT&RUN sample will correspond to actual signal amidst background noise. Rather than having an input DNA control, <b>the use of a nonspecific rabbit IgG antibody is recommended by the Henikoff lab</b>. It will randomly coat the chromatin at low efficiency without sequence bias. While a no-antibody input DNA sample will generate a more diverse DNA library, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.
-</p>
+	<p>Similar to ChIP-seq, only a fraction of the DNA in a CUT&RUN sample will correspond to actual signal amidst background noise. Rather than having an input DNA control, <b>the use of a nonspecific rabbit IgG antibody is recommended by the Henikoff lab</b>. It will randomly coat the chromatin at low efficiency without sequence bias. While a no-antibody input DNA sample will generate a more diverse DNA library, the lack of tethering increases the possibility that slight carryover of pA-MN will result in preferential fragmentation of hyperaccessible DNA.</p>
+	<br>
+ <p>There is also an opinion that perhaps [input control is more appropriate](https://www.cellsignal.com/learn-and-support/frequently-asked-questions/cut-and-run-faqs#a22). One can argue that the IgG sample typically contains extremely small amounts of DNA and is not a good indicator for how well your target-specific antibody is working in the assay.</p>
+ <br>
+ Ultimately it may be best to go with whatever is recommended by the maker of the kit being used.
+		
+
 	
 </details>
 
