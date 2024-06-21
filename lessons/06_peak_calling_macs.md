@@ -37,6 +37,13 @@ A common question is **how do we navigate the myriad of options for peak calling
 ### CUT&RUN
 While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. For example, with a sparse background read distribution if there is any spurious background observed it could be identifed as a peak. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
 
+**How does it work?**
+1. Data are first parsed into signal blocks representing segments of continuous, nonzero read depth by fragment spanning read pairs.
+2. Signal in each block is calculated by summing read counts.
+3. Empirically determine a threshold to filter
+   * Plot proportion of signal blocks in Target / IgG (y-axis) is used to identify the threshold value at which the percentage of Target versus IgG blocks is maximized
+4. Enriched regions which pass filter, but overlap with IgG block are also removed
+
 <p align="center">
 <img src="../CUT&RUN/img/seacr_fig1.png" width=500>
 </p>
