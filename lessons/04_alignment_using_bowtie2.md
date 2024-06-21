@@ -263,32 +263,25 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
 
 <details>
   <summary><b>Click here for solution</b></summary>
-  <br><b>Do not copy paste the SBATCH options from below. There are spaces incorporated which will cause the script to throw an error.</b><br>
-  <p><pre>
- #!/bin/bash
-   
- #SBATCH -p short              # partition name
- #SBATCH -c 2                  # number of cores
- #SBATCH -t 0-2:00             # time limit
- #SBATCH --mem 8G              # requested memory
- #SBATCH --job-name alignment 	# job name
- #SBATCH -o %j.out			          # file to which standard output will be written
- #SBATCH -e %j.err 		          # file to which standard error will be written
-  
-  module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.13
-   
-  bowtie2 -p 2 -q --local \
-  -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
-  -U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
-  -S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
-   
-  samtools view -h -S -b \
-  -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
-  ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
-  
-  rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam    
-  </pre></p>
-  
+  <pre>
+#!/bin/bash<br>
+#SBATCH -p short              # partition name
+#SBATCH -c 2                  # number of cores
+#SBATCH -t 0-2:00             # time limit
+#SBATCH --mem 8G              # requested memory
+#SBATCH --job-name alignment  # job name
+#SBATCH -o %j.out	      # file to which standard output will be written
+#SBATCH -e %j.err 	      # file to which standard error will be written<br>
+module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.13<br>
+bowtie2 -p 2 -q --local \
+-x /n/groups/shared_databases/bowtie2_indexes/mm10 \
+-U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
+-S ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam<br>
+samtools view -h -S -b \
+-o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
+~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam<br>
+rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam    
+  </pre>
 </details>
 
 > NOTE:
