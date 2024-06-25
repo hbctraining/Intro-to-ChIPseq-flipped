@@ -127,7 +127,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | 10:00 - 10:30 | [Troubleshooting your ChIP-seq analysis](../lessons/troubleshooting_chipseq_partI.md) | Meeta |
 | 10:30 - 10:35 | Break|  |
 | 10:35 - 11:45 | [Automating the ChIP-seq workflow](../lessons/10_automation_new.md) | Will |
-| 11:45 - 12:00 | [Wrap-up](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/raw/main/lectures/Wrap-up_new.pdf) | Meeta |
+| 11:45 - 12:00 | [Wrap-up](../lectures/workshop_wrapup_slides.pdf) | Meeta |
 
 
 ## Answer keys
