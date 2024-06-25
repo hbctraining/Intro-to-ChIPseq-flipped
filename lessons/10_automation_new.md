@@ -18,59 +18,59 @@ This will ensure that you run every sample with the exact same parameters, and w
 
 ### Using "scratch space"
 
-Before we get started, let's talk a little bit about how data are stored on O2. O2, like many clusters, has several different storage options; each of which has different amounts of space available, and is differently backed up. One filesystem is the `/n/scratch3/` space. This directory has a lot of shared disk space available, but the files are not backed up and they will be deleted if left "untouched" for more than 30 days.
+Before we get started, let's talk a little bit about how data are stored on O2. O2, like many clusters, has several different storage options; each of which has different amounts of space available, and is differently backed up. One filesystem is the `/n/scratch/` space. This directory has a lot of shared disk space available, but the files are not backed up and they will be deleted if left "untouched" for more than 30 days.
 
-By design `/n/scratch3/` is to be used for intermediate files that are created during any analysis. An example is in the schematic below. 
+By design `/n/scratch/` is to be used for intermediate files that are created during any analysis. An example is in the schematic below. 
 
 <p align="center">
 <img src="../img/scratch3_best-practice.png" width="600">
 </p>
 
-Today, we are going to learn how to use the `/n/scratch3/` storage location as we work on automating our workflow ([More information about scratch space on O2](https://wiki.rc.hms.harvard.edu/display/O2/Scratch3+Storage). We will be maintaining our data in our (backed up) home directories, but all of the output files will be in scratch space. When we are done, we can copy over only those output files that are essential.
+Today, we are going to learn how to use the `/n/scratch/` storage location as we work on automating our workflow ([More information about scratch space on O2](https://harvardmed.atlassian.net/wiki/spaces/O2/pages/2652045313/Scratch+Storage). We will be maintaining our data in our (backed up) home directories, but all of the output files will be in scratch space. When we are done, we can copy over only those output files that are essential.
 
-#### Creating a folder in `/n/scratch3/`
+#### Creating a folder in `/n/scratch/`
 
-To get started let's create a folder for ourselves in `/n/scratch3/` first. We can do so by running the existing script `/n/cluster/bin/scratch3_create.sh` from a login node.
+To get started let's create a folder for ourselves in `/n/scratch/` first. We can do so by running the existing script `/n/cluster/bin/scratch_create_directory.sh` from a login node.
 
 ```bash
-$ sh /n/cluster/bin/scratch3_create.sh
+$ sh /n/cluster/bin/scratch_create_directory.sh
 ```
 
 When you press enter you will see:
 
 ```
-Do you want to create a scratch3 directory under /n/scratch3/users? [y/N]
+Do you want to create a scratch directory under /n/scratch/users? [y/N]
 ```
 
 Please say `y`. Next, it will display the guidelines for this folder and ask you to verify that you have read them:
 
 ```
-Do you want to create a scratch3 directory under /n/scratch3/users? [y/N]> y
+Do you want to create a scratch directory under /n/scratch/users? [y/N]> y
 
-By typing 'YES' I will comply with HMS RC guidelines for using Scratch3.
+By typing 'YES' I will comply with HMS RC guidelines for using Scratch.
 I also confirm that I understand that files in my scratch directory WILL NOT BE BACKED UP IN ANY WAY.
-I also understand that THIRTY DAYS after I last access a given file or directory in my scratch directory,
+I also understand that 45 DAYS after I last modify a given file or directory in my scratch directory,
 it will be DELETED with NO POSSIBILITY of retrieval.
 
-I understand HMS RC guidelines for using Scratch3:
+I understand HMS RC guidelines for using scratch: 
 ```
 
 Please answer `Yes` or `yes` here, once you do you will get some additional information and your command prompt back.
 
 ```
-I understand HMS RC guidelines for using Scratch3: yes
-Your scratch3 directory was created at /n/scratch3/users/r/rc_trainingXX.
-This has a limit of 10TB of storage and 1 million files.
-You can check your scratch3 quota using the scratch3_quota.sh command.
+I understand HMS RC guidelines for using scratch:  yes
+Your scratch directory was created at /n/scratch/users/r/rc_trainingXX.
+This has a limit of 25TiB of storage and 2.5 million files.
+You can check your scratch quota using the quota-v2 command.
 ```
 
-Great, now we all have created a work directory for ourselves in the `/n/scratch3/` storage space! 
+Great, now we all have created a work directory for ourselves in the `/n/scratch/` storage space! 
 
 ```bash
-ls -l /n/scratch3/users/r/$USER/
+ls -l /n/scratch/users/r/$USER/
 ```
 
-When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch3/users/r/$USER/` folder.
+When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch/users/r/$USER/` folder.
 
 ### Start an interactive session
 
@@ -111,14 +111,14 @@ We will be using this concept in our automation script, wherein we will accept t
 
 ### Writing the automation script!
 
-We will start writing the script on our laptops using a simple text editor like Sublime Text or Notepad++. Let's being with the shebang line and a `cd` command so that our results are all written on `/n/scratch3/`. 
+We will start writing the script on our laptops using a simple text editor like Sublime Text or Notepad++. Let's being with the shebang line and a `cd` command so that our results are all written on `/n/scratch/`. 
 
 ```bash
 #!/bin/bash/
 
-# change directories to /n/scratch3/ so that all the analysis is stored there.
+# change directories to /n/scratch/ so that all the analysis is stored there.
 
-cd /n/scratch3/users/r/$USER/
+cd /n/scratch/users/r/$USER/
 ```
 
 **We want users to input the path to the fastq file as input to the shell script**, i.e. `sh chipseq_analysis_on_input_file.sh <name-of-fastq-file>`. To make this work, we have to replace all the places in the script where we want to refer to the fastq file, with the variable `$1`. 
@@ -267,8 +267,8 @@ Your script should now look like this:
 # This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Fastq files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
 # USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 
-# change directories to /n/scratch3/ so that all the analysis is stored there.
-cd /n/scratch3/users/r/$USER/
+# change directories to /n/scratch/ so that all the analysis is stored there.
+cd /n/scratch/users/r/$USER/
 
 # initialize a variable with an intuitive name to store the name of the input fastq file
 fq=$1
@@ -354,7 +354,7 @@ $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_ch
 This script will take a while to run, given the alignment, filtering and sortin steps all take a long time to run. So we can use `CTRL` + `C` and kill the job. Since the first part of the script should have run, we can go check if the folders were appropriately created.
 
 ```bash
-$ cd /n/scratch3/users/r/$USER/
+$ cd /n/scratch/users/r/$USER/
 
 $ tree
 ```
@@ -455,7 +455,7 @@ You can use `O2sacct` to check progress.
 ```bash
 $ O2sacct
 
-$ tree /n/scratch3/users/r/$USER/chipseq/
+$ tree /n/scratch/users/r/$USER/chipseq/
 ```
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.
@@ -464,7 +464,7 @@ Don't forget about the `scancel` command, should something go wrong and you need
 
 Once your run has completed you can check the `.err` and `.out` files for each submitted job. 
 
-Finally, you can move over any results files that you will need for peak calling and visualization (the sorted `bam` and corresponding `bai` files) to your personal home directory or to your lab group's directory. *Remember that `/n/scratch3/` is not backed up and any "untouched" files will be deleted after 30 days.*
+Finally, you can move over any results files that you will need for peak calling and visualization (the sorted `bam` and corresponding `bai` files) to your personal home directory or to your lab group's directory. *Remember that `/n/scratch/` is not backed up and any "untouched" files will be deleted after 30 days.*
 
 
 > **NOTE:** All job schedulers are similar, but not the same. Once you understand how one works, you can transition to another one without too much trouble. They all have their pros and cons which are considered by the system administrators when picking one for a given HPC environment. Some examples of other job schedulers are LSF, SGE, PBS/Torque.
