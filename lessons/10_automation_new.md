@@ -154,7 +154,7 @@ base=`basename $fq .fastq.gz`
 
 > **What is `basename`?**
 >
-> The `basename` command: this command takes a path or a name, and trims away all the information **before** the last `\`. If you specify the string to clear away **at the end**, it will do that as well. 
+> The `basename` command: this command takes a path or a name, and trims away all the information **before** the last `/`. If you specify the string to clear away **at the end**, it will do that as well. 
 > 
 > In this case, if the variable `$fq` contains the path *"~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz"*, `basename $fq .fastq.gz` will output "wt_sample2_chip".
 >
